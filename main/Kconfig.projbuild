@@ -812,13 +812,6 @@ config USE_DEVICE_AEC
     help
         To work properly, device-side AEC requires a clean output reference path from the speaker signal and physical acoustic isolation between the microphone and speaker.
 
-config USE_SERVER_AEC
-    bool "Enable Server-Side AEC (Unstable)"
-    default n
-    depends on USE_AUDIO_PROCESSOR
-    help
-        To work perperly, server-side AEC requires server support
-
 config USE_AUDIO_DEBUGGER
     bool "Enable Audio Debugger"
     default n
@@ -854,12 +847,6 @@ config AUDIO_DEBUG_UDP_SERVER
     depends on USE_AUDIO_DEBUGGER
     help
         UDP server address, format: IP:PORT, used to receive audio debugging data
-
-config RECEIVE_CUSTOM_MESSAGE
-    bool "Enable Custom Message Reception"
-    default n
-    help
-        Enable custom message reception, allow the device to receive custom messages from the server (preferably through the MQTT protocol)
 
 menu "Camera Configuration"
     depends on !IDF_TARGET_ESP32
@@ -958,5 +945,171 @@ menu "TAIJIPAI_S3_CONFIG"
     help
         启动双声道
 endmenu
+
+endmenu
+
+menu "Lingxin Cloud"
+
+config LINGXIN_WS_URL
+    string "Lingxin WebSocket URL"
+    default "wss://eagent.edu-aliyun.com/gw/ws/open/api/v1/agentChat"
+    help
+        Lingxin conversation WebSocket endpoint. Leave the default to let chat mode select the standard Lingxin endpoint.
+
+choice LINGXIN_CHAT_MODE_SELECT
+    prompt "Lingxin Chat Mode"
+    default LINGXIN_CHAT_MODE_CLOUD_VAD
+    help
+        Lingxin chat mode selection.
+    config LINGXIN_CHAT_MODE_VOICE
+        bool "voice"
+    config LINGXIN_CHAT_MODE_CLOUD_VAD
+        bool "cloud_vad"
+    config LINGXIN_CHAT_MODE_TEXT_TO_VOICE
+        bool "text_to_voice"
+    config LINGXIN_CHAT_MODE_FULL_DUPLEX
+        bool "full_duplex"
+endchoice
+
+config LINGXIN_CHAT_MODE
+    string
+    default "voice" if LINGXIN_CHAT_MODE_VOICE
+    default "cloud_vad" if LINGXIN_CHAT_MODE_CLOUD_VAD
+    default "text_to_voice" if LINGXIN_CHAT_MODE_TEXT_TO_VOICE
+    default "full_duplex" if LINGXIN_CHAT_MODE_FULL_DUPLEX
+    help
+        Internal value used by runtime logic.
+
+config LINGXIN_APP_ID
+    string "Lingxin App ID"
+    default ""
+    help
+        Enterprise app_id for Lingxin WebSocket authentication.
+
+config LINGXIN_APP_KEY
+    string "Lingxin App Key"
+    default ""
+    help
+        Device license/app_key for HMAC-SHA1 signing.
+
+config LINGXIN_SN
+    string "Lingxin Device SN"
+    default ""
+    help
+        Device serial number used by Lingxin authentication and task_id.
+
+config LINGXIN_AI_APP_CODE
+    string "Lingxin AI App Code"
+    default ""
+    help
+        Lingxin application code used in start_task payload.
+
+choice LINGXIN_FLOW_CONTROL_STRATEGY_SELECT
+    prompt "Lingxin Flow Control Strategy"
+    default LINGXIN_FLOW_CONTROL_STRATEGY_FIXED_BYTE_RATE
+    help
+        Lingxin TTS flow control strategy selection.
+    config LINGXIN_FLOW_CONTROL_STRATEGY_FIXED_BYTE_RATE
+        bool "fixed_byte_rate"
+    config LINGXIN_FLOW_CONTROL_STRATEGY_FIXED_TIME_INTERVAL
+        bool "fixed_time_interval"
+endchoice
+
+config LINGXIN_FLOW_CONTROL_STRATEGY
+    string
+    default "fixed_byte_rate" if LINGXIN_FLOW_CONTROL_STRATEGY_FIXED_BYTE_RATE
+    default "fixed_time_interval" if LINGXIN_FLOW_CONTROL_STRATEGY_FIXED_TIME_INTERVAL
+    help
+        Internal value used by runtime logic.
+
+config LINGXIN_FLOW_CONTROL_MAX_SIZE
+    int "Lingxin Flow Control Max Size KB"
+    default 32
+    help
+        Maximum downstream audio packet size for fixed_byte_rate flow control.
+
+config LINGXIN_MAX_SENTENCE_SILENCE_MS
+    int "Lingxin Max Sentence Silence Milliseconds"
+    default 800
+    help
+        Cloud VAD silence duration for automatic end-of-sentence detection.
+
+config LINGXIN_AUDIO_UP_SAMPLE_RATE
+    int "Lingxin Uplink Audio Sample Rate"
+    default 16000
+    help
+        Uplink audio sample rate. Default is 16 kHz Opus.
+
+config LINGXIN_AUDIO_DOWN_SAMPLE_RATE
+    int "Lingxin Downlink Audio Sample Rate"
+    default 16000
+    help
+        Downlink audio sample rate. Default is 16 kHz PCM.
+
+choice LINGXIN_AUDIO_UP_CODEC_SELECT
+    prompt "Lingxin Uplink Audio Codec"
+    default LINGXIN_AUDIO_UP_CODEC_OPUS
+    help
+        Uplink audio codec selection.
+    config LINGXIN_AUDIO_UP_CODEC_OPUS
+        bool "opus"
+    config LINGXIN_AUDIO_UP_CODEC_PCM
+        bool "pcm"
+    config LINGXIN_AUDIO_UP_CODEC_WAV
+        bool "wav"
+    config LINGXIN_AUDIO_UP_CODEC_MP3
+        bool "mp3"
+endchoice
+
+config LINGXIN_AUDIO_UP_CODEC
+    string
+    default "opus" if LINGXIN_AUDIO_UP_CODEC_OPUS
+    default "pcm" if LINGXIN_AUDIO_UP_CODEC_PCM
+    default "wav" if LINGXIN_AUDIO_UP_CODEC_WAV
+    default "mp3" if LINGXIN_AUDIO_UP_CODEC_MP3
+    help
+        Internal value used by runtime logic.
+
+choice LINGXIN_AUDIO_DOWN_CODEC_SELECT
+    prompt "Lingxin Downlink Audio Codec"
+    default LINGXIN_AUDIO_DOWN_CODEC_PCM
+    help
+        Downlink audio codec selection.
+    config LINGXIN_AUDIO_DOWN_CODEC_OPUS
+        bool "opus"
+    config LINGXIN_AUDIO_DOWN_CODEC_PCM
+        bool "pcm"
+    config LINGXIN_AUDIO_DOWN_CODEC_WAV
+        bool "wav"
+    config LINGXIN_AUDIO_DOWN_CODEC_MP3
+        bool "mp3"
+endchoice
+
+config LINGXIN_AUDIO_DOWN_CODEC
+    string
+    default "opus" if LINGXIN_AUDIO_DOWN_CODEC_OPUS
+    default "pcm" if LINGXIN_AUDIO_DOWN_CODEC_PCM
+    default "wav" if LINGXIN_AUDIO_DOWN_CODEC_WAV
+    default "mp3" if LINGXIN_AUDIO_DOWN_CODEC_MP3
+    help
+        Internal value used by runtime logic.
+
+config LINGXIN_AUDIO_CHANNELS
+    int "Lingxin Audio Channels"
+    default 1
+    help
+        Audio channel count for PCM/WAV payloads. Mono is recommended on ESP32S3.
+
+config LINGXIN_AUDIO_BITS_PER_SAMPLE
+    int "Lingxin Audio Bits Per Sample"
+    default 16
+    help
+        Audio bit depth for PCM/WAV payloads. Only 16-bit PCM is currently supported.
+
+config LINGXIN_AUDIO_FRAME_MS
+    int "Lingxin Audio Frame Duration Milliseconds"
+    default 60
+    help
+        Audio frame duration used by the local Opus encoder and PCM decoder path.
 
 endmenu

@@ -24,7 +24,7 @@ v1の安定版は1.9.2です。`git checkout v1`でv1に切り替えることが
 
 - Wi-Fi / ML307 Cat.1 4G
 - オフライン音声ウェイクアップ [ESP-SR](https://github.com/espressif/esp-sr)
-- 2種類の通信プロトコルに対応（[Websocket](docs/websocket.md) または MQTT+UDP）
+- Lingxin WebSocketクラウド会話プロトコルを使用（[protocol documentation](docs/websocket.md)）
 - OPUSオーディオコーデックを採用
 - ストリーミングASR + LLM + TTSアーキテクチャに基づく音声インタラクション
 - 話者認識、現在話している人を識別 [3D Speaker](https://github.com/modelscope/3D-Speaker)
@@ -124,8 +124,7 @@ Feishuドキュメントチュートリアルをご覧ください：
 - [カスタム開発ボードガイド](docs/custom-board.md) - シャオジーAI用のカスタム開発ボード作成方法
 - [MCPプロトコルIoT制御使用法](docs/mcp-usage.md) - MCPプロトコルでIoTデバイスを制御する方法
 - [MCPプロトコルインタラクションフロー](docs/mcp-protocol.md) - デバイス側MCPプロトコルの実装方法
-- [MQTT + UDP ハイブリッド通信プロトコルドキュメント](docs/mqtt-udp.md)
-- [詳細なWebSocket通信プロトコルドキュメント](docs/websocket.md)
+- [Lingxin WebSocketクラウド会話プロトコル](docs/websocket.md)
 
 ## 大規模モデル設定
 

@@ -21,8 +21,91 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <cctype>
 
 #define TAG "Ota"
+
+static std::string ToLower(std::string value) {
+    std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) {
+        return static_cast<char>(std::tolower(c));
+    });
+    return value;
+}
+
+static bool IsLingxinStringKey(const char* key) {
+    static const char* allowed_keys[] = {
+        "app_id", "app_key", "sn", "ai_app_code", "device_code", "ws_url", "mode",
+        "flow_control_strategy", "audio_up_codec", "audio_down_codec"
+    };
+    for (const auto* allowed_key : allowed_keys) {
+        if (strcmp(key, allowed_key) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool IsLingxinIntKey(const char* key) {
+    static const char* allowed_keys[] = {
+        "flow_control_max_size", "max_sentence_silence_ms", "audio_up_sample_rate",
+        "audio_down_sample_rate", "audio_channels", "audio_bits_per_sample", "audio_frame_ms"
+    };
+    for (const auto* allowed_key : allowed_keys) {
+        if (strcmp(key, allowed_key) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool IsAllowedLingxinCodec(const std::string& codec) {
+    std::string value = ToLower(codec);
+    return value == "opus" || value == "pcm" || value == "wav" || value == "mp3";
+}
+
+static bool IsAllowedLingxinMode(const std::string& mode) {
+    std::string value = ToLower(mode);
+    return value == "voice" || value == "cloud_vad" || value == "text_to_voice" || value == "full_duplex";
+}
+
+static bool ValidateLingxinStringValue(const char* key, const char* value) {
+    if (strcmp(key, "audio_up_codec") == 0 || strcmp(key, "audio_down_codec") == 0) {
+        return IsAllowedLingxinCodec(value);
+    }
+    if (strcmp(key, "mode") == 0) {
+        return IsAllowedLingxinMode(value);
+    }
+    if (strcmp(key, "ws_url") == 0) {
+        return strncmp(value, "wss://", 6) == 0 || strncmp(value, "ws://", 5) == 0;
+    }
+    if (strcmp(key, "flow_control_strategy") == 0) {
+        std::string strategy = ToLower(value);
+        return strategy.empty() || strategy == "none" || strategy == "fixed_byte_rate" || strategy == "fixed_time_interval";
+    }
+    return value != nullptr;
+}
+
+static bool ValidateLingxinIntValue(const char* key, int value) {
+    if (strcmp(key, "audio_up_sample_rate") == 0 || strcmp(key, "audio_down_sample_rate") == 0) {
+        return value == 8000 || value == 16000 || value == 24000 || value == 48000;
+    }
+    if (strcmp(key, "audio_channels") == 0) {
+        return value == 1 || value == 2;
+    }
+    if (strcmp(key, "audio_bits_per_sample") == 0) {
+        return value == 16;
+    }
+    if (strcmp(key, "audio_frame_ms") == 0) {
+        return value == 20 || value == 40 || value == 60 || value == 80 || value == 100 || value == 120;
+    }
+    if (strcmp(key, "flow_control_max_size") == 0) {
+        return value == 32 || value == 64 || value == 128 || value == 256;
+    }
+    if (strcmp(key, "max_sentence_silence_ms") == 0) {
+        return value >= 200 && value <= 6000;
+    }
+    return true;
+}
 
 
 Ota::Ota() {
@@ -143,46 +226,38 @@ esp_err_t Ota::CheckVersion() {
         }
     }
 
-    has_mqtt_config_ = false;
-    cJSON *mqtt = cJSON_GetObjectItem(root, "mqtt");
-    if (cJSON_IsObject(mqtt)) {
-        Settings settings("mqtt", true);
+    has_lingxin_config_ = false;
+    cJSON *lingxin = cJSON_GetObjectItem(root, "lingxin");
+    if (cJSON_IsObject(lingxin)) {
+        Settings settings("lingxin", true);
         cJSON *item = NULL;
-        cJSON_ArrayForEach(item, mqtt) {
+        cJSON_ArrayForEach(item, lingxin) {
+            if (item->string == nullptr) {
+                continue;
+            }
             if (cJSON_IsString(item)) {
+                if (!IsLingxinStringKey(item->string) || !ValidateLingxinStringValue(item->string, item->valuestring)) {
+                    ESP_LOGW(TAG, "Ignore invalid lingxin string config: %s", item->string);
+                    continue;
+                }
                 if (settings.GetString(item->string) != item->valuestring) {
                     settings.SetString(item->string, item->valuestring);
                 }
             } else if (cJSON_IsNumber(item)) {
+                if (!IsLingxinIntKey(item->string) || !ValidateLingxinIntValue(item->string, item->valueint)) {
+                    ESP_LOGW(TAG, "Ignore invalid lingxin numeric config: %s=%d", item->string, item->valueint);
+                    continue;
+                }
                 if (settings.GetInt(item->string) != item->valueint) {
                     settings.SetInt(item->string, item->valueint);
                 }
+            } else {
+                ESP_LOGW(TAG, "Ignore unsupported lingxin config type: %s", item->string);
             }
         }
-        has_mqtt_config_ = true;
+        has_lingxin_config_ = true;
     } else {
-        ESP_LOGI(TAG, "No mqtt section found !");
-    }
-
-    has_websocket_config_ = false;
-    cJSON *websocket = cJSON_GetObjectItem(root, "websocket");
-    if (cJSON_IsObject(websocket)) {
-        Settings settings("websocket", true);
-        cJSON *item = NULL;
-        cJSON_ArrayForEach(item, websocket) {
-            if (cJSON_IsString(item)) {
-                if (settings.GetString(item->string) != item->valuestring) {
-                    settings.SetString(item->string, item->valuestring);
-                }
-            } else if (cJSON_IsNumber(item)) {
-                if (settings.GetInt(item->string) != item->valueint) {
-                    settings.SetInt(item->string, item->valueint);
-                }
-            }
-        }
-        has_websocket_config_ = true;
-    } else {
-        ESP_LOGI(TAG, "No websocket section found!");
+        ESP_LOGI(TAG, "No lingxin section found!");
     }
 
     has_server_time_ = false;

@@ -1,5 +1,7 @@
 #include "audio_service.h"
 #include <esp_log.h>
+#include <algorithm>
+#include <cctype>
 #include <cstring>
 
 #define RATE_CVT_CFG(_src_rate, _dest_rate, _channel)        \
@@ -36,6 +38,17 @@
 #endif
 
 #define TAG "AudioService"
+
+static uint16_t ReadLe16(const uint8_t* data) {
+    return static_cast<uint16_t>(data[0]) | (static_cast<uint16_t>(data[1]) << 8);
+}
+
+static uint32_t ReadLe32(const uint8_t* data) {
+    return static_cast<uint32_t>(data[0]) |
+        (static_cast<uint32_t>(data[1]) << 8) |
+        (static_cast<uint32_t>(data[2]) << 16) |
+        (static_cast<uint32_t>(data[3]) << 24);
+}
 
 AudioService::AudioService() {
     event_group_ = xEventGroupCreate();
@@ -347,49 +360,14 @@ void AudioService::OpusCodecTask() {
             task->type = kAudioTaskTypeDecodeToPlaybackQueue;
             task->timestamp = packet->timestamp;
 
-            SetDecodeSampleRate(packet->sample_rate, packet->frame_duration);
-            if (opus_decoder_ != nullptr) {
-                task->pcm.resize(decoder_frame_size_);
-                esp_audio_dec_in_raw_t raw = {
-                    .buffer = (uint8_t *)(packet->payload.data()),
-                    .len = (uint32_t)(packet->payload.size()),
-                    .consumed = 0,
-                    .frame_recover = ESP_AUDIO_DEC_RECOVERY_NONE,
-                };
-                esp_audio_dec_out_frame_t out_frame = {
-                    .buffer = (uint8_t *)(task->pcm.data()),
-                    .len = (uint32_t)(task->pcm.size() * sizeof(int16_t)),
-                    .decoded_size = 0,
-                };
-                esp_audio_dec_info_t dec_info = {};
-                std::unique_lock<std::mutex> decoder_lock(decoder_mutex_);
-                auto ret = esp_opus_dec_decode(opus_decoder_, &raw, &out_frame, &dec_info);
-                decoder_lock.unlock();
-                if (ret == ESP_AUDIO_ERR_OK) {
-                    task->pcm.resize(out_frame.decoded_size / sizeof(int16_t));
-                    if (decoder_sample_rate_ != codec_->output_sample_rate() && output_resampler_ != nullptr) {
-                        uint32_t target_size = 0;
-                        esp_ae_rate_cvt_get_max_out_sample_num(output_resampler_, task->pcm.size(), &target_size);
-                        std::vector<int16_t> resampled(target_size);
-                        uint32_t actual_output = target_size;
-                        esp_ae_rate_cvt_process(output_resampler_, (esp_ae_sample_t)task->pcm.data(), task->pcm.size(),
-                                                (esp_ae_sample_t)resampled.data(), &actual_output);
-                        resampled.resize(actual_output);
-                        task->pcm = std::move(resampled);
-                    }
-                    lock.lock();
-                    audio_playback_queue_.push_back(std::move(task));
-                    audio_queue_cv_.notify_all();
-                    debug_statistics_.decode_count++;
-                } else {
-                    ESP_LOGE(TAG, "Failed to decode audio after resize, error code: %d", ret);
-                    lock.lock();
-                }
+            if (DecodePacketToPcm(*packet, *task)) {
+                lock.lock();
+                audio_playback_queue_.push_back(std::move(task));
+                audio_queue_cv_.notify_all();
+                debug_statistics_.decode_count++;
             } else {
-                ESP_LOGE(TAG, "Audio decoder is not configured");
                 lock.lock();
             }
-            debug_statistics_.decode_count++;
         }
         /* Encode the audio to send queue */
         if (!audio_encode_queue_.empty() && audio_send_queue_.size() < MAX_SEND_PACKETS_IN_QUEUE) {
@@ -443,6 +421,183 @@ void AudioService::OpusCodecTask() {
     }
 
     ESP_LOGW(TAG, "Opus codec task stopped");
+}
+
+bool AudioService::DecodePacketToPcm(const AudioStreamPacket& packet, AudioTask& task) {
+    std::string codec = packet.codec;
+    std::transform(codec.begin(), codec.end(), codec.begin(), [](unsigned char c) {
+        return static_cast<char>(std::tolower(c));
+    });
+
+    if (codec.empty() || codec == "opus" || codec == "raw_opus") {
+        SetDecodeSampleRate(packet.sample_rate, packet.frame_duration);
+        if (opus_decoder_ == nullptr) {
+            ESP_LOGE(TAG, "Audio decoder is not configured");
+            return false;
+        }
+
+        task.pcm.resize(decoder_frame_size_);
+        esp_audio_dec_in_raw_t raw = {
+            .buffer = (uint8_t *)(packet.payload.data()),
+            .len = (uint32_t)(packet.payload.size()),
+            .consumed = 0,
+            .frame_recover = ESP_AUDIO_DEC_RECOVERY_NONE,
+        };
+        esp_audio_dec_out_frame_t out_frame = {
+            .buffer = (uint8_t *)(task.pcm.data()),
+            .len = (uint32_t)(task.pcm.size() * sizeof(int16_t)),
+            .decoded_size = 0,
+        };
+        esp_audio_dec_info_t dec_info = {};
+        std::unique_lock<std::mutex> decoder_lock(decoder_mutex_);
+        auto ret = esp_opus_dec_decode(opus_decoder_, &raw, &out_frame, &dec_info);
+        decoder_lock.unlock();
+        if (ret != ESP_AUDIO_ERR_OK) {
+            ESP_LOGE(TAG, "Failed to decode Opus audio, error code: %d", ret);
+            return false;
+        }
+
+        task.pcm.resize(out_frame.decoded_size / sizeof(int16_t));
+        return ResamplePlaybackTask(task, decoder_sample_rate_, 1);
+    }
+
+    if (codec == "pcm" || codec == "raw_pcm") {
+        return ConvertRawPcmToPlayback(packet, task);
+    }
+
+    if (codec == "wav") {
+        return ConvertWavToPlayback(packet, task);
+    }
+
+    if (codec == "mp3") {
+        ESP_LOGE(TAG, "MP3 downlink is configured but this audio path has no MP3 decoder");
+        return false;
+    }
+
+    ESP_LOGE(TAG, "Unsupported downlink audio codec: %s", codec.c_str());
+    return false;
+}
+
+bool AudioService::ConvertRawPcmToPlayback(const AudioStreamPacket& packet, AudioTask& task) {
+    if (packet.bits_per_sample != 16) {
+        ESP_LOGE(TAG, "Unsupported PCM bit depth: %d", packet.bits_per_sample);
+        return false;
+    }
+    if (packet.channels <= 0) {
+        ESP_LOGE(TAG, "Invalid PCM channel count: %d", packet.channels);
+        return false;
+    }
+
+    size_t sample_count = packet.payload.size() / sizeof(int16_t);
+    if (sample_count == 0) {
+        return false;
+    }
+
+    const int16_t* samples = reinterpret_cast<const int16_t*>(packet.payload.data());
+    if (packet.channels == 1) {
+        task.pcm.assign(samples, samples + sample_count);
+    } else {
+        size_t frame_count = sample_count / packet.channels;
+        task.pcm.resize(frame_count);
+        for (size_t frame = 0; frame < frame_count; ++frame) {
+            task.pcm[frame] = samples[frame * packet.channels];
+        }
+    }
+
+    return ResamplePlaybackTask(task, packet.sample_rate, 1);
+}
+
+bool AudioService::ConvertWavToPlayback(const AudioStreamPacket& packet, AudioTask& task) {
+    const auto& data = packet.payload;
+    if (data.size() < 44 || std::memcmp(data.data(), "RIFF", 4) != 0 || std::memcmp(data.data() + 8, "WAVE", 4) != 0) {
+        ESP_LOGE(TAG, "Invalid WAV payload");
+        return false;
+    }
+
+    size_t offset = 12;
+    int sample_rate = 0;
+    int channels = 0;
+    int bits_per_sample = 0;
+    const uint8_t* pcm_data = nullptr;
+    size_t pcm_size = 0;
+
+    while (offset + 8 <= data.size()) {
+        const uint8_t* chunk = data.data() + offset;
+        uint32_t chunk_size = ReadLe32(chunk + 4);
+        size_t next_offset = offset + 8 + chunk_size + (chunk_size & 1);
+        if (next_offset > data.size() + 1) {
+            ESP_LOGE(TAG, "Invalid WAV chunk size");
+            return false;
+        }
+
+        if (std::memcmp(chunk, "fmt ", 4) == 0) {
+            if (chunk_size < 16) {
+                ESP_LOGE(TAG, "Invalid WAV fmt chunk");
+                return false;
+            }
+            uint16_t audio_format = ReadLe16(chunk + 8);
+            channels = ReadLe16(chunk + 10);
+            sample_rate = ReadLe32(chunk + 12);
+            bits_per_sample = ReadLe16(chunk + 22);
+            if (audio_format != 1) {
+                ESP_LOGE(TAG, "Unsupported WAV format: %u", audio_format);
+                return false;
+            }
+        } else if (std::memcmp(chunk, "data", 4) == 0) {
+            pcm_data = chunk + 8;
+            pcm_size = std::min<size_t>(chunk_size, data.size() - offset - 8);
+        }
+
+        offset = next_offset;
+    }
+
+    if (pcm_data == nullptr || sample_rate <= 0 || channels <= 0 || bits_per_sample != 16) {
+        ESP_LOGE(TAG, "Unsupported WAV audio params rate=%d channels=%d bits=%d", sample_rate, channels, bits_per_sample);
+        return false;
+    }
+
+    AudioStreamPacket pcm_packet;
+    pcm_packet.codec = "pcm";
+    pcm_packet.sample_rate = sample_rate;
+    pcm_packet.channels = channels;
+    pcm_packet.bits_per_sample = bits_per_sample;
+    pcm_packet.payload.assign(pcm_data, pcm_data + pcm_size);
+    return ConvertRawPcmToPlayback(pcm_packet, task);
+}
+
+bool AudioService::ResamplePlaybackTask(AudioTask& task, int sample_rate, int channels) {
+    if (sample_rate <= 0) {
+        ESP_LOGE(TAG, "Invalid playback sample rate: %d", sample_rate);
+        return false;
+    }
+    if (channels != 1) {
+        ESP_LOGE(TAG, "Playback resampler expects mono PCM, got channels=%d", channels);
+        return false;
+    }
+    if (sample_rate == codec_->output_sample_rate()) {
+        return true;
+    }
+
+    if (output_resampler_ != nullptr) {
+        esp_ae_rate_cvt_close(output_resampler_);
+        output_resampler_ = nullptr;
+    }
+    esp_ae_rate_cvt_cfg_t output_resampler_cfg = RATE_CVT_CFG(sample_rate, codec_->output_sample_rate(), ESP_AUDIO_MONO);
+    auto resampler_ret = esp_ae_rate_cvt_open(&output_resampler_cfg, &output_resampler_);
+    if (output_resampler_ == nullptr) {
+        ESP_LOGE(TAG, "Failed to create output resampler, error code: %d", resampler_ret);
+        return false;
+    }
+
+    uint32_t target_size = 0;
+    esp_ae_rate_cvt_get_max_out_sample_num(output_resampler_, task.pcm.size(), &target_size);
+    std::vector<int16_t> resampled(target_size);
+    uint32_t actual_output = target_size;
+    esp_ae_rate_cvt_process(output_resampler_, (esp_ae_sample_t)task.pcm.data(), task.pcm.size(),
+                            (esp_ae_sample_t)resampled.data(), &actual_output);
+    resampled.resize(actual_output);
+    task.pcm = std::move(resampled);
+    return true;
 }
 
 void AudioService::SetDecodeSampleRate(int sample_rate, int frame_duration) {

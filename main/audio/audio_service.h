@@ -6,6 +6,7 @@
 #include <condition_variable>
 #include <chrono>
 #include <mutex>
+#include <string>
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -188,6 +189,10 @@ private:
     void AudioOutputTask();
     void OpusCodecTask();
     void PushTaskToEncodeQueue(AudioTaskType type, std::vector<int16_t>&& pcm);
+    bool DecodePacketToPcm(const AudioStreamPacket& packet, AudioTask& task);
+    bool ConvertRawPcmToPlayback(const AudioStreamPacket& packet, AudioTask& task);
+    bool ConvertWavToPlayback(const AudioStreamPacket& packet, AudioTask& task);
+    bool ResamplePlaybackTask(AudioTask& task, int sample_rate, int channels);
     void SetDecodeSampleRate(int sample_rate, int frame_duration);
     void CheckAndUpdateAudioPowerState();
 };

@@ -3,8 +3,7 @@
 #include "display.h"
 #include "system_info.h"
 #include "audio_codec.h"
-#include "mqtt_protocol.h"
-#include "websocket_protocol.h"
+#include "lingxin_websocket_protocol.h"
 #include "assets/lang_config.h"
 #include "mcp_server.h"
 #include "assets.h"
@@ -23,12 +22,8 @@
 Application::Application() {
     event_group_ = xEventGroupCreate();
 
-#if CONFIG_USE_DEVICE_AEC && CONFIG_USE_SERVER_AEC
-#error "CONFIG_USE_DEVICE_AEC and CONFIG_USE_SERVER_AEC cannot be enabled at the same time"
-#elif CONFIG_USE_DEVICE_AEC
+#if CONFIG_USE_DEVICE_AEC
     aec_mode_ = kAecOnDeviceSide;
-#elif CONFIG_USE_SERVER_AEC
-    aec_mode_ = kAecOnServerSide;
 #else
     aec_mode_ = kAecOff;
 #endif
@@ -477,14 +472,7 @@ void Application::InitializeProtocol() {
 
     display->SetStatus(Lang::Strings::LOADING_PROTOCOL);
 
-    if (ota_->HasMqttConfig()) {
-        protocol_ = std::make_unique<MqttProtocol>();
-    } else if (ota_->HasWebsocketConfig()) {
-        protocol_ = std::make_unique<WebsocketProtocol>();
-    } else {
-        ESP_LOGW(TAG, "No protocol specified in the OTA config, using MQTT");
-        protocol_ = std::make_unique<MqttProtocol>();
-    }
+    protocol_ = std::make_unique<LingxinWebsocketProtocol>();
 
     protocol_->OnConnected([this]() {
         DismissAlert();
@@ -519,90 +507,107 @@ void Application::InitializeProtocol() {
     });
     
     protocol_->OnIncomingJson([this, display](const cJSON* root) {
-        // Parse JSON data
-        auto type = cJSON_GetObjectItem(root, "type");
-        if (strcmp(type->valuestring, "tts") == 0) {
-            auto state = cJSON_GetObjectItem(root, "state");
-            if (strcmp(state->valuestring, "start") == 0) {
-                Schedule([this]() {
-                    aborted_ = false;
-                    SetDeviceState(kDeviceStateSpeaking);
-                });
-            } else if (strcmp(state->valuestring, "stop") == 0) {
-                Schedule([this]() {
-                    if (GetDeviceState() == kDeviceStateSpeaking) {
-                        if (listening_mode_ == kListeningModeManualStop) {
-                            SetDeviceState(kDeviceStateIdle);
-                        } else {
-                            SetDeviceState(kDeviceStateListening);
-                        }
-                    }
-                });
-            } else if (strcmp(state->valuestring, "sentence_start") == 0) {
-                auto text = cJSON_GetObjectItem(root, "text");
-                if (cJSON_IsString(text)) {
-                    ESP_LOGI(TAG, "<< %s", text->valuestring);
-                    Schedule([display, message = std::string(text->valuestring)]() {
-                        display->SetChatMessage("assistant", message.c_str());
-                    });
+        const cJSON* header = cJSON_GetObjectItem(root, "header");
+        const cJSON* action = cJSON_IsObject(header) ? cJSON_GetObjectItem(header, "action") : nullptr;
+        if (!cJSON_IsString(action)) {
+            ESP_LOGW(TAG, "Lingxin message missing header.action");
+            return;
+        }
+
+        const char* action_value = action->valuestring;
+        if (strcmp(action_value, "audio_response_start") == 0) {
+            Schedule([this]() {
+                aborted_ = false;
+                SetDeviceState(kDeviceStateSpeaking);
+            });
+        } else if (strcmp(action_value, "audio_response_end") == 0) {
+            // 协议层会发送 end_task，等待 task_ended 后再开启下一轮 / Wait for task_ended before starting the next turn.
+        } else if (strcmp(action_value, "task_ended") == 0) {
+            Schedule([this]() {
+                if (listening_mode_ == kListeningModeManualStop) {
+                    SetDeviceState(kDeviceStateIdle);
+                } else if (GetDeviceState() == kDeviceStateSpeaking) {
+                    SetDeviceState(kDeviceStateListening);
+                } else {
+                    SetDeviceState(kDeviceStateIdle);
                 }
+            });
+        } else if (strcmp(action_value, "task_terminated") == 0) {
+            Schedule([this]() {
+                audio_service_.ResetDecoder();
+                SetDeviceState(kDeviceStateIdle);
+            });
+        } else if (strcmp(action_value, "vad_end") == 0) {
+            Schedule([this]() {
+                if (protocol_) {
+                    protocol_->SendStopListening();
+                }
+            });
+        } else if (strcmp(action_value, "vad_exit") == 0) {
+            Schedule([this]() {
+                if (protocol_) {
+                    protocol_->SendStopListening();
+                }
+                SetDeviceState(kDeviceStateIdle);
+            });
+        } else if (strcmp(action_value, "text_output") == 0) {
+            const cJSON* payload = cJSON_GetObjectItem(root, "payload");
+            const cJSON* output_type = cJSON_IsObject(payload) ? cJSON_GetObjectItem(payload, "type") : nullptr;
+            const cJSON* result = cJSON_IsObject(payload) ? cJSON_GetObjectItem(payload, "result") : nullptr;
+            if (!cJSON_IsString(output_type)) {
+                ESP_LOGW(TAG, "Lingxin text_output missing payload.type");
+                return;
             }
-        } else if (strcmp(type->valuestring, "stt") == 0) {
-            auto text = cJSON_GetObjectItem(root, "text");
-            if (cJSON_IsString(text)) {
-                ESP_LOGI(TAG, ">> %s", text->valuestring);
-                Schedule([display, message = std::string(text->valuestring)]() {
+
+            const char* type_value = output_type->valuestring;
+            if (strcmp(type_value, "asr_final_text") == 0 && cJSON_IsString(result)) {
+                ESP_LOGI(TAG, ">> %s", result->valuestring);
+                Schedule([display, message = std::string(result->valuestring)]() {
                     display->SetChatMessage("user", message.c_str());
                 });
-            }
-        } else if (strcmp(type->valuestring, "llm") == 0) {
-            auto emotion = cJSON_GetObjectItem(root, "emotion");
-            if (cJSON_IsString(emotion)) {
-                Schedule([display, emotion_str = std::string(emotion->valuestring)]() {
-                    display->SetEmotion(emotion_str.c_str());
+            } else if ((strcmp(type_value, "agent_response_text") == 0 || strcmp(type_value, "llm_sentence_text") == 0) && cJSON_IsString(result)) {
+                ESP_LOGI(TAG, "<< %s", result->valuestring);
+                Schedule([display, message = std::string(result->valuestring)]() {
+                    display->SetChatMessage("assistant", message.c_str());
                 });
-            }
-        } else if (strcmp(type->valuestring, "mcp") == 0) {
-            auto payload = cJSON_GetObjectItem(root, "payload");
-            if (cJSON_IsObject(payload)) {
-                McpServer::GetInstance().ParseMessage(payload);
-            }
-        } else if (strcmp(type->valuestring, "system") == 0) {
-            auto command = cJSON_GetObjectItem(root, "command");
-            if (cJSON_IsString(command)) {
-                ESP_LOGI(TAG, "System command: %s", command->valuestring);
-                if (strcmp(command->valuestring, "reboot") == 0) {
-                    // Do a reboot if user requests a OTA update
-                    Schedule([this]() {
-                        Reboot();
+            } else if (strcmp(type_value, "sentiment_analysis_result") == 0) {
+                std::string emotion;
+                if (cJSON_IsString(result)) {
+                    emotion = result->valuestring;
+                } else if (cJSON_IsArray(result)) {
+                    const cJSON* first = cJSON_GetArrayItem(result, 0);
+                    const cJSON* type = cJSON_IsObject(first) ? cJSON_GetObjectItem(first, "type") : nullptr;
+                    if (cJSON_IsString(type)) {
+                        emotion = type->valuestring;
+                    }
+                } else if (cJSON_IsObject(result)) {
+                    const cJSON* type = cJSON_GetObjectItem(result, "type");
+                    if (cJSON_IsString(type)) {
+                        emotion = type->valuestring;
+                    }
+                }
+
+                if (!emotion.empty()) {
+                    Schedule([display, emotion]() {
+                        display->SetEmotion(emotion.c_str());
                     });
                 } else {
-                    ESP_LOGW(TAG, "Unknown system command: %s", command->valuestring);
+                    ESP_LOGW(TAG, "Lingxin sentiment result has unsupported structure");
                 }
-            }
-        } else if (strcmp(type->valuestring, "alert") == 0) {
-            auto status = cJSON_GetObjectItem(root, "status");
-            auto message = cJSON_GetObjectItem(root, "message");
-            auto emotion = cJSON_GetObjectItem(root, "emotion");
-            if (cJSON_IsString(status) && cJSON_IsString(message) && cJSON_IsString(emotion)) {
-                Alert(status->valuestring, message->valuestring, emotion->valuestring, Lang::Sounds::OGG_VIBRATION);
+            } else if (strcmp(type_value, "action_list") == 0 || strcmp(type_value, "tool_call") == 0) {
+                char* json_str = cJSON_PrintUnformatted(payload);
+                ESP_LOGI(TAG, "Lingxin action payload: %s", json_str == nullptr ? "" : json_str);
+                cJSON_free(json_str);
+                if (cJSON_IsObject(result) || cJSON_IsArray(result)) {
+                    McpServer::GetInstance().ParseMessage(result);
+                }
             } else {
-                ESP_LOGW(TAG, "Alert command requires status, message and emotion");
+                ESP_LOGW(TAG, "Unsupported Lingxin text_output type: %s", type_value);
             }
-#if CONFIG_RECEIVE_CUSTOM_MESSAGE
-        } else if (strcmp(type->valuestring, "custom") == 0) {
-            auto payload = cJSON_GetObjectItem(root, "payload");
-            ESP_LOGI(TAG, "Received custom message: %s", cJSON_PrintUnformatted(root));
-            if (cJSON_IsObject(payload)) {
-                Schedule([this, display, payload_str = std::string(cJSON_PrintUnformatted(payload))]() {
-                    display->SetChatMessage("system", payload_str.c_str());
-                });
-            } else {
-                ESP_LOGW(TAG, "Invalid custom message format: missing payload");
-            }
-#endif
+        } else if (strcmp(action_value, "task_started") == 0 || strcmp(action_value, "audio_ended") == 0) {
+            // 这些确认消息由协议层维护状态，应用层无需更新 UI / ACKs are state-only for the protocol layer.
         } else {
-            ESP_LOGW(TAG, "Unknown message type: %s", type->valuestring);
+            ESP_LOGW(TAG, "Unknown Lingxin action: %s", action_value);
         }
     });
     
@@ -945,7 +950,7 @@ void Application::SetListeningMode(ListeningMode mode) {
 }
 
 ListeningMode Application::GetDefaultListeningMode() const {
-    return aec_mode_ == kAecOff ? kListeningModeAutoStop : kListeningModeRealtime;
+    return aec_mode_ == kAecOnDeviceSide ? kListeningModeRealtime : kListeningModeAutoStop;
 }
 
 void Application::Reboot() {
@@ -1083,8 +1088,9 @@ void Application::SetAecMode(AecMode mode) {
             display->ShowNotification(Lang::Strings::RTC_MODE_OFF);
             break;
         case kAecOnServerSide:
+            aec_mode_ = kAecOff;
             audio_service_.EnableDeviceAec(false);
-            display->ShowNotification(Lang::Strings::RTC_MODE_ON);
+            display->ShowNotification(Lang::Strings::RTC_MODE_OFF);
             break;
         case kAecOnDeviceSide:
             audio_service_.EnableDeviceAec(true);

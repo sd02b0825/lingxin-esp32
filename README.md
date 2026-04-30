@@ -24,7 +24,7 @@ The stable version of v1 is 1.9.2. You can switch to v1 by running `git checkout
 
 - Wi-Fi / ML307 Cat.1 4G
 - Offline voice wake-up [ESP-SR](https://github.com/espressif/esp-sr)
-- Supports two communication protocols ([Websocket](docs/websocket.md) or MQTT+UDP)
+- Uses Lingxin WebSocket for cloud conversation ([protocol documentation](docs/websocket.md))
 - Uses OPUS audio codec
 - Voice interaction based on streaming ASR + LLM + TTS architecture
 - Speaker recognition, identifies the current speaker [3D Speaker](https://github.com/modelscope/3D-Speaker)
@@ -124,8 +124,7 @@ The firmware connects to the official [xiaozhi.me](https://xiaozhi.me) server by
 - [Custom Board Guide](docs/custom-board.md) - Learn how to create custom boards for XiaoZhi AI
 - [MCP Protocol IoT Control Usage](docs/mcp-usage.md) - Learn how to control IoT devices via MCP protocol
 - [MCP Protocol Interaction Flow](docs/mcp-protocol.md) - Device-side MCP protocol implementation
-- [MQTT + UDP Hybrid Communication Protocol Document](docs/mqtt-udp.md)
-- [A detailed WebSocket communication protocol document](docs/websocket.md)
+- [Lingxin WebSocket cloud conversation protocol](docs/websocket.md)
 
 ## Large Model Configuration
 

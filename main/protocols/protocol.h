@@ -6,29 +6,17 @@
 #include <functional>
 #include <chrono>
 #include <vector>
+#include <cstdint>
 
 struct AudioStreamPacket {
     int sample_rate = 0;
     int frame_duration = 0;
+    int channels = 1;
+    int bits_per_sample = 16;
     uint32_t timestamp = 0;
+    std::string codec = "opus";
     std::vector<uint8_t> payload;
 };
-
-struct BinaryProtocol2 {
-    uint16_t version;
-    uint16_t type;          // Message type (0: OPUS, 1: JSON)
-    uint32_t reserved;      // Reserved for future use
-    uint32_t timestamp;     // Timestamp in milliseconds (used for server-side AEC)
-    uint32_t payload_size;  // Payload size in bytes
-    uint8_t payload[];      // Payload data
-} __attribute__((packed));
-
-struct BinaryProtocol3 {
-    uint8_t type;
-    uint8_t reserved;
-    uint16_t payload_size;
-    uint8_t payload[];
-} __attribute__((packed));
 
 enum AbortReason {
     kAbortReasonNone,
