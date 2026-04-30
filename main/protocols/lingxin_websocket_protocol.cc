@@ -350,9 +350,19 @@ std::string LingxinWebsocketProtocol::BuildStartTaskMessage(ListeningMode mode) 
         SetError(Lang::Strings::SERVER_ERROR);
         return "";
     }
-    std::string task_id = (mode == kListeningModeManualStop || task_id_manager_->Current().empty())
-        ? task_id_manager_->BeginNewConversation()
-        : task_id_manager_->BeginNextTurn();
+    std::string task_id;
+    if (runtime_mode == "text_to_voice" && !task_id_manager_->Current().empty()) {
+        // APP 文本模式下，多轮对话复用同一 task_id，以保持文档约定的上下文语义。
+        task_id = task_id_manager_->Current();
+    } else {
+        bool start_new_conversation = task_id_manager_->Current().empty();
+        if (mode == kListeningModeManualStop && runtime_mode != "text_to_voice") {
+            start_new_conversation = true;
+        }
+        task_id = start_new_conversation
+            ? task_id_manager_->BeginNewConversation()
+            : task_id_manager_->BeginNextTurn();
+    }
 
     cJSON* root = cJSON_CreateObject();
     cJSON* header = cJSON_CreateObject();
@@ -447,6 +457,9 @@ void LingxinWebsocketProtocol::SendStartListening(ListeningMode mode) {
     if (!SendText(message)) {
         return;
     }
+    if (chat_mode_ == "text_to_voice") {
+        pending_text_input_.clear();
+    }
 
     // 先等待 task_started 再启用本地录音，避免音频早于服务端状态机 / Wait before recording so audio cannot arrive before server is ready.
     EventBits_t bits = xEventGroupWaitBits(event_group_handle_, LINGXIN_TASK_STARTED_EVENT, pdTRUE, pdFALSE, pdMS_TO_TICKS(10000));
@@ -459,10 +472,12 @@ void LingxinWebsocketProtocol::SendStartListening(ListeningMode mode) {
 void LingxinWebsocketProtocol::SendStopListening() {
     if (task_inflight_) {
         const bool full_duplex = (chat_mode_ == "full_duplex");
+        const bool text_to_voice = (chat_mode_ == "text_to_voice");
+        const char* action = full_duplex ? "terminate_task" : (text_to_voice ? "end_task" : "end_audio");
         ESP_LOGI(TAG, "Send stop listening -> %s, task_id=%s",
-            full_duplex ? "terminate_task" : "end_audio",
+            action,
             task_id_manager_->Current().c_str());
-        SendTaskCommand(full_duplex ? "terminate_task" : "end_audio");
+        SendTaskCommand(action);
         task_started_ = false;
     }
 }
@@ -484,6 +499,13 @@ void LingxinWebsocketProtocol::SendMcpMessage(const std::string& message) {
         return;
     }
     pending_text_input_ = message;
+    if (!IsAudioChannelOpened()) {
+        ESP_LOGI(TAG, "Audio channel is closed, open it before text_to_voice start_task");
+        if (!OpenAudioChannel()) {
+            ESP_LOGE(TAG, "Failed to open audio channel for text_to_voice request");
+            return;
+        }
+    }
     SendStartListening(kListeningModeManualStop);
 }
 
@@ -528,6 +550,7 @@ void LingxinWebsocketProtocol::HandleJsonMessage(const cJSON* root) {
         } else {
             task_started_ = false;
             task_inflight_ = false;
+            pending_text_input_.clear();
             ESP_LOGW(TAG, "task_started rejected by server code, stop inflight task, task_id=%s request_id=%s",
                 task_id_manager_->Current().c_str(),
                 request_id_.c_str());
@@ -553,6 +576,7 @@ void LingxinWebsocketProtocol::HandleJsonMessage(const cJSON* root) {
         task_started_ = false;
         task_inflight_ = false;
         end_task_sent_ = false;
+        pending_text_input_.clear();
         ESP_LOGI(TAG, "Task closed by server action=%s task_id=%s", action_value, task_id_manager_->Current().c_str());
         task_id_manager_->MarkTaskClosed();
     } else if (strcmp(action_value, "vad_end") == 0 || strcmp(action_value, "vad_exit") == 0) {
