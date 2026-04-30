@@ -550,6 +550,26 @@ void Application::InitializeProtocol() {
                 }
                 SetDeviceState(kDeviceStateIdle);
             });
+        } else if (strcmp(action_value, "asr_ended") == 0) {
+            const cJSON* payload = cJSON_GetObjectItem(root, "payload");
+            const cJSON* text = cJSON_IsObject(payload) ? cJSON_GetObjectItem(payload, "text") : nullptr;
+            if (cJSON_IsString(text)) {
+                ESP_LOGI(TAG, ">> %s", text->valuestring);
+                Schedule([display, message = std::string(text->valuestring)]() {
+                    display->SetChatMessage("user", message.c_str());
+                });
+            } else {
+                ESP_LOGW(TAG, "Lingxin asr_ended missing payload.text");
+            }
+        } else if (strcmp(action_value, "task_interrupted") == 0) {
+            Schedule([this]() {
+                audio_service_.ResetDecoder();
+                if (listening_mode_ == kListeningModeManualStop) {
+                    SetDeviceState(kDeviceStateIdle);
+                } else {
+                    SetDeviceState(kDeviceStateListening);
+                }
+            });
         } else if (strcmp(action_value, "text_output") == 0) {
             const cJSON* payload = cJSON_GetObjectItem(root, "payload");
             const cJSON* output_type = cJSON_IsObject(payload) ? cJSON_GetObjectItem(payload, "type") : nullptr;

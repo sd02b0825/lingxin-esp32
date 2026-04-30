@@ -281,7 +281,11 @@ bool LingxinWebsocketProtocol::OpenAudioChannel() {
 
 void LingxinWebsocketProtocol::CloseAudioChannel(bool send_goodbye) {
     if (send_goodbye && websocket_ != nullptr && websocket_->IsConnected() && task_inflight_) {
-        SendTaskCommand(task_started_ ? "end_task" : "terminate_task");
+        if (chat_mode_ == "full_duplex") {
+            SendTaskCommand("terminate_task");
+        } else {
+            SendTaskCommand(task_started_ ? "end_task" : "terminate_task");
+        }
     }
     websocket_.reset();
     task_started_ = false;
@@ -454,8 +458,11 @@ void LingxinWebsocketProtocol::SendStartListening(ListeningMode mode) {
 
 void LingxinWebsocketProtocol::SendStopListening() {
     if (task_inflight_) {
-        ESP_LOGI(TAG, "Send stop listening -> end_audio, task_id=%s", task_id_manager_->Current().c_str());
-        SendTaskCommand("end_audio");
+        const bool full_duplex = (chat_mode_ == "full_duplex");
+        ESP_LOGI(TAG, "Send stop listening -> %s, task_id=%s",
+            full_duplex ? "terminate_task" : "end_audio",
+            task_id_manager_->Current().c_str());
+        SendTaskCommand(full_duplex ? "terminate_task" : "end_audio");
         task_started_ = false;
     }
 }
@@ -527,14 +534,14 @@ void LingxinWebsocketProtocol::HandleJsonMessage(const cJSON* root) {
         }
     } else if (strcmp(action_value, "audio_response_end") == 0) {
         task_started_ = false;
-        if (task_inflight_ && !end_task_sent_) {
+        if (chat_mode_ != "full_duplex" && task_inflight_ && !end_task_sent_) {
             end_task_sent_ = true;
             ESP_LOGI(TAG, "audio_response_end received, auto send end_task, task_id=%s", task_id_manager_->Current().c_str());
             SendTaskCommand("end_task");
         }
     } else if (strcmp(action_value, "task_stage_end") == 0) {
         // 无音频下行时服务端也可能直接结束当前阶段，需要补发 end_task 做任务收尾。
-        if (task_inflight_ && !end_task_sent_) {
+        if (chat_mode_ != "full_duplex" && task_inflight_ && !end_task_sent_) {
             end_task_sent_ = true;
             ESP_LOGI(TAG, "task_stage_end received, auto send end_task for no-audio stage, task_id=%s",
                 task_id_manager_->Current().c_str());
