@@ -47,7 +47,7 @@ static bool IsLingxinStringKey(const char* key) {
 
 static bool IsLingxinIntKey(const char* key) {
     static const char* allowed_keys[] = {
-        "flow_control_max_size", "max_sentence_silence_ms", "audio_up_sample_rate",
+        "flow_control_max_size", "flow_control_space_time_ms", "max_sentence_silence_ms", "audio_up_sample_rate",
         "audio_down_sample_rate", "audio_channels", "audio_bits_per_sample", "audio_frame_ms"
     };
     for (const auto* allowed_key : allowed_keys) {
@@ -100,6 +100,9 @@ static bool ValidateLingxinIntValue(const char* key, int value) {
     }
     if (strcmp(key, "flow_control_max_size") == 0) {
         return value == 32 || value == 64 || value == 128 || value == 256;
+    }
+    if (strcmp(key, "flow_control_space_time_ms") == 0) {
+        return value >= 80 && value <= 1000;
     }
     if (strcmp(key, "max_sentence_silence_ms") == 0) {
         return value >= 200 && value <= 6000;

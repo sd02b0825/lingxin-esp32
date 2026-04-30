@@ -1028,6 +1028,12 @@ config LINGXIN_FLOW_CONTROL_MAX_SIZE
     help
         Maximum downstream audio packet size for fixed_byte_rate flow control.
 
+config LINGXIN_FLOW_CONTROL_SPACE_TIME_MS
+    int "Lingxin Flow Control Space Time Milliseconds"
+    default 120
+    help
+        Audio packet interval for fixed_time_interval flow control. Valid range: 80~1000 ms.
+
 config LINGXIN_MAX_SENTENCE_SILENCE_MS
     int "Lingxin Max Sentence Silence Milliseconds"
     default 800

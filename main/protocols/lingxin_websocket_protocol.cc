@@ -49,6 +49,7 @@ void LingxinWebsocketProtocol::LoadConfig() {
     audio_up_codec_ = GetConfigString("audio_up_codec", CONFIG_LINGXIN_AUDIO_UP_CODEC);
     audio_down_codec_ = GetConfigString("audio_down_codec", CONFIG_LINGXIN_AUDIO_DOWN_CODEC);
     flow_control_max_size_ = GetConfigInt("flow_control_max_size", CONFIG_LINGXIN_FLOW_CONTROL_MAX_SIZE);
+    flow_control_space_time_ms_ = GetConfigInt("flow_control_space_time_ms", CONFIG_LINGXIN_FLOW_CONTROL_SPACE_TIME_MS);
     max_sentence_silence_ms_ = GetConfigInt("max_sentence_silence_ms", CONFIG_LINGXIN_MAX_SENTENCE_SILENCE_MS);
     audio_up_sample_rate_ = GetConfigInt("audio_up_sample_rate", CONFIG_LINGXIN_AUDIO_UP_SAMPLE_RATE);
     audio_down_sample_rate_ = GetConfigInt("audio_down_sample_rate", CONFIG_LINGXIN_AUDIO_DOWN_SAMPLE_RATE);
@@ -135,6 +136,18 @@ bool LingxinWebsocketProtocol::ValidateAudioConfig() {
     if (audio_frame_ms_ <= 0) {
         ESP_LOGW(TAG, "Invalid frame duration %d, fallback to 60", audio_frame_ms_);
         audio_frame_ms_ = 60;
+    }
+    if (flow_control_max_size_ != 32 && flow_control_max_size_ != 64 && flow_control_max_size_ != 128 && flow_control_max_size_ != 256) {
+        ESP_LOGW(TAG, "Invalid flow_control_max_size %d, fallback to 32", flow_control_max_size_);
+        flow_control_max_size_ = 32;
+    }
+    if (flow_control_space_time_ms_ < 80 || flow_control_space_time_ms_ > 1000) {
+        ESP_LOGW(TAG, "Invalid flow_control_space_time_ms %d, fallback to 120", flow_control_space_time_ms_);
+        flow_control_space_time_ms_ = 120;
+    }
+    if (max_sentence_silence_ms_ < 200 || max_sentence_silence_ms_ > 6000) {
+        ESP_LOGW(TAG, "Invalid max_sentence_silence_ms %d, fallback to 800", max_sentence_silence_ms_);
+        max_sentence_silence_ms_ = 800;
     }
     return true;
 }
@@ -360,13 +373,17 @@ std::string LingxinWebsocketProtocol::BuildStartTaskMessage(ListeningMode mode) 
 
     cJSON* agent_ext_inputs = cJSON_CreateObject();
     cJSON_AddBoolToObject(agent_ext_inputs, "play_prologue", false);
-    cJSON_AddBoolToObject(agent_ext_inputs, "show_asr_output", true);
+    //cJSON_AddBoolToObject(agent_ext_inputs, "show_asr_output", true);
     cJSON_AddItemToObject(payload, "agent_ext_inputs", agent_ext_inputs);
 
     cJSON* flow_control = cJSON_CreateObject();
     if (!flow_control_strategy_.empty() && flow_control_strategy_ != "none") {
         cJSON_AddStringToObject(flow_control, "flow_control_strategy", flow_control_strategy_.c_str());
-        cJSON_AddNumberToObject(flow_control, "max_size", flow_control_max_size_);
+        if (flow_control_strategy_ == "fixed_byte_rate") {
+            cJSON_AddNumberToObject(flow_control, "max_size", flow_control_max_size_);
+        } else if (flow_control_strategy_ == "fixed_time_interval") {
+            cJSON_AddNumberToObject(flow_control, "space_time", flow_control_space_time_ms_);
+        }
     }
     cJSON_AddItemToObject(payload, "flow_control_parameters", flow_control);
 

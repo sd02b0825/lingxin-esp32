@@ -47,6 +47,7 @@ private:
     std::string audio_up_codec_;
     std::string audio_down_codec_;
     int flow_control_max_size_ = 32;
+    int flow_control_space_time_ms_ = 120;
     int max_sentence_silence_ms_ = 800;
     int audio_up_sample_rate_ = 16000;
     int audio_down_sample_rate_ = 16000;
