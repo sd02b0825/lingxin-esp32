@@ -208,8 +208,6 @@ bool LingxinWebsocketProtocol::OpenAudioChannel() {
     websocket_->SetHeader("sn", sn_.c_str());
     websocket_->SetHeader("timestamp", timestamp.c_str());
     websocket_->SetHeader("signature", signature.c_str());
-    websocket_->SetHeader("sdk_name", "xiaozhi-esp32-lingxin");
-    websocket_->SetHeader("sdk_version", "1.0.0");
 
     websocket_->OnData([this](const char* data, size_t len, bool binary) {
         last_incoming_time_ = std::chrono::steady_clock::now();
