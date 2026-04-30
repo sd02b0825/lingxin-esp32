@@ -312,9 +312,6 @@ std::string LingxinWebsocketProtocol::BuildTaskCommand(const std::string& action
     cJSON* header = cJSON_CreateObject();
     cJSON_AddStringToObject(header, "action", action.c_str());
     cJSON_AddStringToObject(header, "task_id", task_id_manager_->Current().c_str());
-    if (!request_id_.empty() && action != "start_task") {
-        cJSON_AddStringToObject(header, "request_id", request_id_.c_str());
-    }
     cJSON_AddItemToObject(root, "header", header);
     cJSON_AddItemToObject(root, "payload", cJSON_CreateObject());
 
@@ -395,8 +392,15 @@ std::string LingxinWebsocketProtocol::BuildStartTaskMessage(ListeningMode mode) 
 }
 
 bool LingxinWebsocketProtocol::SendTaskCommand(const std::string& action) {
+    ESP_LOGI(TAG, "Send task command: action=%s task_id=%s inflight=%d started=%d end_task_sent=%d",
+        action.c_str(),
+        task_id_manager_->Current().c_str(),
+        task_inflight_ ? 1 : 0,
+        task_started_ ? 1 : 0,
+        end_task_sent_ ? 1 : 0);
     std::string message = BuildTaskCommand(action);
     if (message.empty()) {
+        ESP_LOGE(TAG, "Failed to build task command: action=%s", action.c_str());
         return false;
     }
     return SendText(message);
@@ -409,13 +413,16 @@ void LingxinWebsocketProtocol::SendStartListening(ListeningMode mode) {
 
     task_started_ = false;
     task_inflight_ = true;
+    end_task_sent_ = false;
     request_id_.clear();
     xEventGroupClearBits(event_group_handle_, LINGXIN_TASK_STARTED_EVENT);
     std::string message = BuildStartTaskMessage(mode);
     if (message.empty()) {
         task_inflight_ = false;
+        ESP_LOGE(TAG, "start_task build failed, mode=%d", static_cast<int>(mode));
         return;
     }
+    ESP_LOGI(TAG, "Send start_task: mode=%d task_id=%s", static_cast<int>(mode), task_id_manager_->Current().c_str());
     if (!SendText(message)) {
         return;
     }
@@ -430,6 +437,7 @@ void LingxinWebsocketProtocol::SendStartListening(ListeningMode mode) {
 
 void LingxinWebsocketProtocol::SendStopListening() {
     if (task_inflight_) {
+        ESP_LOGI(TAG, "Send stop listening -> end_audio, task_id=%s", task_id_manager_->Current().c_str());
         SendTaskCommand("end_audio");
         task_started_ = false;
     }
@@ -467,8 +475,10 @@ void LingxinWebsocketProtocol::HandleJsonMessage(const cJSON* root) {
     if (cJSON_IsString(request_id)) {
         request_id_ = request_id->valuestring;
     }
+    bool success_response = true;
     const cJSON* code = cJSON_GetObjectItem(header, "code");
     if (cJSON_IsString(code) && strcmp(code->valuestring, "20000001") != 0) {
+        success_response = false;
         const cJSON* err_msg = cJSON_GetObjectItem(header, "err_msg");
         const cJSON* task_id = cJSON_GetObjectItem(header, "task_id");
         std::string message = cJSON_IsString(err_msg) ? err_msg->valuestring : Lang::Strings::SERVER_ERROR;
@@ -485,16 +495,41 @@ void LingxinWebsocketProtocol::HandleJsonMessage(const cJSON* root) {
     ESP_LOGI(TAG, "Lingxin action: %s", action_value);
 
     if (strcmp(action_value, "task_started") == 0) {
-        task_started_ = true;
-        xEventGroupSetBits(event_group_handle_, LINGXIN_TASK_STARTED_EVENT);
+        if (success_response) {
+            task_started_ = true;
+            ESP_LOGI(TAG, "task_started accepted, allow uplink audio, task_id=%s request_id=%s",
+                task_id_manager_->Current().c_str(),
+                request_id_.c_str());
+            xEventGroupSetBits(event_group_handle_, LINGXIN_TASK_STARTED_EVENT);
+        } else {
+            task_started_ = false;
+            task_inflight_ = false;
+            ESP_LOGW(TAG, "task_started rejected by server code, stop inflight task, task_id=%s request_id=%s",
+                task_id_manager_->Current().c_str(),
+                request_id_.c_str());
+        }
     } else if (strcmp(action_value, "audio_response_end") == 0) {
         task_started_ = false;
-        if (task_inflight_) {
+        if (task_inflight_ && !end_task_sent_) {
+            end_task_sent_ = true;
+            ESP_LOGI(TAG, "audio_response_end received, auto send end_task, task_id=%s", task_id_manager_->Current().c_str());
             SendTaskCommand("end_task");
+        }
+    } else if (strcmp(action_value, "task_stage_end") == 0) {
+        // 无音频下行时服务端也可能直接结束当前阶段，需要补发 end_task 做任务收尾。
+        if (task_inflight_ && !end_task_sent_) {
+            end_task_sent_ = true;
+            ESP_LOGI(TAG, "task_stage_end received, auto send end_task for no-audio stage, task_id=%s",
+                task_id_manager_->Current().c_str());
+            SendTaskCommand("end_task");
+        } else {
+            ESP_LOGI(TAG, "task_stage_end received, skip end_task duplicate, task_id=%s", task_id_manager_->Current().c_str());
         }
     } else if (strcmp(action_value, "task_ended") == 0 || strcmp(action_value, "task_terminated") == 0) {
         task_started_ = false;
         task_inflight_ = false;
+        end_task_sent_ = false;
+        ESP_LOGI(TAG, "Task closed by server action=%s task_id=%s", action_value, task_id_manager_->Current().c_str());
         task_id_manager_->MarkTaskClosed();
     } else if (strcmp(action_value, "vad_end") == 0 || strcmp(action_value, "vad_exit") == 0) {
         task_started_ = false;

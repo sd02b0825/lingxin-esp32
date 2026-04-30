@@ -55,6 +55,7 @@ private:
     int audio_frame_ms_ = 60;
     bool task_started_ = false;
     bool task_inflight_ = false;
+    bool end_task_sent_ = false;
     std::string request_id_;
     std::string pending_text_input_;
     std::chrono::time_point<std::chrono::steady_clock> last_channel_closed_time_;
