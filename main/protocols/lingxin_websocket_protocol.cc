@@ -409,10 +409,10 @@ std::string LingxinWebsocketProtocol::BuildStartTaskMessage(ListeningMode mode) 
     if (runtime_mode == "cloud_vad" && max_sentence_silence_ms_ > 0) {
         cJSON_AddNumberToObject(payload, "max_sentence_silence", max_sentence_silence_ms_);
     }
-    cJSON_AddStringToObject(payload, "input_format", audio_up_codec_.c_str());
-    cJSON_AddStringToObject(payload, "output_format", audio_down_codec_.c_str());
-    cJSON_AddNumberToObject(payload, "input_sample_rate", audio_up_sample_rate_);
-    cJSON_AddNumberToObject(payload, "output_sample_rate", audio_down_sample_rate_);
+    // cJSON_AddStringToObject(payload, "input_format", audio_up_codec_.c_str());
+    // cJSON_AddStringToObject(payload, "output_format", audio_down_codec_.c_str());
+    // cJSON_AddNumberToObject(payload, "input_sample_rate", audio_up_sample_rate_);
+    // cJSON_AddNumberToObject(payload, "output_sample_rate", audio_down_sample_rate_);
     cJSON_AddItemToObject(root, "payload", payload);
 
     char* json_str = cJSON_PrintUnformatted(root);
