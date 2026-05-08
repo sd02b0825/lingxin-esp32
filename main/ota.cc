@@ -33,9 +33,12 @@ static std::string ToLower(std::string value) {
 }
 
 static bool IsLingxinStringKey(const char* key) {
+    if (key == nullptr) {
+        return false;
+    }
     static const char* allowed_keys[] = {
         "app_id", "app_key", "sn", "ai_app_code", "device_code", "ws_url", "mode",
-        "flow_control_strategy", "audio_up_codec", "audio_down_codec"
+        "fc_strategy", "aud_up_codec", "aud_dn_codec"
     };
     for (const auto* allowed_key : allowed_keys) {
         if (strcmp(key, allowed_key) == 0) {
@@ -46,9 +49,12 @@ static bool IsLingxinStringKey(const char* key) {
 }
 
 static bool IsLingxinIntKey(const char* key) {
+    if (key == nullptr) {
+        return false;
+    }
     static const char* allowed_keys[] = {
-        "flow_control_max_size", "flow_control_space_time_ms", "max_sentence_silence_ms", "audio_up_sample_rate",
-        "audio_down_sample_rate", "audio_channels", "audio_bits_per_sample", "audio_frame_ms"
+        "fc_max_size", "fc_sp_time_ms", "max_sent_sil_ms", "aud_up_sr",
+        "aud_dn_sr", "audio_channels", "aud_bits_samp", "audio_frame_ms"
     };
     for (const auto* allowed_key : allowed_keys) {
         if (strcmp(key, allowed_key) == 0) {
@@ -69,7 +75,10 @@ static bool IsAllowedLingxinMode(const std::string& mode) {
 }
 
 static bool ValidateLingxinStringValue(const char* key, const char* value) {
-    if (strcmp(key, "audio_up_codec") == 0 || strcmp(key, "audio_down_codec") == 0) {
+    if (key == nullptr || value == nullptr) {
+        return false;
+    }
+    if (strcmp(key, "aud_up_codec") == 0 || strcmp(key, "aud_dn_codec") == 0) {
         return IsAllowedLingxinCodec(value);
     }
     if (strcmp(key, "mode") == 0) {
@@ -78,33 +87,36 @@ static bool ValidateLingxinStringValue(const char* key, const char* value) {
     if (strcmp(key, "ws_url") == 0) {
         return strncmp(value, "wss://", 6) == 0 || strncmp(value, "ws://", 5) == 0;
     }
-    if (strcmp(key, "flow_control_strategy") == 0) {
+    if (strcmp(key, "fc_strategy") == 0) {
         std::string strategy = ToLower(value);
         return strategy.empty() || strategy == "none" || strategy == "fixed_byte_rate" || strategy == "fixed_time_interval";
     }
-    return value != nullptr;
+    return true;
 }
 
 static bool ValidateLingxinIntValue(const char* key, int value) {
-    if (strcmp(key, "audio_up_sample_rate") == 0 || strcmp(key, "audio_down_sample_rate") == 0) {
+    if (key == nullptr) {
+        return false;
+    }
+    if (strcmp(key, "aud_up_sr") == 0 || strcmp(key, "aud_dn_sr") == 0) {
         return value == 8000 || value == 16000 || value == 24000 || value == 48000;
     }
     if (strcmp(key, "audio_channels") == 0) {
         return value == 1 || value == 2;
     }
-    if (strcmp(key, "audio_bits_per_sample") == 0) {
+    if (strcmp(key, "aud_bits_samp") == 0) {
         return value == 16;
     }
     if (strcmp(key, "audio_frame_ms") == 0) {
         return value == 20 || value == 40 || value == 60 || value == 80 || value == 100 || value == 120;
     }
-    if (strcmp(key, "flow_control_max_size") == 0) {
+    if (strcmp(key, "fc_max_size") == 0) {
         return value == 32 || value == 64 || value == 128 || value == 256;
     }
-    if (strcmp(key, "flow_control_space_time_ms") == 0) {
+    if (strcmp(key, "fc_sp_time_ms") == 0) {
         return value >= 80 && value <= 1000;
     }
-    if (strcmp(key, "max_sentence_silence_ms") == 0) {
+    if (strcmp(key, "max_sent_sil_ms") == 0) {
         return value >= 200 && value <= 6000;
     }
     return true;

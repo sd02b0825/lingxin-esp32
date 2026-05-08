@@ -45,16 +45,16 @@ void LingxinWebsocketProtocol::LoadConfig() {
     ai_app_code_ = GetConfigString("ai_app_code", CONFIG_LINGXIN_AI_APP_CODE);
     device_code_ = GetConfigString("device_code", Board::GetInstance().GetUuid().c_str());
     chat_mode_ = GetConfigString("mode", CONFIG_LINGXIN_CHAT_MODE);
-    flow_control_strategy_ = GetConfigString("flow_control_strategy", CONFIG_LINGXIN_FLOW_CONTROL_STRATEGY);
-    audio_up_codec_ = GetConfigString("audio_up_codec", CONFIG_LINGXIN_AUDIO_UP_CODEC);
-    audio_down_codec_ = GetConfigString("audio_down_codec", CONFIG_LINGXIN_AUDIO_DOWN_CODEC);
-    flow_control_max_size_ = GetConfigInt("flow_control_max_size", CONFIG_LINGXIN_FLOW_CONTROL_MAX_SIZE);
-    flow_control_space_time_ms_ = GetConfigInt("flow_control_space_time_ms", CONFIG_LINGXIN_FLOW_CONTROL_SPACE_TIME_MS);
-    max_sentence_silence_ms_ = GetConfigInt("max_sentence_silence_ms", CONFIG_LINGXIN_MAX_SENTENCE_SILENCE_MS);
-    audio_up_sample_rate_ = GetConfigInt("audio_up_sample_rate", CONFIG_LINGXIN_AUDIO_UP_SAMPLE_RATE);
-    audio_down_sample_rate_ = GetConfigInt("audio_down_sample_rate", CONFIG_LINGXIN_AUDIO_DOWN_SAMPLE_RATE);
+    flow_control_strategy_ = GetConfigString("fc_strategy", CONFIG_LINGXIN_FLOW_CONTROL_STRATEGY);
+    audio_up_codec_ = GetConfigString("aud_up_codec", CONFIG_LINGXIN_AUDIO_UP_CODEC);
+    audio_down_codec_ = GetConfigString("aud_dn_codec", CONFIG_LINGXIN_AUDIO_DOWN_CODEC);
+    flow_control_max_size_ = GetConfigInt("fc_max_size", CONFIG_LINGXIN_FLOW_CONTROL_MAX_SIZE);
+    flow_control_space_time_ms_ = GetConfigInt("fc_sp_time_ms", CONFIG_LINGXIN_FLOW_CONTROL_SPACE_TIME_MS);
+    max_sentence_silence_ms_ = GetConfigInt("max_sent_sil_ms", CONFIG_LINGXIN_MAX_SENTENCE_SILENCE_MS);
+    audio_up_sample_rate_ = GetConfigInt("aud_up_sr", CONFIG_LINGXIN_AUDIO_UP_SAMPLE_RATE);
+    audio_down_sample_rate_ = GetConfigInt("aud_dn_sr", CONFIG_LINGXIN_AUDIO_DOWN_SAMPLE_RATE);
     audio_channels_ = GetConfigInt("audio_channels", CONFIG_LINGXIN_AUDIO_CHANNELS);
-    audio_bits_per_sample_ = GetConfigInt("audio_bits_per_sample", CONFIG_LINGXIN_AUDIO_BITS_PER_SAMPLE);
+    audio_bits_per_sample_ = GetConfigInt("aud_bits_samp", CONFIG_LINGXIN_AUDIO_BITS_PER_SAMPLE);
     audio_frame_ms_ = GetConfigInt("audio_frame_ms", CONFIG_LINGXIN_AUDIO_FRAME_MS);
 
     if (sn_.empty()) {
@@ -210,6 +210,7 @@ bool LingxinWebsocketProtocol::OpenAudioChannel() {
     }
 
     std::string timestamp = CurrentTimestampMs();
+    ESP_LOGI(TAG, "timestamp: %s", timestamp.c_str());
     std::string signature = LingxinSigner::GenerateSignature(sn_, app_key_, app_id_, timestamp);
     if (signature.empty()) {
         ESP_LOGE(TAG, "Failed to generate Lingxin signature");
