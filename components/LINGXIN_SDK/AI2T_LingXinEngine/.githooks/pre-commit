@@ -1,0 +1,191 @@
+#!/bin/bash
+
+OS="$OSTYPE"
+# AI2T_LingXinEngine pre-commit Hook
+# 在 git commit 之前执行 makefile 编译检查
+
+echo "🔍 Running pre-commit checks for AI2T_LingXinEngine..."
+
+# 获取脚本所在目录和仓库根目录
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LOG_FILE="$SCRIPT_DIR/pre-build.log"
+
+# 进入 AI2T_LingXinEngine 路径
+REPO_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
+cd "$REPO_DIR"
+
+# ==================== 路径转换函数 ====================
+# 将 Windows 路径转换为 WSL 路径
+# 输入：D:/code/... 或 /d/code/...
+# 输出：/mnt/d/code/...
+convert_to_wsl_path() {
+    local win_path="$1"
+    local wsl_path="$win_path"
+    
+    # 处理 D:/code/... 格式（Git Bash -W 输出）
+    if [[ "$wsl_path" =~ ^([A-Za-z]):/ ]]; then
+        local drive_letter="${BASH_REMATCH[1]}"
+        local drive_lower=$(echo "$drive_letter" | tr '[:upper:]' '[:lower:]')
+        wsl_path="/mnt/${drive_lower}${wsl_path:2}"
+    # 处理 /d/code/... 格式（Git Bash 默认输出）
+    elif [[ "$wsl_path" =~ ^/([a-z])/ ]]; then
+        local drive_letter="${BASH_REMATCH[1]}"
+        wsl_path="/mnt/${drive_letter}${wsl_path:2}"
+    fi
+    
+    # 统一转换反斜杠为正斜杠
+    wsl_path="${wsl_path//\\//}"
+    
+    # 返回结果
+    echo "$wsl_path"
+}
+
+# ==================== 编译检查 ====================
+echo "🔨 Checking if code compiles..."
+
+# 检查是否存在 makefile
+if [ ! -f "makefile" ] && [ ! -f "Makefile" ]; then
+    echo "⚠️  Warning: No makefile found, skipping build check"
+    exit 0
+fi
+
+run_make_locally() {
+    echo "  🌐 Environment: $OS (local Unix-like)"
+    echo "  🧹 Cleaning previous build..."
+    # /dev/null 是一个特殊的"黑洞"设备文件，写入的所有内容都会被丢弃
+    make clean >/dev/null 2>&1 || true
+
+    # 尝试编译
+    echo "  ⚙️  Compiling..."
+    # 临时禁用 errexit 以处理管道的退出状态
+    set +e
+    make 2>&1 | tee "$LOG_FILE"
+    # 获取管道中第一个命令（make）的退出状态
+    MAKE_EXIT_CODE=${PIPESTATUS[0]}
+    set -e  # 重新启用 errexit
+
+    if [ $MAKE_EXIT_CODE -ne 0 ]; then
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo ""
+        echo "❌ Error: Build failed!"
+        echo "💡 Please fix the compilation errors before commiting."
+        echo "💡 Full build log saved to: "$LOG_FILE""
+        echo ""
+        echo "To bypass this check (not recommended):"
+        echo "  git commit --no-verify"
+        
+        # 清理编译产物
+        make clean > /dev/null 2>&1
+        
+        exit 1
+    fi
+    
+    echo "  ✅ Build successful"
+
+    # 清理编译产物
+    echo "  🧹 Cleaning build artifacts..."
+    make clean > /dev/null 2>&1
+}
+
+run_make_via_wsl() {
+    echo "  🌐 Environment: $OS (Windows Git Bash/MSYS, use WSL Ubuntu for build)"
+
+    # 检查 wsl 命令是否可用
+    if ! command -v wsl >/dev/null 2>&1; then
+        echo "⚠  wsl 未安装或不可用，无法在 WSL 中编译。"
+        echo "⚠  请先安装 wsl 再执行 git commit 操作"
+        # echo "   跳过编译检查，允许本次 commit（如需强制，可改为 exit 1）。"
+        exit 1
+    fi
+
+    # 路径转换（使用抽取的函数）
+    WIN_PWD="$(pwd -W 2>/dev/null || pwd)"
+    WSL_PWD="$(convert_to_wsl_path "$WIN_PWD")"
+    echo "  📁 Windows path: $WIN_PWD"
+    echo "  📁 WSL path    : $WSL_PWD"
+
+    # 检查 WSL Ubuntu 中是否已安装 gcc（使用系统默认版本）
+    echo "  🔍 Checking gcc in WSL Ubuntu..."
+
+    if ! wsl bash -lc "command -v gcc >/dev/null 2>&1"; then
+        echo "  ⚠  gcc not found, installing build-essential..."
+        # 在 WSL 中安装 build-essential（包含默认版本的 gcc 和 g++）
+        if wsl bash -lc "sudo apt update && sudo apt install -y build-essential"; then
+            echo "  ✅ build-essential installed successfully !"
+        else
+            echo ""
+            echo "❌ Failed to install build-essential in WSL Ubuntu"
+            echo "   请手动在 WSL 中执行："
+            echo "     wsl"
+            echo "     sudo apt update"
+            echo "     sudo apt install -y build-essential"
+            exit 1
+        fi
+    fi
+
+
+    # 获取并显示 Ubuntu 版本和 GCC 版本信息
+    UBUNTU_VERSION=$(wsl bash -lc "lsb_release -d -s 2>/dev/null || grep PRETTY_NAME /etc/os-release | cut -d'\"' -f2")
+    GCC_VERSION=$(wsl bash -lc "gcc --version | head -n1")
+    echo "  ✅ Using $GCC_VERSION"
+    echo "  ✅ Ubuntu: $UBUNTU_VERSION"
+
+    # 将环境信息写入日志文件头部
+    WSL_LOG_FILE="$(convert_to_wsl_path "$LOG_FILE")"
+    wsl bash -lc "echo '========== Build Environment ==========' > '$WSL_LOG_FILE'"
+    wsl bash -lc "echo 'OS: $UBUNTU_VERSION' >> '$WSL_LOG_FILE'"
+    wsl bash -lc "echo 'Compiler: $GCC_VERSION' >> '$WSL_LOG_FILE'"
+    wsl bash -lc "echo 'Build Time: \$(date)' >> '$WSL_LOG_FILE'"
+    wsl bash -lc "echo '=======================================' >> '$WSL_LOG_FILE'"
+    wsl bash -lc "echo '' >> '$WSL_LOG_FILE'"
+
+
+    echo "  🧹 WSL: make clean..."
+    wsl bash -lc "cd '$WSL_PWD' && make clean >/dev/null 2>&1 || true"
+
+
+    echo "  ⚙️ WSL: make..."
+
+    # CC 和 CXX 指定编译器版本
+    if ! wsl bash -lc "set -o pipefail; cd '$WSL_PWD' && make 2>&1 | tee -a '$WSL_LOG_FILE'"; then
+        echo ""
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo ""
+        echo "❌ Build failed (via WSL)!"
+        echo "💡 Please fix the compilation errors before commiting."
+        echo "💡 Full build log saved to: "$LOG_FILE""
+        echo ""
+        echo "To bypass this check (not recommended):"
+        echo "  git commit --no-verify"
+
+        # 清理编译产物
+        wsl bash -lc "cd '$WSL_PWD' && make clean >/dev/null 2>&1 || true"
+        exit 1
+    fi
+
+    echo "  ✅ Build succeeded (via WSL)"
+
+    # 清理编译产物
+    echo "  🧹 Cleaning build artifacts..."
+    wsl bash -lc "cd '$WSL_PWD' && make clean >/dev/null 2>&1 || true"
+}
+
+case "$OS" in
+    linux*|darwin*)
+        # macOS / 纯 Linux / 直接在 WSL 里跑 git 时，走本地 make
+        run_make_locally
+        ;;
+    msys*|mingw*|cygwin*)
+        # Windows 上的 Git Bash / MSYS / Cygwin：通过 WSL 编译
+        run_make_via_wsl
+        ;;
+    *)
+        echo "⚠  Unknown OSTYPE=$OS，暂不进行编译检查，允许本次 commit。"
+        ;;
+esac
+
+echo ""
+echo "✅ pre-commit checks passed!"
+echo "📝 Proceeding with commit..."
+
+exit 0

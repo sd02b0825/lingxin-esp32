@@ -16,6 +16,7 @@
 #include "esp_audio_enc.h"
 #include "esp_opus_enc.h"
 #include "esp_opus_dec.h"
+#include "esp_audio_simple_dec.h"
 #include "esp_ae_rate_cvt.h"
 #include "esp_audio_types.h"
 
@@ -143,6 +144,10 @@ private:
     std::unique_ptr<AudioDebugger> audio_debugger_;
     void* opus_encoder_ = nullptr;
     void* opus_decoder_ = nullptr;
+    esp_audio_simple_dec_handle_t mp3_decoder_ = nullptr;
+    bool mp3_decoders_registered_ = false;
+    int mp3_decoder_sample_rate_ = 0;
+    int mp3_decoder_channels_ = 1;
     std::mutex decoder_mutex_;
     std::mutex input_resampler_mutex_;
     esp_ae_rate_cvt_handle_t input_resampler_ = nullptr;
@@ -192,6 +197,9 @@ private:
     bool DecodePacketToPcm(const AudioStreamPacket& packet, AudioTask& task);
     bool ConvertRawPcmToPlayback(const AudioStreamPacket& packet, AudioTask& task);
     bool ConvertWavToPlayback(const AudioStreamPacket& packet, AudioTask& task);
+    bool DecodeMp3Packet(const AudioStreamPacket& packet, AudioTask& task);
+    bool OpenMp3Decoder();
+    void CloseMp3Decoder();
     bool ResamplePlaybackTask(AudioTask& task, int sample_rate, int channels);
     void SetDecodeSampleRate(int sample_rate, int frame_duration);
     void CheckAndUpdateAudioPowerState();

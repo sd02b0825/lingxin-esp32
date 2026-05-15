@@ -1,0 +1,173 @@
+#ifdef LINGXI_USE_VOICE_QUEUE
+
+#include <stdbool.h>
+#include <stddef.h>
+#include "lingxin_event_queue.h"
+#include "lingxin_log.h"
+
+int EVENT_QUEUE_FINISH_FLAG = 10001;
+
+static void *eventNotifyThread(void *arg)
+{
+  EventQueue *queue = (EventQueue *)arg;
+  if (!queue)
+  {
+    return NULL;
+  }
+  // lingxin_log_debug("eventNotifyThread before");
+  while (!queue->isDestroyed)
+  {
+    // lingxin_log_debug("eventNotifyThread");
+    EventChunk *event = eventQueueDequeue(queue);
+    if (event && queue->callback)
+    {
+      if (queue && queue->callback)
+      {
+        queue->callback(queue->userContext, event->eventType, event->data,
+                        event->dataSize);
+      }
+      lingxin_free(event); // 释放 eventChunk 内存
+      lingxin_log_debug("eventNotifyThread callback finish");
+    }
+  }
+  // lingxin_log_debug("eventNotifyThread after");
+  return NULL;
+}
+
+// 初始化队列
+EventQueue *eventQueueCreate(void *userContext, EventQueueCallback callback)
+{
+  EventQueue *queue = (EventQueue *)lingxin_calloc(1, sizeof(EventQueue));
+  if (!queue)
+  {
+    return NULL;
+  }
+  queue->front = NULL;
+  queue->rear = NULL;
+  queue->isDestroyed = false;
+  queue->callback = callback;
+  queue->userContext = userContext;
+  queue->mutex = (pthread_mutex_t *)lingxin_calloc(1, sizeof(pthread_mutex_t));
+  queue->cond = (pthread_cond_t *)lingxin_calloc(1, sizeof(pthread_cond_t));
+  pthread_mutex_init(queue->mutex, NULL);
+  pthread_cond_init(queue->cond, NULL);
+
+  pthread_create(&queue->notifyThread, NULL, eventNotifyThread, (void *)queue);
+
+  return queue;
+}
+
+// 销毁队列
+void eventQueueDestroy(EventQueue *queue)
+{
+  if (!queue)
+  {
+    return;
+  }
+  lingxin_log_debug("eventQueueDestroy begin");
+  pthread_mutex_lock(queue->mutex);
+  EventQueueNode *current = queue->front;
+  while (current)
+  {
+    EventQueueNode *next = current->next;
+    lingxin_free(current);
+    current = next;
+  }
+  queue->isDestroyed = true;
+  // 唤醒等待的线程
+  pthread_cond_signal(queue->cond);
+  pthread_mutex_unlock(queue->mutex);
+
+  // 等待通知线程结束
+  pthread_join(queue->notifyThread, NULL);
+
+  pthread_mutex_destroy(queue->mutex);
+  pthread_cond_destroy(queue->cond);
+
+  lingxin_free(queue->mutex);
+  lingxin_free(queue->cond);
+  lingxin_free(queue);
+  lingxin_log_debug("eventQueueDestroy finish");
+}
+
+// 入队操作
+EventQueueStatus eventQueueEnqueue(EventQueue *queue, int dataType,
+                                   const char *message, size_t messageSize)
+{
+  lingxin_log_debug("eventQueueEnqueue begin %d: %d: %s", dataType, messageSize,
+            !message ? "NULL" : message);
+
+  EventQueueNode *new_node =
+      (EventQueueNode *)lingxin_calloc(1, sizeof(EventQueueNode));
+  if (!new_node)
+  {
+    return QUEUE_MEMORY_ERROR;
+  }
+  EventChunk *chunk = (EventChunk *)lingxin_calloc(1, sizeof(EventChunk));
+  if (!chunk)
+  {
+    lingxin_log_debug("event malloc fail");
+  }
+  chunk->eventType = dataType;
+  chunk->data = message;
+  chunk->dataSize = messageSize;
+
+  new_node->event = chunk;
+  new_node->next = NULL;
+  int lockResult = pthread_mutex_lock(queue->mutex);
+  if (lockResult != 0)
+  {
+    lingxin_log_error("queueEnqueue: Mutex lock failed with error code %d", lockResult);
+    lingxin_free(new_node);
+    return QUEUE_MUTEX_ERROR;
+  }
+
+  if (!queue->rear)
+  {
+    queue->front = new_node;
+    queue->rear = new_node;
+  }
+  else
+  {
+    queue->rear->next = new_node;
+    queue->rear = new_node;
+  }
+  pthread_cond_signal(queue->cond);
+  pthread_mutex_unlock(queue->mutex);
+  lingxin_log_debug("eventQueueEnqueue finish");
+  return QUEUE_SUCCESS;
+}
+
+// 出队操作
+EventChunk *eventQueueDequeue(EventQueue *queue)
+{
+  lingxin_log_debug("eventQueueDequeue: begin");
+  pthread_mutex_lock(queue->mutex);
+  while (!queue->front && !queue->isDestroyed)
+  {
+    lingxin_log_debug("eventQueueDequeue: wait");
+    pthread_cond_wait(queue->cond, queue->mutex);
+    lingxin_log_debug("eventQueueDequeue:after wait");
+  }
+
+  if (queue->isDestroyed)
+  {
+    pthread_mutex_unlock(queue->mutex);
+    return NULL;
+  }
+
+  EventQueueNode *front_node = queue->front;
+  EventChunk *data = front_node->event;
+  queue->front = front_node->next;
+  if (!queue->front)
+  {
+    queue->rear = NULL;
+  }
+  pthread_mutex_unlock(queue->mutex);
+  lingxin_free(front_node);
+  lingxin_log_debug("eventQueueDequeue: finish: %d, %zu", data->eventType,
+            data->dataSize);
+
+  return data;
+}
+#endif // LINGXI_USE_VOICE_QUEUE

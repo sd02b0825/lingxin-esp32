@@ -30,6 +30,8 @@ set(SOURCES "audio/audio_codec.cc"
             "protocols/lingxin_signer.cc"
             "protocols/task_id_manager.cc"
             "protocols/lingxin_websocket_protocol.cc"
+            "protocols/lingxin_sdk_protocol.cc"
+            "protocols/lingxin_sdk_bridge.cc"
             "mcp_server.cc"
             "system_info.cc"
             "application.cc"
@@ -983,6 +985,7 @@ idf_component_register(SRCS ${SOURCES}
                         efuse
                         bt
                         fatfs
+                        LINGXIN_SDK
                         ${MAIN_PRIV_REQUIRES_EXTRA}
                     )
 

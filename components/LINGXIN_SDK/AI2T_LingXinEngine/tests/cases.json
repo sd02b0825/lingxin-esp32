@@ -1,0 +1,223 @@
+[
+  {
+    "name": "change_record_size",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init",
+        "props": {
+          "send_uni_size": 1920,
+          "send_cbuf_scale": 50
+        }
+      },
+      {
+        "func": "lingxin_test_start_new_chat"
+      }
+    ]
+  },
+  {
+    "name": "change_volume",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat"
+      },
+      {
+        "func": "lingxin_test_set_volume",
+        "props": 50
+      }
+    ]
+  },
+  {
+    "name": "exit_chat",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat"
+      },
+      {
+        "func": "lingxin_test_exit_chat"
+      },
+      {
+        "func": "lingxin_test_start_new_chat"
+      },
+      {
+        "func": "lingxin_test_exit_chat",
+        "props": {
+          "disable_close_ws_immediately": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "keep_task_id",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "task_id": "1234567890"
+        }
+      },
+      {
+        "func": "lingxin_test_exit_chat"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "task_id": "1234567890"
+        }
+      }
+    ]
+  },
+  {
+    "name": "no_vad",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "disable_vad": true
+        }
+      },
+      {
+        "func": "lingxin_test_stop_record"
+      }
+    ]
+  },
+  {
+    "name": "no_welcome",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "disable_welcome_audio": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "translate",
+    "cmd": [
+      {
+        "func": "lingxin_test_set_chat_biz_parameter",
+        "props": "{\"target_language\": \"en\", \"enable_asr_return_text\": true, \"enable_asr_stream_return_text\": false, \"need_voice\": true}"
+      },
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "single_round": true,
+          "task": "translate"
+        }
+      },
+      {
+        "func": "lingxin_test_stop_record"
+      }
+    ]
+  },
+  {
+    "name": "text_user_input",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "user_input": "给我讲一个故事"
+        }
+      }
+    ]
+  },
+  {
+    "name": "text_user_input",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "user_input": "给我讲一个故事",
+          "disable_welcome_audio": true
+        }
+      },
+      {
+        "func": "lingxin_test_start_new_chat"
+      }
+    ]
+  },
+  {
+    "name": "chat_multimodal",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "task": "chat_multimodal_vad"
+        }
+      },
+      {
+        "func": "lingxin_test_send_binary_stream_start",
+        "props": {
+          "content_type": "image/png",
+          "id": "file1.png"
+        }
+      },
+      {
+        "func": "lingxin_test_send_binary_stream_end"
+      },
+      {
+        "func": "lingxin_test_multimodal_input_end"
+      }
+    ]
+  },
+  {
+    "name": "chat_multimodal_no_vad",
+    "cmd": [
+      {
+        "func": "lingxin_test_voice_chat_init"
+      },
+      {
+        "func": "lingxin_test_start_new_chat",
+        "props": {
+          "task": "chat_multimodal"
+        }
+      },
+      {
+        "func": "lingxin_test_send_binary_stream_start",
+        "props": {
+          "content_type": "image/png",
+          "id": "file1.png"
+        }
+      },
+      {
+        "func": "lingxin_test_send_binary_stream_end"
+      },
+      {
+        "func": "lingxin_test_multimodal_start_record"
+      },
+      {
+        "func": "lingxin_test_multimodal_stop_record"
+      },
+      {
+        "func": "lingxin_test_multimodal_input_end"
+      }
+    ]
+  }
+]

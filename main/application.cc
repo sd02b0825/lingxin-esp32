@@ -4,6 +4,9 @@
 #include "system_info.h"
 #include "audio_codec.h"
 #include "lingxin_websocket_protocol.h"
+#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
+#include "lingxin_sdk_protocol.h"
+#endif
 #include "assets/lang_config.h"
 #include "mcp_server.h"
 #include "assets.h"
@@ -213,11 +216,13 @@ void Application::Run() {
         }
 
         if (bits & MAIN_EVENT_SEND_AUDIO) {
+#ifndef CONFIG_LINGXIN_PROTOCOL_SDK
             while (auto packet = audio_service_.PopPacketFromSendQueue()) {
                 if (protocol_ && !protocol_->SendAudio(std::move(packet))) {
                     break;
                 }
             }
+#endif
         }
 
         if (bits & MAIN_EVENT_WAKE_WORD_DETECTED) {
@@ -473,6 +478,10 @@ void Application::InitializeProtocol() {
     display->SetStatus(Lang::Strings::LOADING_PROTOCOL);
 
     protocol_ = std::make_unique<LingxinWebsocketProtocol>();
+
+#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
+    protocol_ = std::make_unique<LingxinSdkProtocol>();
+#endif
 
     protocol_->OnConnected([this]() {
         DismissAlert();

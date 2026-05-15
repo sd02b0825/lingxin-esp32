@@ -1004,6 +1004,12 @@ config LINGXIN_AI_APP_CODE
     help
         Lingxin application code used in start_task payload.
 
+config LINGXIN_DEVICE_CODE
+    string "Lingxin Device Code"
+    default ""
+    help
+        Lingxin device code for device authentication.
+
 choice LINGXIN_FLOW_CONTROL_STRATEGY_SELECT
     prompt "Lingxin Flow Control Strategy"
     default LINGXIN_FLOW_CONTROL_STRATEGY_FIXED_BYTE_RATE
@@ -1117,5 +1123,20 @@ config LINGXIN_AUDIO_FRAME_MS
     default 60
     help
         Audio frame duration used by the local Opus encoder and PCM decoder path.
+
+choice LINGXIN_PROTOCOL_SELECT
+    prompt "Lingxin Protocol Implementation"
+    default LINGXIN_PROTOCOL_WEBSOCKET
+    help
+        Select which protocol implementation to use for Lingxin cloud communication.
+        WebSocket: Original LingxinWebsocketProtocol (v2.6.6 native)
+        SDK: LingXin SDK voice_chat API (recommended for bread-compact-wifi)
+
+    config LINGXIN_PROTOCOL_WEBSOCKET
+        bool "WebSocket Protocol (original)"
+    config LINGXIN_PROTOCOL_SDK
+        bool "LingXin SDK Protocol (voice_chat API)"
+        depends on BOARD_TYPE_BREAD_COMPACT_WIFI
+endchoice
 
 endmenu

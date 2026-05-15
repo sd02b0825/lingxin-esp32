@@ -3,6 +3,10 @@
 #include <algorithm>
 #include <cctype>
 #include <cstring>
+#include "esp_audio_dec_default.h"
+#include "esp_audio_dec_reg.h"
+#include "esp_audio_simple_dec_default.h"
+#include "protocols/lingxin_sdk_bridge.h"
 
 #define RATE_CVT_CFG(_src_rate, _dest_rate, _channel)        \
     (esp_ae_rate_cvt_cfg_t)                                  \
@@ -64,6 +68,7 @@ AudioService::~AudioService() {
     if (opus_decoder_ != nullptr) {
         esp_opus_dec_close(opus_decoder_);
     }
+    CloseMp3Decoder();
     if (input_resampler_ != nullptr) {
         esp_ae_rate_cvt_close(input_resampler_);
     }
@@ -112,6 +117,14 @@ void AudioService::Initialize(AudioCodec* codec) {
 #endif
 
     audio_processor_->OnOutput([this](std::vector<int16_t>&& data) {
+#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
+        /* In SDK mode, write PCM directly to SDK record ringbuf instead of encoding */
+        if (lingxin_sdk_is_record_mode() && lingxin_record_ringbuf_available()) {
+            lingxin_record_write_pcm(reinterpret_cast<const uint8_t*>(data.data()),
+                                     data.size() * sizeof(int16_t));
+            return;
+        }
+#endif
         PushTaskToEncodeQueue(kAudioTaskTypeEncodeToSendQueue, std::move(data));
     });
 
@@ -470,8 +483,7 @@ bool AudioService::DecodePacketToPcm(const AudioStreamPacket& packet, AudioTask&
     }
 
     if (codec == "mp3") {
-        ESP_LOGE(TAG, "MP3 downlink is configured but this audio path has no MP3 decoder");
-        return false;
+        return DecodeMp3Packet(packet, task);
     }
 
     ESP_LOGE(TAG, "Unsupported downlink audio codec: %s", codec.c_str());
@@ -826,6 +838,9 @@ void AudioService::ResetDecoder() {
     if (opus_decoder_ != nullptr) {
         esp_opus_dec_reset(opus_decoder_);
     }
+    if (mp3_decoder_ != nullptr) {
+        esp_audio_simple_dec_reset(mp3_decoder_);
+    }
     decoder_lock.unlock();
     timestamp_queue_.clear();
     audio_decode_queue_.clear();
@@ -878,6 +893,127 @@ void AudioService::SetModelsList(srmodel_list_t* models_list) {
             }
         });
     }
+}
+
+bool AudioService::OpenMp3Decoder() {
+    if (mp3_decoder_ != nullptr) return true;
+
+    if (!mp3_decoders_registered_) {
+        esp_audio_dec_register_default();
+        esp_audio_simple_dec_register_default();
+        mp3_decoders_registered_ = true;
+    }
+
+    esp_audio_simple_dec_cfg_t dec_cfg = {};
+    dec_cfg.dec_type = ESP_AUDIO_SIMPLE_DEC_TYPE_MP3;
+    dec_cfg.dec_cfg = nullptr;
+    dec_cfg.cfg_size = 0;
+    dec_cfg.use_frame_dec = false;
+
+    esp_audio_err_t ret = esp_audio_simple_dec_open(&dec_cfg, &mp3_decoder_);
+    if (ret != ESP_AUDIO_ERR_OK || mp3_decoder_ == nullptr) {
+        ESP_LOGE(TAG, "Failed to open MP3 decoder, error: %d", ret);
+        return false;
+    }
+    mp3_decoder_sample_rate_ = 0;
+    mp3_decoder_channels_ = 1;
+    ESP_LOGI(TAG, "MP3 decoder opened successfully");
+    return true;
+}
+
+void AudioService::CloseMp3Decoder() {
+    if (mp3_decoder_ != nullptr) {
+        esp_audio_simple_dec_close(mp3_decoder_);
+        mp3_decoder_ = nullptr;
+    }
+    mp3_decoder_sample_rate_ = 0;
+    mp3_decoder_channels_ = 1;
+}
+
+bool AudioService::DecodeMp3Packet(const AudioStreamPacket& packet, AudioTask& task) {
+    std::unique_lock<std::mutex> decoder_lock(decoder_mutex_);
+
+    if (!OpenMp3Decoder()) return false;
+
+    int max_out_size = 4096;
+    uint8_t *out_buf = (uint8_t *)malloc(max_out_size);
+    if (out_buf == nullptr) {
+        ESP_LOGE(TAG, "Failed to allocate MP3 decode output buffer");
+        return false;
+    }
+
+    esp_audio_simple_dec_raw_t raw = {};
+    raw.buffer = (uint8_t *)packet.payload.data();
+    raw.len = (uint32_t)packet.payload.size();
+    raw.consumed = 0;
+    raw.eos = false;
+
+    std::vector<int16_t> all_pcm;
+    int total_decoded = 0;
+
+    while (raw.len > 0) {
+        esp_audio_simple_dec_out_t out_frame = {};
+        out_frame.buffer = out_buf;
+        out_frame.len = max_out_size;
+
+        esp_audio_err_t ret = esp_audio_simple_dec_process(mp3_decoder_, &raw, &out_frame);
+
+        if (ret == ESP_AUDIO_ERR_BUFF_NOT_ENOUGH) {
+            uint8_t *new_buf = (uint8_t *)realloc(out_buf, out_frame.needed_size);
+            if (new_buf == nullptr) {
+                ESP_LOGE(TAG, "Failed to realloc MP3 output buffer to %d", out_frame.needed_size);
+                break;
+            }
+            out_buf = new_buf;
+            max_out_size = out_frame.needed_size;
+            continue;
+        }
+
+        if (ret != ESP_AUDIO_ERR_OK) {
+            ESP_LOGW(TAG, "MP3 decode error: %d, skipping remaining %d bytes", ret, raw.len);
+            break;
+        }
+
+        if (out_frame.decoded_size > 0) {
+            if (total_decoded == 0) {
+                esp_audio_simple_dec_info_t dec_info = {};
+                esp_audio_simple_dec_get_info(mp3_decoder_, &dec_info);
+                mp3_decoder_sample_rate_ = dec_info.sample_rate;
+                mp3_decoder_channels_ = dec_info.channel;
+                ESP_LOGI(TAG, "MP3 audio info: sample_rate=%d channel=%d bits=%d",
+                         dec_info.sample_rate, dec_info.channel, dec_info.bits_per_sample);
+            }
+
+            size_t samples = out_frame.decoded_size / sizeof(int16_t);
+            const int16_t *pcm = reinterpret_cast<const int16_t *>(out_frame.buffer);
+
+            if (mp3_decoder_channels_ == 2) {
+                size_t frames = samples / 2;
+                size_t old_size = all_pcm.size();
+                all_pcm.resize(old_size + frames);
+                for (size_t i = 0; i < frames; ++i) {
+                    all_pcm[old_size + i] = pcm[i * 2];
+                }
+            } else {
+                all_pcm.insert(all_pcm.end(), pcm, pcm + samples);
+            }
+            total_decoded += out_frame.decoded_size;
+        }
+
+        raw.buffer += raw.consumed;
+        raw.len -= raw.consumed;
+    }
+
+    free(out_buf);
+    decoder_lock.unlock();
+
+    if (all_pcm.empty()) {
+        return false;
+    }
+
+    task.pcm = std::move(all_pcm);
+    int decode_rate = mp3_decoder_sample_rate_ > 0 ? mp3_decoder_sample_rate_ : 16000;
+    return ResamplePlaybackTask(task, decode_rate, 1);
 }
 
 bool AudioService::IsAfeWakeWord() {
