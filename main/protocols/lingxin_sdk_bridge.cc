@@ -8,10 +8,16 @@
 #include "lingxin_sdk_bridge.h"
 #include "audio_service.h"
 #include "application.h"
+#include "device_state.h"
 #include "boards/common/board.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "sdkconfig.h"
 #include <string>
+
+#if CONFIG_USE_AUDIO_PROCESSOR
+#include "processors/afe_audio_processor.h"
+#endif
 
 /* Fallback if Kconfig is not configured */
 #ifndef CONFIG_LINGXIN_AUDIO_DOWN_CODEC
@@ -23,6 +29,9 @@ static const char *TAG = "lx_sdk_bridge";
 /* ---- AudioService record bridge ---- */
 
 static bool g_sdk_record_mode = false;
+static bool g_sdk_uplink_active = false;
+
+extern "C" void lingxin_recorder_finish_open(void *recorder_hdl);
 
 void audio_service_start_record_to_sdk(void)
 {
@@ -34,11 +43,76 @@ void audio_service_stop_record_to_sdk(void)
 {
     ESP_LOGI(TAG, "SDK record mode: STOP");
     g_sdk_record_mode = false;
+#if CONFIG_USE_AUDIO_PROCESSOR
+    Application::GetInstance().GetAudioService().SetProcessorTaskPriority(3);
+#endif
 }
 
 int lingxin_sdk_is_record_mode(void)
 {
     return g_sdk_record_mode ? 1 : 0;
+}
+
+int audio_service_is_sdk_uplink_active(void)
+{
+    return g_sdk_uplink_active ? 1 : 0;
+}
+
+void audio_service_wait_playback_idle(void)
+{
+    int64_t t0 = esp_timer_get_time();
+    Application::GetInstance().GetAudioService().WaitForPlaybackQueueEmpty();
+    int wait_ms = static_cast<int>((esp_timer_get_time() - t0) / 1000);
+    ESP_LOGI(TAG, "wait_playback_idle done in %d ms", wait_ms);
+}
+
+int audio_service_is_playback_busy(void)
+{
+    return Application::GetInstance().GetAudioService().IsPlaybackBusy() ? 1 : 0;
+}
+
+void audio_service_schedule_recorder_uplink_begin(void *recorder_hdl)
+{
+    if (recorder_hdl == nullptr) {
+        return;
+    }
+
+    Application::GetInstance().Schedule([recorder_hdl]() {
+        int64_t t0 = esp_timer_get_time();
+        auto &audio_service = Application::GetInstance().GetAudioService();
+        audio_service.WaitForPlaybackQueueEmpty();
+        int wait_ms = static_cast<int>((esp_timer_get_time() - t0) / 1000);
+        ESP_LOGI(TAG, "recorder uplink: wait_playback %d ms", wait_ms);
+
+        g_sdk_uplink_active = true;
+        audio_service.EnableVoiceProcessing(true);
+#if CONFIG_USE_AUDIO_PROCESSOR
+        audio_service.SetProcessorTaskPriority(5);
+#endif
+
+        auto &app = Application::GetInstance();
+        if (app.GetDeviceState() != kDeviceStateListening &&
+            app.GetDeviceState() != kDeviceStateConnecting) {
+            app.SetDeviceState(kDeviceStateListening);
+        }
+
+        audio_service_start_record_to_sdk();
+        lingxin_recorder_finish_open(recorder_hdl);
+    });
+}
+
+void audio_service_schedule_recorder_uplink_end(void)
+{
+    Application::GetInstance().Schedule([]() {
+        g_sdk_uplink_active = false;
+#if CONFIG_USE_AUDIO_PROCESSOR
+        Application::GetInstance().GetAudioService().SetProcessorTaskPriority(3);
+#endif
+        if (!g_sdk_record_mode) {
+            Application::GetInstance().GetAudioService().EnableVoiceProcessing(false);
+        }
+        ESP_LOGI(TAG, "recorder uplink: deactivated");
+    });
 }
 
 /* ---- AudioService playback bridge ---- */
@@ -74,15 +148,7 @@ void audio_service_play_local_sound(const char *audio_path)
 
     auto &audio_service = Application::GetInstance().GetAudioService();
 
-    /* SDK passes filesystem paths like "/spiffs/welcome.mp3".
-     * v2.6.6 AudioService::PlaySound expects an OGG sound name from embedded assets.
-     * Since we set welcome/terminate/continue_audio_path to NULL in voice_chat_init,
-     * this should only be called if SDK needs ad-hoc local playback.
-     * We map known paths to v2.6.6 sounds or read and push the file.
-     */
     ESP_LOGI(TAG, "SDK local sound request: %s", audio_path);
-
-    /* Try to play via AudioService's PlaySound if it's a known sound name */
     audio_service.PlaySound(audio_path);
 }
 
@@ -103,7 +169,6 @@ const char *lingxin_bridge_get_device_name(void)
 
 const char *lingxin_bridge_get_device_version(void)
 {
-    /* Use compile-time version macro from IDF */
 #ifdef CONFIG_LINGXIN_DEVICE_VERSION
     return CONFIG_LINGXIN_DEVICE_VERSION;
 #else

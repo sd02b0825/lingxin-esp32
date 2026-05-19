@@ -1136,7 +1136,7 @@ choice LINGXIN_PROTOCOL_SELECT
         bool "WebSocket Protocol (original)"
     config LINGXIN_PROTOCOL_SDK
         bool "LingXin SDK Protocol (voice_chat API)"
-        depends on BOARD_TYPE_BREAD_COMPACT_WIFI
+        depends on BOARD_TYPE_BREAD_COMPACT_WIFI || BOARD_TYPE_BREAD_COMPACT_WIFI_LCD
 endchoice
 
 endmenu

@@ -71,7 +71,13 @@ void AfeAudioProcessor::Initialize(AudioCodec* codec, int frame_duration_ms, srm
         auto this_ = (AfeAudioProcessor*)arg;
         this_->AudioProcessorTask();
         vTaskDelete(NULL);
-    }, "audio_communication", 4096, this, 3, NULL);
+    }, "audio_communication", 4096, this, 3, &communication_task_handle_);
+}
+
+void AfeAudioProcessor::SetCommunicationTaskPriority(UBaseType_t priority) {
+    if (communication_task_handle_ != nullptr) {
+        vTaskPrioritySet(communication_task_handle_, priority);
+    }
 }
 
 AfeAudioProcessor::~AfeAudioProcessor() {

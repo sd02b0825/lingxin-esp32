@@ -402,6 +402,13 @@ static void dealEventFromServer(VoiceChatHandler *handler, const char *event, cJ
     notify_all_listeners(CHAT_EVENT_ON_REQUEST_DATA_END, payload, strlen(payload));
     cJSON_free((char *)payload);
   }
+  else if (strcmp(event, "audio_response_start") == 0 ||
+           strcmp(event, "audio_response_end") == 0 ||
+           strcmp(event, "audio_ended") == 0)
+  {
+    /* v2 cloud TTS lifecycle; binary stream handled in onBinaryMessageReceived */
+    lingxin_log_ut_with_args(LINGXIN_DEBUG, "chat_manager_recv_event_ack", "event: %s", event);
+  }
   else
   {
     lingxin_log_ut_with_args(LINGXIN_WARN, "chat_manager_unknown_event", "event: %s unknown, ignore", event);

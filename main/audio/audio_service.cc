@@ -7,6 +7,7 @@
 #include "esp_audio_dec_reg.h"
 #include "esp_audio_simple_dec_default.h"
 #include "protocols/lingxin_sdk_bridge.h"
+#include <esp_timer.h>
 
 #define RATE_CVT_CFG(_src_rate, _dest_rate, _channel)        \
     (esp_ae_rate_cvt_cfg_t)                                  \
@@ -118,10 +119,22 @@ void AudioService::Initialize(AudioCodec* codec) {
 
     audio_processor_->OnOutput([this](std::vector<int16_t>&& data) {
 #ifdef CONFIG_LINGXIN_PROTOCOL_SDK
-        /* In SDK mode, write PCM directly to SDK record ringbuf instead of encoding */
         if (lingxin_sdk_is_record_mode() && lingxin_record_ringbuf_available()) {
-            lingxin_record_write_pcm(reinterpret_cast<const uint8_t*>(data.data()),
-                                     data.size() * sizeof(int16_t));
+            if (audio_service_is_playback_busy()) {
+                static int64_t blocked_last_log_us = 0;
+                static uint32_t blocked_count = 0;
+                blocked_count++;
+                int64_t now = esp_timer_get_time();
+                if (now - blocked_last_log_us >= 500000) {
+                    ESP_LOGW(TAG, "SDK OnOutput blocked by playback_busy (%lu frames)",
+                             (unsigned long)blocked_count);
+                    blocked_last_log_us = now;
+                    blocked_count = 0;
+                }
+            } else {
+                lingxin_record_write_pcm(reinterpret_cast<const uint8_t*>(data.data()),
+                                         data.size() * sizeof(int16_t));
+            }
             return;
         }
 #endif
@@ -300,6 +313,11 @@ void AudioService::AudioInputTask() {
                     wake_word_->Feed(data);
                 }
                 if (bits & AS_EVENT_AUDIO_PROCESSOR_RUNNING) {
+#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
+                    if (lingxin_sdk_is_record_mode() && audio_service_is_playback_busy()) {
+                        continue;
+                    }
+#endif
                     audio_processor_->Feed(std::move(data));
                 }
                 continue;
@@ -825,6 +843,11 @@ bool AudioService::IsIdle() {
     return audio_encode_queue_.empty() && audio_decode_queue_.empty() && audio_playback_queue_.empty() && audio_testing_queue_.empty();
 }
 
+bool AudioService::IsPlaybackBusy() {
+    std::lock_guard<std::mutex> lock(audio_queue_mutex_);
+    return !audio_decode_queue_.empty() || !audio_playback_queue_.empty();
+}
+
 void AudioService::WaitForPlaybackQueueEmpty() {
     std::unique_lock<std::mutex> lock(audio_queue_mutex_);
     audio_queue_cv_.wait(lock, [this]() { 
@@ -866,6 +889,15 @@ void AudioService::CheckAndUpdateAudioPowerState() {
         esp_timer_stop(audio_power_timer_);
     }
 }
+
+#if CONFIG_USE_AUDIO_PROCESSOR
+void AudioService::SetProcessorTaskPriority(UBaseType_t priority) {
+    auto *afe = dynamic_cast<AfeAudioProcessor*>(audio_processor_.get());
+    if (afe != nullptr) {
+        afe->SetCommunicationTaskPriority(priority);
+    }
+}
+#endif
 
 void AudioService::SetModelsList(srmodel_list_t* models_list) {
     models_list_ = models_list;

@@ -45,6 +45,32 @@ int lingxin_record_ringbuf_available(void);
  */
 int lingxin_sdk_is_record_mode(void);
 
+/**
+ * Block until decode/playback queues are empty (local TTS finished).
+ */
+void audio_service_wait_playback_idle(void);
+
+/**
+ * Return 1 if decode or playback queue has pending audio, else 0.
+ */
+int audio_service_is_playback_busy(void);
+
+/**
+ * Return 1 when SDK uplink capture is active (post-playback, during upload).
+ */
+int audio_service_is_sdk_uplink_active(void);
+
+/**
+ * Schedule uplink activation on the main thread: wait playback idle, enable VP,
+ * start SDK record mode, then call lingxin_recorder_finish_open().
+ */
+void audio_service_schedule_recorder_uplink_begin(void *recorder_hdl);
+
+/**
+ * Schedule uplink deactivation on the main thread after recorder close.
+ */
+void audio_service_schedule_recorder_uplink_end(void);
+
 /* ---- AudioService playback bridge ---- */
 
 /**

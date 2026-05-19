@@ -170,10 +170,15 @@ static void record_open_callback(int result) {
 
 LingxinRecorderDataCallback temp_data_callback = NULL;
 void module_record_start_send(LingxinRecorderDataCallback data_callback) {
-    lingxin_log_ut(LINGXIN_DEBUG, "record_manager_start_send");
+    int cbuf_items = send_cbuf ? lingxin_cbuffer_size(send_cbuf) : -1;
+    lingxin_log_ut_with_args(LINGXIN_DEBUG, "record_manager_start_send",
+        "recorder_ready=%d prev_send_flag=%d cbuf_items=%d",
+        recorder_ready, send_flag, cbuf_items);
     temp_data_callback = data_callback;
     server_ready = 1;
     set_send_flag();
+    lingxin_log_ut_with_args(LINGXIN_DEBUG, "record_manager_start_send_done",
+        "send_flag=%d cbuf_items=%d", send_flag, send_cbuf ? lingxin_cbuffer_size(send_cbuf) : -1);
 } 
 
 /****************** 录音器结束 ******************/

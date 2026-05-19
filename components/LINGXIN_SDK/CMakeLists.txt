@@ -16,5 +16,5 @@ list(FILTER SOURCES EXCLUDE REGEX "usecases/.*")
 idf_component_register(SRCS ${SOURCES}
   INCLUDE_DIRS "AI2T_LingXinEngine/inc" "AI2T_LingXinEngine/inc/func" "AI2T_LingXinEngine/inc/system_adapter"
   PRIV_INCLUDE_DIRS "AI2T_LingXinEngine/src/inc" "AI2T_LingXinEngine/src/inc/state_module_manager" "AI2T_LingXinEngine/src/inc/task_state_strategies"
-  REQUIRES freertos esp_ringbuf mbedtls esp_websocket_client esp_http_client json main esp_wifi esp_system
+  REQUIRES freertos esp_ringbuf mbedtls esp_websocket_client esp_http_client json main esp_wifi esp_system esp_timer
 )

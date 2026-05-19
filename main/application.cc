@@ -6,6 +6,7 @@
 #include "lingxin_websocket_protocol.h"
 #ifdef CONFIG_LINGXIN_PROTOCOL_SDK
 #include "lingxin_sdk_protocol.h"
+#include "lingxin_sdk_bridge.h"
 #endif
 #include "assets/lang_config.h"
 #include "mcp_server.h"
@@ -750,12 +751,7 @@ void Application::ContinueOpenAudioChannel(ListeningMode mode) {
         return;
     }
 
-    if (!protocol_->IsAudioChannelOpened()) {
-        if (!protocol_->OpenAudioChannel()) {
-            return;
-        }
-    }
-
+    /* Enter listening first (AFE + SendStartListening); SDK opens channel if needed */
     SetListeningMode(mode);
 }
 
@@ -854,33 +850,27 @@ void Application::HandleWakeWordDetectedEvent() {
 }
 
 void Application::ContinueWakeWordInvoke(const std::string& wake_word) {
-    // Check state again in case it was changed during scheduling
-    if (GetDeviceState() != kDeviceStateConnecting) {
+    auto state = GetDeviceState();
+    if (state != kDeviceStateConnecting && state != kDeviceStateListening) {
         return;
     }
 
+    ESP_LOGI(TAG, "Wake word detected: %s", wake_word.c_str());
+#if CONFIG_SEND_WAKE_WORD_DATA
     if (!protocol_->IsAudioChannelOpened()) {
         if (!protocol_->OpenAudioChannel()) {
             audio_service_.EnableWakeWordDetection(true);
             return;
         }
     }
-
-    ESP_LOGI(TAG, "Wake word detected: %s", wake_word.c_str());
-#if CONFIG_SEND_WAKE_WORD_DATA
-    // Encode and send the wake word data to the server
     while (auto packet = audio_service_.PopWakeWordPacket()) {
         protocol_->SendAudio(std::move(packet));
     }
-    // Set the chat state to wake word detected
     protocol_->SendWakeWordDetected(wake_word);
-    SetListeningMode(GetDefaultListeningMode());
-#else
-    // Set flag to play popup sound after state changes to listening
-    // (PlaySound here would be cleared by ResetDecoder in EnableVoiceProcessing)
+#endif
+    // Start AFE before/alongside SDK session; SendStartListening opens channel when needed
     play_popup_on_listening_ = true;
     SetListeningMode(GetDefaultListeningMode());
-#endif
 }
 
 void Application::HandleStateChangedEvent() {
@@ -911,7 +901,12 @@ void Application::HandleStateChangedEvent() {
             display->SetEmotion("neutral");
 
             // Make sure the audio processor is running
+#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
+            if (play_popup_on_listening_ || !audio_service_.IsAudioProcessorRunning()
+                || lingxin_sdk_is_record_mode()) {
+#else
             if (play_popup_on_listening_ || !audio_service_.IsAudioProcessorRunning()) {
+#endif
                 // For auto mode, wait for playback queue to be empty before enabling voice processing
                 // This prevents audio truncation when STOP arrives late due to network jitter
                 if (listening_mode_ == kListeningModeAutoStop) {
@@ -940,6 +935,11 @@ void Application::HandleStateChangedEvent() {
         case kDeviceStateSpeaking:
             display->SetStatus(Lang::Strings::SPEAKING);
 
+#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
+            if (audio_service_is_sdk_uplink_active()) {
+                break;
+            }
+#endif
             if (listening_mode_ != kListeningModeRealtime) {
                 audio_service_.EnableVoiceProcessing(false);
                 // Only AFE wake word can be detected in speaking mode

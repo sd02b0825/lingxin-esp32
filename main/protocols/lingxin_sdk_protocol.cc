@@ -149,18 +149,23 @@ void LingxinSdkProtocol::SdkLifeCycleHandler(ChatLifeCycleEvent event, void *pay
 /* ---- Handle methods (called on main thread via Schedule) ---- */
 
 void LingxinSdkProtocol::HandleChatPhaseChange(ChatPhaseCode phase) {
+    auto& app = Application::GetInstance();
     switch (phase) {
     case CHAT_PHASE_INPUTING:
         audio_channel_opened_ = true;
         if (on_audio_channel_opened_) {
             on_audio_channel_opened_();
         }
+        /* Uplink VP is owned by recorder open (sdk_uplink_active), not device state */
         break;
     case CHAT_PHASE_THINKING:
         /* No specific Protocol callback for thinking; handled by Application state */
         break;
     case CHAT_PHASE_OUTPUTING:
-        /* AI is speaking; audio comes through buffer_play adapter */
+        /* Only enter Speaking while local playback is active; ignore stale OUTPUTING after TTS */
+        if (audio_service_is_playback_busy()) {
+            app.SetDeviceState(kDeviceStateSpeaking);
+        }
         break;
     case CHAT_PHASE_INTERRUPTING:
         /* User interrupted AI */
@@ -183,6 +188,15 @@ void LingxinSdkProtocol::HandleTextOut(char *text) {
     if (text && on_incoming_json_) {
         cJSON *root = cJSON_Parse(text);
         if (root) {
+            cJSON *header_obj = cJSON_GetObjectItem(root, "header");
+            cJSON *action = cJSON_IsObject(header_obj) ? cJSON_GetObjectItem(header_obj, "action") : nullptr;
+            if (!cJSON_IsString(action)) {
+                if (!cJSON_IsObject(header_obj)) {
+                    header_obj = cJSON_CreateObject();
+                    cJSON_AddItemToObject(root, "header", header_obj);
+                }
+                cJSON_AddStringToObject(header_obj, "action", "text_output");
+            }
             on_incoming_json_(root);
             cJSON_Delete(root);
         } else {
@@ -205,7 +219,14 @@ void LingxinSdkProtocol::HandleExit(ExitCode exit_code, char *reason) {
 
 void LingxinSdkProtocol::HandlePlayEnd() {
     ESP_LOGI(TAG, "HandlePlayEnd");
-    /* Currently no specific callback for play end in Protocol interface */
+    auto& app = Application::GetInstance();
+    app.GetAudioService().WaitForPlaybackQueueEmpty();
+    if (audio_service_is_sdk_uplink_active()) {
+        return;
+    }
+    if (app.GetDeviceState() == kDeviceStateSpeaking) {
+        app.SetDeviceState(kDeviceStateListening);
+    }
 }
 
 void LingxinSdkProtocol::HandleError() {
@@ -243,9 +264,9 @@ bool LingxinSdkProtocol::Start() {
     props.device_code_get_func = GetDeviceCode;
     props.chat_life_cycle_event_listener = SdkLifeCycleHandler;
 
-    /* Audio format configuration from Kconfig */
-    props.send_uni_size = 0;  /* Use SDK default */
-    props.send_cbuf_scale = 0; /* Use SDK default */
+    /* SDK default send_uni_size=640 (20ms @ 16kHz PCM); adapter splits AFE 60ms frames */
+    props.send_uni_size = 0;
+    props.send_cbuf_scale = 0;
 
     /* No local prompt sounds - v2.6.6 handles its own sounds */
     props.welcome_audio_path = NULL;
