@@ -114,7 +114,7 @@ static void record_close_callback_for_start(int result) {
             lingxin_recorder = NULL;
             lingxin_log_ut(LINGXIN_DEBUG, "recorder_manager_destory_recorder_success_before_recorder_start");
         }
-        lingxin_mutex_unlock(record_close_mutex);
+        /* Keep record_close_mutex held until inner_record_init finishes sync open (unlock on SDK thread). */
         // [开启录音-2]退出可能存在的录音发送线程
         int res = stop_send_thread(0);
         if (res == 0) {
@@ -123,6 +123,7 @@ static void record_close_callback_for_start(int result) {
             inner_record_init();
         } else {
             lingxin_log_ut(LINGXIN_ERROR, "recorder_manager_stop_send_thread_fail_before_recorder_start");
+            lingxin_mutex_unlock(record_close_mutex);
             run_start_callback(false);
         }
     } else {
@@ -136,8 +137,7 @@ static void inner_record_init() {
     int res = start_send_thread();
     if (res == 0) {
         lingxin_log_ut(LINGXIN_DEBUG, "recorder_manager_start_send_thread_success");
-        // [开启录音-3.2]开启录音
-        lingxin_mutex_lock(record_close_mutex);
+        // [开启录音-3.2]开启录音 (mutex still held from module_record_start; do not lock again)
         recorder_ready = 1;
         set_send_flag();
         lingxin_recorder = lingxin_recorder_create();
@@ -146,8 +146,12 @@ static void inner_record_init() {
         };
         lingxin_log_ut(LINGXIN_DEBUG, "recorder_adapter_recorder_open");
         lingxin_recorder_open(lingxin_recorder, &props, record_open_callback);
+        /* Unlock on this thread after async open is scheduled; record_open_callback runs on main thread. */
+        lingxin_log_ut(LINGXIN_DEBUG, "recorder_manager_unlock_after_recorder_open_schedule");
+        lingxin_mutex_unlock(record_close_mutex);
     } else {
         lingxin_log_ut(LINGXIN_ERROR, "recorder_manager_start_send_thread_fail");
+        lingxin_mutex_unlock(record_close_mutex);
         run_start_callback(false);
     }
 }
@@ -155,12 +159,10 @@ static void record_open_callback(int result) {
     lingxin_log_ut(LINGXIN_DEBUG, "recorder_adapter_recorder_open_callback"); 
     if (result == 0) {
         lingxin_log_ut(LINGXIN_DEBUG, "recorder_manager_open_recorder_success");
-        // [开启录音-4]通知状态机录音模块启动已完成
-        lingxin_mutex_unlock(record_close_mutex);
+        // [开启录音-4]通知状态机录音模块启动已完成 (mutex unlocked in inner_record_init on SDK thread)
         run_start_callback(true);
     } else {
         lingxin_log_ut(LINGXIN_ERROR, "recorder_manager_open_recorder_fail");
-        lingxin_mutex_unlock(record_close_mutex);
         run_start_callback(false);
     }
 }

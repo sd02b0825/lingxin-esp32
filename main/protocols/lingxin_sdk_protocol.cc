@@ -156,7 +156,11 @@ void LingxinSdkProtocol::HandleChatPhaseChange(ChatPhaseCode phase) {
         if (on_audio_channel_opened_) {
             on_audio_channel_opened_();
         }
-        /* Uplink VP is owned by recorder open (sdk_uplink_active), not device state */
+        /* Early Listening for re-wake from Connecting; full VP still starts in uplink_begin */
+        if (!audio_service_is_sdk_uplink_active() &&
+            app.GetDeviceState() == kDeviceStateConnecting) {
+            app.SetDeviceState(kDeviceStateListening);
+        }
         break;
     case CHAT_PHASE_THINKING:
         /* No specific Protocol callback for thinking; handled by Application state */
