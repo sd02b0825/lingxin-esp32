@@ -19,7 +19,6 @@
 
 // Main event bits
 #define MAIN_EVENT_SCHEDULE             (1 << 0)
-#define MAIN_EVENT_SEND_AUDIO           (1 << 1)
 #define MAIN_EVENT_WAKE_WORD_DETECTED   (1 << 2)
 #define MAIN_EVENT_VAD_CHANGE           (1 << 3)
 #define MAIN_EVENT_ERROR                (1 << 4)
@@ -155,6 +154,7 @@ private:
     void HandleWakeWordDetectedEvent();
     void ContinueOpenAudioChannel(ListeningMode mode);
     void ContinueWakeWordInvoke(const std::string& wake_word);
+    void HandleSdkTextOutput(const cJSON* root);
 
     // Activation task (runs in background)
     void ActivationTask();

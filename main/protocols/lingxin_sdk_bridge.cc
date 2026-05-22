@@ -6,6 +6,7 @@
  */
 
 #include "lingxin_sdk_bridge.h"
+#include "lingxin_sdk_protocol.h"
 #include "audio_service.h"
 #include "application.h"
 #include "device_state.h"
@@ -84,6 +85,7 @@ void audio_service_schedule_recorder_uplink_begin(void *recorder_hdl)
         int wait_ms = static_cast<int>((esp_timer_get_time() - t0) / 1000);
         ESP_LOGI(TAG, "recorder uplink: wait_playback %d ms", wait_ms);
 
+        audio_service_start_record_to_sdk();
         g_sdk_uplink_active = true;
         audio_service.EnableVoiceProcessing(true);
 #if CONFIG_USE_AUDIO_PROCESSOR
@@ -96,7 +98,6 @@ void audio_service_schedule_recorder_uplink_begin(void *recorder_hdl)
             app.SetDeviceState(kDeviceStateListening);
         }
 
-        audio_service_start_record_to_sdk();
         lingxin_recorder_finish_open(recorder_hdl);
     });
 }
@@ -105,6 +106,7 @@ void audio_service_schedule_recorder_uplink_end(void)
 {
     Application::GetInstance().Schedule([]() {
         g_sdk_uplink_active = false;
+        g_sdk_record_mode = false;
 #if CONFIG_USE_AUDIO_PROCESSOR
         Application::GetInstance().GetAudioService().SetProcessorTaskPriority(3);
 #endif
@@ -120,6 +122,11 @@ void audio_service_schedule_recorder_uplink_end(void)
 void audio_service_push_decode_packet(const uint8_t *data, int len, const char *codec, int sample_rate)
 {
     auto &audio_service = Application::GetInstance().GetAudioService();
+
+
+    if (LingxinSdkProtocol::GetInstance()) {
+        LingxinSdkProtocol::GetInstance()->OnDownlinkStarted();
+    }
 
     auto packet = std::make_unique<AudioStreamPacket>();
     packet->codec = codec ? codec : CONFIG_LINGXIN_AUDIO_DOWN_CODEC;

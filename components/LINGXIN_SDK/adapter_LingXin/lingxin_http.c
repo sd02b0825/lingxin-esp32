@@ -1,9 +1,12 @@
 #include "lingxin_http.h"
+#include "lingxin_adapter_downlink.h"
 #include "lingxin_device_info.h"
 #include "lingxin_log.h"
+#include "lingxin_common.h"
 #include "esp_http_client.h"
 #include "esp_log.h"
 #include "lingxin_memory.h"
+#include <string.h>
 typedef struct {
     char *response_buffer;
     int buffer_size;
@@ -194,10 +197,14 @@ int http_post(HttpConfig *config, RequestCallback userCallback, void *userData)
         int status_code = esp_http_client_get_status_code(client);
         if (status_code >= 200 && status_code < 300)
         {
+            if (ctx.data_length > 0 && config->path
+                && strstr(config->path, LINGXIN_SERVER_CONFIG_GET_PATH) != NULL) {
+                lingxin_adapter_cache_terminal_config_response(ctx.response_buffer);
+            }
             // 调用用户回调
             if (ctx.data_length > 0 && userCallback) {
                 userCallback(ctx.response_buffer, ctx.data_length, userData);
-            }   
+            }
             esp_http_client_cleanup(client);
             lingxin_free(ctx.response_buffer);
             ctx.response_buffer = NULL;

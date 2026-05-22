@@ -118,27 +118,16 @@ void AudioService::Initialize(AudioCodec* codec) {
 #endif
 
     audio_processor_->OnOutput([this](std::vector<int16_t>&& data) {
-#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
         if (lingxin_sdk_is_record_mode() && lingxin_record_ringbuf_available()) {
-            if (audio_service_is_playback_busy()) {
-                static int64_t blocked_last_log_us = 0;
-                static uint32_t blocked_count = 0;
-                blocked_count++;
-                int64_t now = esp_timer_get_time();
-                if (now - blocked_last_log_us >= 500000) {
-                    ESP_LOGW(TAG, "SDK OnOutput blocked by playback_busy (%lu frames)",
-                             (unsigned long)blocked_count);
-                    blocked_last_log_us = now;
-                    blocked_count = 0;
-                }
-            } else {
+            if (!audio_service_is_playback_busy()) {
                 lingxin_record_write_pcm(reinterpret_cast<const uint8_t*>(data.data()),
                                          data.size() * sizeof(int16_t));
             }
             return;
         }
-#endif
-        PushTaskToEncodeQueue(kAudioTaskTypeEncodeToSendQueue, std::move(data));
+        if (xEventGroupGetBits(event_group_) & AS_EVENT_AUDIO_TESTING_RUNNING) {
+            PushTaskToEncodeQueue(kAudioTaskTypeEncodeToTestingQueue, std::move(data));
+        }
     });
 
     audio_processor_->OnVadStateChange([this](bool speaking) {
@@ -313,11 +302,9 @@ void AudioService::AudioInputTask() {
                     wake_word_->Feed(data);
                 }
                 if (bits & AS_EVENT_AUDIO_PROCESSOR_RUNNING) {
-#ifdef CONFIG_LINGXIN_PROTOCOL_SDK
                     if (lingxin_sdk_is_record_mode() && audio_service_is_playback_busy()) {
                         continue;
                     }
-#endif
                     audio_processor_->Feed(std::move(data));
                 }
                 continue;
@@ -373,7 +360,7 @@ void AudioService::OpusCodecTask() {
         std::unique_lock<std::mutex> lock(audio_queue_mutex_);
         audio_queue_cv_.wait(lock, [this]() {
             return service_stopped_ ||
-                (!audio_encode_queue_.empty() && audio_send_queue_.size() < MAX_SEND_PACKETS_IN_QUEUE) ||
+                !audio_encode_queue_.empty() ||
                 (!audio_decode_queue_.empty() && audio_playback_queue_.size() < MAX_PLAYBACK_TASKS_IN_QUEUE);
         });
         if (service_stopped_) {
@@ -400,8 +387,8 @@ void AudioService::OpusCodecTask() {
                 lock.lock();
             }
         }
-        /* Encode the audio to send queue */
-        if (!audio_encode_queue_.empty() && audio_send_queue_.size() < MAX_SEND_PACKETS_IN_QUEUE) {
+        /* Encode the audio (testing queue only in SDK-only mode) */
+        if (!audio_encode_queue_.empty()) {
             auto task = std::move(audio_encode_queue_.front());
             audio_encode_queue_.pop_front();
             audio_queue_cv_.notify_all();
@@ -427,15 +414,7 @@ void AudioService::OpusCodecTask() {
                 if (ret == ESP_AUDIO_ERR_OK) {
                     packet->payload.assign(buf.data(), buf.data() + out.encoded_bytes);
 
-                    if (task->type == kAudioTaskTypeEncodeToSendQueue) {
-                        {
-                            std::lock_guard<std::mutex> lock2(audio_queue_mutex_);
-                            audio_send_queue_.push_back(std::move(packet));
-                        }
-                        if (callbacks_.on_send_queue_available) {
-                            callbacks_.on_send_queue_available();
-                        }
-                    } else if (task->type == kAudioTaskTypeEncodeToTestingQueue) {
+                    if (task->type == kAudioTaskTypeEncodeToTestingQueue) {
                         std::lock_guard<std::mutex> lock2(audio_queue_mutex_);
                         audio_testing_queue_.push_back(std::move(packet));
                     }
@@ -1012,7 +991,7 @@ bool AudioService::DecodeMp3Packet(const AudioStreamPacket& packet, AudioTask& t
                 esp_audio_simple_dec_get_info(mp3_decoder_, &dec_info);
                 mp3_decoder_sample_rate_ = dec_info.sample_rate;
                 mp3_decoder_channels_ = dec_info.channel;
-                ESP_LOGI(TAG, "MP3 audio info: sample_rate=%d channel=%d bits=%d",
+                ESP_LOGD(TAG, "MP3 audio info: sample_rate=%d channel=%d bits=%d",
                          dec_info.sample_rate, dec_info.channel, dec_info.bits_per_sample);
             }
 

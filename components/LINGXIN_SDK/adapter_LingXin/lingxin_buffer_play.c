@@ -9,6 +9,7 @@
  */
 
 #include "audio_buffer_play.h"
+#include "lingxin_adapter_downlink.h"
 #include <string.h>
 #include <stdlib.h>
 #include "sdkconfig.h"
@@ -30,9 +31,35 @@ static void *g_user_data = NULL;
 static int is_terminating = 0;
 static SemaphoreHandle_t g_terminate_mutex = NULL;
 
-/* Current codec type for downstream audio, initialized from Kconfig */
+/* Downlink: cloud config (from terminal/config/get via lingxin_http) first, Kconfig fallback */
 static char g_current_codec[16] = CONFIG_LINGXIN_AUDIO_DOWN_CODEC;
 static int g_current_sample_rate = 16000;
+static int s_need_format_refresh_on_first_packet = 0;
+
+static void buffer_play_apply_downlink_format(void)
+{
+    char cloud_format[16] = "";
+    int cloud_rate = 0;
+    lingxin_adapter_downlink_get(cloud_format, sizeof(cloud_format), &cloud_rate);
+
+    if (cloud_format[0] != '\0') {
+        strncpy(g_current_codec, cloud_format, sizeof(g_current_codec) - 1);
+        g_current_codec[sizeof(g_current_codec) - 1] = '\0';
+    } else {
+        strncpy(g_current_codec, CONFIG_LINGXIN_AUDIO_DOWN_CODEC, sizeof(g_current_codec) - 1);
+        g_current_codec[sizeof(g_current_codec) - 1] = '\0';
+    }
+
+    if (cloud_rate > 0) {
+        g_current_sample_rate = cloud_rate;
+    } else {
+#ifdef CONFIG_LINGXIN_AUDIO_DOWN_SAMPLE_RATE
+        g_current_sample_rate = CONFIG_LINGXIN_AUDIO_DOWN_SAMPLE_RATE;
+#else
+        g_current_sample_rate = 16000;
+#endif
+    }
+}
 
 /**
  * Bridge functions implemented in lingxin_sdk_bridge.cc
@@ -54,11 +81,10 @@ void module_bufferPlay_audioInit(PlaybackEventHandler callback, void *user_data)
         }
     }
 
-    /* Codec is set from Kconfig at compile time */
-    strncpy(g_current_codec, CONFIG_LINGXIN_AUDIO_DOWN_CODEC, sizeof(g_current_codec) - 1);
-    g_current_sample_rate = 16000;
+    buffer_play_apply_downlink_format();
+    s_need_format_refresh_on_first_packet = 1;
 
-    lingxin_log_debug("bufferPlay audioInit, codec=%s, sample_rate=%d", g_current_codec, g_current_sample_rate);
+    ESP_LOGI(TAG, "bufferPlay audioInit, codec=%s, sample_rate=%d", g_current_codec, g_current_sample_rate);
 
     if (g_callback) {
         g_callback(Lingxin_Download_Audio_InitEnd, g_user_data);
@@ -76,6 +102,21 @@ void module_bufferPlay_data(void *buf, int rlen)
     if (is_terminating) {
         lingxin_log_debug("bufferplay is terminating, skip data");
         return;
+    }
+
+    if (s_need_format_refresh_on_first_packet) {
+        int prev_rate = g_current_sample_rate;
+        char prev_codec[16];
+        strncpy(prev_codec, g_current_codec, sizeof(prev_codec) - 1);
+        prev_codec[sizeof(prev_codec) - 1] = '\0';
+        buffer_play_apply_downlink_format();
+        s_need_format_refresh_on_first_packet = 0;
+        if (prev_rate != g_current_sample_rate || strcmp(prev_codec, g_current_codec) != 0) {
+            ESP_LOGW(TAG, "downlink format updated on first packet: %s@%d -> %s@%d",
+                     prev_codec, prev_rate, g_current_codec, g_current_sample_rate);
+        }
+        ESP_LOGI(TAG, "bufferPlay first packet, codec=%s, sample_rate=%d, len=%d",
+                 g_current_codec, g_current_sample_rate, rlen);
     }
 
     /* Push audio data to AudioService decode queue via bridge */

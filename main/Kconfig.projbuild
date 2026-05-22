@@ -1083,10 +1083,11 @@ config LINGXIN_AUDIO_UP_CODEC
         Internal value used by runtime logic.
 
 choice LINGXIN_AUDIO_DOWN_CODEC_SELECT
-    prompt "Lingxin Downlink Audio Codec"
+    prompt "Lingxin Downlink Audio Codec (fallback)"
     default LINGXIN_AUDIO_DOWN_CODEC_PCM
     help
-        Downlink audio codec selection.
+        Fallback when cloud terminal/config/get does not provide output_format.
+        Runtime prefers cloud output_format / output_sample_rate after SDK init.
     config LINGXIN_AUDIO_DOWN_CODEC_OPUS
         bool "opus"
     config LINGXIN_AUDIO_DOWN_CODEC_PCM
@@ -1123,20 +1124,5 @@ config LINGXIN_AUDIO_FRAME_MS
     default 60
     help
         Audio frame duration used by the local Opus encoder and PCM decoder path.
-
-choice LINGXIN_PROTOCOL_SELECT
-    prompt "Lingxin Protocol Implementation"
-    default LINGXIN_PROTOCOL_WEBSOCKET
-    help
-        Select which protocol implementation to use for Lingxin cloud communication.
-        WebSocket: Original LingxinWebsocketProtocol (v2.6.6 native)
-        SDK: LingXin SDK voice_chat API (recommended for bread-compact-wifi)
-
-    config LINGXIN_PROTOCOL_WEBSOCKET
-        bool "WebSocket Protocol (original)"
-    config LINGXIN_PROTOCOL_SDK
-        bool "LingXin SDK Protocol (voice_chat API)"
-        depends on BOARD_TYPE_BREAD_COMPACT_WIFI || BOARD_TYPE_BREAD_COMPACT_WIFI_LCD
-endchoice
 
 endmenu
