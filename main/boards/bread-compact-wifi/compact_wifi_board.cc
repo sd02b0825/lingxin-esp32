@@ -25,12 +25,12 @@
 class CompactWifiLeds : public Led {
 public:
     void OnStateChanged() override {
-        status_led_.OnStateChanged();
+        //status_led_.OnStateChanged();
         strip_led_.OnStateChanged();
     }
 
 private:
-    SingleLed status_led_{BUILTIN_LED_GPIO};
+    //SingleLed status_led_{BUILTIN_LED_GPIO};
     BreadCompactWifiStripLed strip_led_{LED_STRIP_GPIO, LED_STRIP_COUNT};
 };
 

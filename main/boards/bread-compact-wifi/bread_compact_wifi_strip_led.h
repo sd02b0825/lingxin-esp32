@@ -15,18 +15,15 @@ public:
 
 private:
     CircularStrip strip_;
-    esp_timer_handle_t speak_timer_ = nullptr;
     esp_timer_handle_t breathe_timer_ = nullptr;
     uint16_t led_count_ = 0;
     float breathe_phase_ = 0.0f;
+    float breathe_phase_step_ = 0.0f;
 
     void SetRainbow(uint8_t brightness);
     void ShowRainbowStatic();
-    void StopSpeakTimer();
-    void StartSpeakTimer();
-    void OnSpeakTimer();
     void StopBreatheTimer();
-    void StartBreatheTimer();
+    void StartBreatheTimer(float speed_multiplier = 1.0f);
     void OnBreatheTimer();
 };
 
