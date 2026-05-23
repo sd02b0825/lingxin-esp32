@@ -1,6 +1,7 @@
 #include "audio_service.h"
 #include <esp_log.h>
 #include <algorithm>
+#include <cmath>
 #include <cctype>
 #include <cstring>
 #include "esp_audio_dec_default.h"
@@ -43,6 +44,9 @@
 #endif
 
 #define TAG "AudioService"
+
+#define PLAYBACK_AUDIO_RMS_THRESHOLD 400
+#define PLAYBACK_AUDIO_HOLD_US 150000
 
 static uint16_t ReadLe16(const uint8_t* data) {
     return static_cast<uint16_t>(data[0]) | (static_cast<uint16_t>(data[1]) << 8);
@@ -338,6 +342,8 @@ void AudioService::AudioOutputTask() {
         }
 
         codec_->OutputData(task->pcm);
+
+        UpdatePlaybackLevel(task->pcm);
 
         /* Update the last output time */
         last_output_time_ = std::chrono::steady_clock::now();
@@ -815,6 +821,29 @@ void AudioService::PlaySound(const std::string_view& ogg) {
     });
     demuxer->Reset();
     demuxer->Process(buf, size);
+}
+
+void AudioService::UpdatePlaybackLevel(const std::vector<int16_t>& pcm) {
+    if (pcm.empty()) {
+        return;
+    }
+
+    int64_t sum_squares = 0;
+    for (int16_t sample : pcm) {
+        sum_squares += static_cast<int32_t>(sample) * sample;
+    }
+    uint32_t rms = static_cast<uint32_t>(sqrt(static_cast<double>(sum_squares) / pcm.size()));
+    if (rms > PLAYBACK_AUDIO_RMS_THRESHOLD) {
+        last_playback_sound_us_.store(esp_timer_get_time());
+    }
+}
+
+bool AudioService::HasPlaybackAudio() const {
+    int64_t last_sound_us = last_playback_sound_us_.load();
+    if (last_sound_us == 0) {
+        return false;
+    }
+    return (esp_timer_get_time() - last_sound_us) < PLAYBACK_AUDIO_HOLD_US;
 }
 
 bool AudioService::IsIdle() {

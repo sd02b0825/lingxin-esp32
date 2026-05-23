@@ -7,6 +7,7 @@
 #include <chrono>
 #include <mutex>
 #include <string>
+#include <atomic>
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -116,6 +117,7 @@ public:
     std::unique_ptr<AudioStreamPacket> PopWakeWordPacket();
     const std::string& GetLastWakeWord() const;
     bool IsVoiceDetected() const { return voice_detected_; }
+    bool HasPlaybackAudio() const;
     bool IsIdle();
     bool IsPlaybackBusy();
     void WaitForPlaybackQueueEmpty();
@@ -193,6 +195,9 @@ private:
     esp_timer_handle_t audio_power_timer_ = nullptr;
     std::chrono::steady_clock::time_point last_input_time_;
     std::chrono::steady_clock::time_point last_output_time_;
+    std::atomic<int64_t> last_playback_sound_us_{0};
+
+    void UpdatePlaybackLevel(const std::vector<int16_t>& pcm);
 
     void AudioInputTask();
     void AudioOutputTask();

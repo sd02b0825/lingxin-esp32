@@ -8,6 +8,7 @@
 #include "mcp_server.h"
 #include "lamp_controller.h"
 #include "led/single_led.h"
+#include "bread_compact_wifi_strip_led.h"
 #include "assets/lang_config.h"
 
 #include <esp_log.h>
@@ -20,6 +21,18 @@
 #endif
 
 #define TAG "CompactWifiBoard"
+
+class CompactWifiLeds : public Led {
+public:
+    void OnStateChanged() override {
+        status_led_.OnStateChanged();
+        strip_led_.OnStateChanged();
+    }
+
+private:
+    SingleLed status_led_{BUILTIN_LED_GPIO};
+    BreadCompactWifiStripLed strip_led_{LED_STRIP_GPIO, LED_STRIP_COUNT};
+};
 
 class CompactWifiBoard : public WifiBoard {
 private:
@@ -165,8 +178,8 @@ public:
     }
 
     virtual Led* GetLed() override {
-        static SingleLed led(BUILTIN_LED_GPIO);
-        return &led;
+        static CompactWifiLeds leds;
+        return &leds;
     }
 
     virtual AudioCodec* GetAudioCodec() override {
