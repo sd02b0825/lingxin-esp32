@@ -35,6 +35,9 @@ static VoiceChatHandler *globalHandler = NULL;
 static bool isAIResponseding = false; // 已给服务端发请求，带响应，或者 已在响应，YES 才能发打断
 static bool isAudioSending = false;
 static bool waitTerminateOrEndSuccess = false;
+static bool has_played_prologue = false;         // 开场白是否已播放完毕（防止重复处理）
+static bool skip_next_start_task = false;        // 开场白结束后跳过下一轮 sendStartTask
+static bool current_play_prologue = false;       // 当前会话是否配置了开场白
 void setWaitTerminateOrEndSuccess(bool target)
 {
   waitTerminateOrEndSuccess = target;
@@ -141,6 +144,8 @@ static bool fill_config_params(VoiceChatConfig *chat_config, ChatStartNewParams 
   // 释放biz_parameters，申请在lingxin_chat_biz_parameter_get中
   lingxin_free(biz_parameters);
   lingxin_log_ut(LINGXIN_DEBUG, "chat_manager_get_config_finish");
+  // 记录当前会话是否为开场白模式，供 audio_response_end 处理时使用
+  current_play_prologue = params->play_prologue;
   return true;
 }
 
@@ -348,6 +353,28 @@ static void dealEventFromServer(VoiceChatHandler *handler, const char *event, cJ
     waitTerminateOrEndSuccess = false;
     notify_all_listeners(CHAT_EVENT_ON_AI_READY, "", 0);
   }
+  else if (strcmp(event, "audio_response_end") == 0)
+  {
+    lingxin_log_ut_with_args(LINGXIN_DEBUG, "chat_manager_recv_event", "event: %s", event);
+    
+    // 开场白场景：标记下一轮 voice_chat_start_new 跳过发送新的 start_task
+    if (current_play_prologue && !has_played_prologue)
+    {
+      has_played_prologue = true;
+      skip_next_start_task = true;
+      lingxin_log_ut_with_args(LINGXIN_DEBUG, "chat_manager_recv_event", "prologue audio_response_end, skip next start_task");
+    
+      // 服务端音频响应结束：复位标志，允许后续对话
+      isAIResponseding = false;
+      handler->waitTerminate = false;
+      waitTerminateOrEndSuccess = false;
+
+      // 通知状态机 AI 音频流结束，驱动状态从 Download_Play → Task_Complete → Upload_Init
+      state_machine_run_event(State_Event_VoiceChat_AIEnd);
+    }
+
+
+  }
   else if (strcmp(event, "task_stage_end") == 0)
   {
     sendEndTask(handler);
@@ -403,7 +430,6 @@ static void dealEventFromServer(VoiceChatHandler *handler, const char *event, cJ
     cJSON_free((char *)payload);
   }
   else if (strcmp(event, "audio_response_start") == 0 ||
-           strcmp(event, "audio_response_end") == 0 ||
            strcmp(event, "audio_ended") == 0)
   {
     /* v2 cloud TTS lifecycle; binary stream handled in onBinaryMessageReceived */
@@ -775,6 +801,19 @@ bool voice_chat_start_new(ChatStartNewParams *params)
     lingxin_log_ut_with_args(LINGXIN_WARN, "chat_manager_start_new_fail", "isAIResponseding true");
     return false;
   }
+
+
+  // 开场白结束恢复：不发送新 start_task，直接触发录音上传
+  if (skip_next_start_task)
+  {
+    lingxin_log_ut_with_args(LINGXIN_DEBUG, "chat_manager_skip_start_task", "prologue ended, skip sendStartTask");
+    skip_next_start_task = false;
+    isAIResponseding = true;
+    // 触发 CHAT_EVENT_ON_AI_READY，让 chat_upload_manager.onChatEvent() 调 module_record_start_send 开始录音上传
+    notify_all_listeners(CHAT_EVENT_ON_AI_READY, "", 0);
+    return true;
+  }
+
   // 之前没有建联或者建联后断联了
   if (globalHandler == NULL)
   {

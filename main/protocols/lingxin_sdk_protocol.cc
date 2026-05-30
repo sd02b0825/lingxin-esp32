@@ -422,6 +422,7 @@ bool LingxinSdkProtocol::OpenAudioChannel() {
     StartNewChatProps start_props = get_start_new_chat_default_props();
     start_props.disable_welcome_audio = true;
     start_props.single_round = false;
+    start_props.play_prologue = true;   
     ApplyStartNewChatProps(start_props);
 
     int ret = start_new_chat(&start_props);
