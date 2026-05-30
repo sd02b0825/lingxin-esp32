@@ -1,0 +1,1474 @@
+[05-29 17:50:30.207] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:75] [activation] [chat_api_voice_chat_init_start]
+[05-29 17:50:30.217] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:91] [activation] [chat_api_voice_chat_config_init_start]
+[05-29 17:50:30.227] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:106] [activation] [chat_api_voice_chat_config_init_success]
+[05-29 17:50:30.238] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:123] [activation] [chat_api_lingxin_config_get_thread_create]
+[05-29 17:50:30.248] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:363] [activation] Creating thread: name=lx_config, prio=16, stack=8192, args=0x3fce0910
+[05-29 17:50:30.262] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:386] [activation] Thread created successfully: name=lx_config, prio=16, stack=8192, tid=1070475512
+[05-29 17:50:30.264] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_http:138] [lx_config] URL: http://eagent.edu-aliyun.com:80/gw/d/api/v1/terminal/config/get
+[05-29 17:50:30.276] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:138] [activation] lingxin_config_get_state=0, count=1
+[05-29 17:50:30.289] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_http:159] [lx_config] Custom headers: signature=08b8kOzNPTSV9yd5fqKev3OmSn0=, sn=JYXJL01259000085, app_id=78fadf26-6588-4523-8fc6-c82710b41928, timestamp=1780048230000，sdk_name=LINGXIN_ESP32S3, sdk_version=1.3.0
+[05-29 17:50:30.323] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_http:183] [lx_config] POST data: {"device_code":"4adc9d43-6160-4cd3-8b6c-59086e23d10d"}
+[05-29 17:50:30.396] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:138] [activation] lingxin_config_get_state=0, count=2
+[05-29 17:50:30.496] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:138] [activation] lingxin_config_get_state=0, count=3
+[05-29 17:50:30.596] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:138] [activation] lingxin_config_get_state=0, count=4
+[05-29 17:50:30.621] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_http:83] [lx_config] HTTP request finished
+[05-29 17:50:30.623] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_adapter_downlink:51] [lx_config] terminal config cached: output=mp3, sample_rate=16000
+[05-29 17:50:30.632] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:484] [lx_config] parse responese: {"success":true,"err_code":null,"err_message":null,"request_id":"R1eea8cba270e4fa886d40165bde33157","code":"20000001","err_msg":null,"readable_err_msg":null,"data":{"input_format":"pcm","input_sample_rate":16000,"output_format":"mp3","output_sample_rate":16000,"enable_schedule_task":true,"enable_log_upload":true}}
+[05-29 17:50:30.668] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:521] [lx_config] parse success
+[05-29 17:50:30.676] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [lx_config] [[lingxin_thread_destroy] called in thread:] Task Info - ID: 1070475512, Name: lx_config, Priority: 16, State: 0
+[05-29 17:50:30.692] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:405] [lx_config] thread 1070475512 enter self destroy
+[05-29 17:50:30.701] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:171] [activation] [chat_api_state_machine_init_start]
+[05-29 17:50:30.713] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:175] [activation] [chat_api_state_machine_init_success]
+[05-29 17:50:30.723] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:178] [activation] [chat_api_record_manager_init_start]
+[05-29 17:50:30.733] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:53] [activation] [recorder_manager_init] send_uni_size is 0, send_cbuf_scale is 0
+[05-29 17:50:30.747] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:77] [activation] [recorder_manager_init_success]
+[05-29 17:50:30.756] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:180] [activation] [chat_api_record_manager_init_success]
+[05-29 17:50:30.767] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:183] [activation] [chat_api_local_player_manager_init_start]
+[05-29 17:50:30.777] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:199] [activation] [chat_api_local_player_manager_init_success]
+[05-29 17:50:30.788] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:208] [activation] [chat_api_schedule_timer_manager_no_init]
+[05-29 17:50:30.798] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:216] [activation] [chat_api_voice_chat_init_success]
+I (6399) LingxinSdkProtocol: LingXin SDK initialized successfully
+I (6399) Application: Activation done
+I (6409) SystemInfo: free sram: 166935 minimal sram: 146067
+I (6409) StateMachine: State: activating -> idle
+W (6419) Display: ShowNotification: 版本 2.2.6
+W (6419) Display: Role:system
+W (6419) Display:
+I (6429) WifiStation: Setting WiFi power save level: LOW_POWER (MAX_MODEM)
+I (6429) wifi:Set ps type: 2, coexist: 0
+
+W (6439) Display: SetStatus: 待命
+W (6439) Display: SetEmotion: neutral
+I (6439) AfeWakeWord: Model 0: wn9_nihaoxiaozhi_tts
+I (6449) AFE_CONFIG: Set WakeNet Model: wn9_nihaoxiaozhi_tts
+MC Quantized wakenet9: wakenet9l_tts1h8_你好小智_3_0.631_0.635, tigger:v4, mode:0, p:0, (Dec 16 2025 14:45:55)
+I (6489) AFE: AFE Version: (1MIC_V251128)
+I (6489) AFE: Input PCM Config: total 1 channels(1 microphone, 0 playback), sample rate:16000
+I (6499) AFE: AFE Pipeline: [input] ->  -> |VAD(WebRTC)| -> |WakeNet(wn9_nihaoxiaozhi_tts,)| -> [output]
+I (6509) AfeWakeWord: Audio detection task started, feed size: 512 fetch size: 512
+I (6509) AudioCodec: Set output enable to true
+I (6519) AudioCodec: Set input enable to true
+I (6519) AudioService: Resampling audio from 16000 to 24000
+I (10359) Application: Wake word detected: 你好小智 (state: 3)
+I (10369) StateMachine: State: idle -> connecting
+W (10369) Display: SetStatus: 连接中...
+W (10369) Display: SetEmotion: neutral
+W (10369) Display: Role:system
+W (10369) Display:
+I (10379) Application: Wake word detected: 你好小智
+I (10379) StateMachine: State: connecting -> listening
+W (10389) Display: SetStatus: 聆听中...
+W (10389) Display: SetEmotion: neutral
+W (10389) LingxinSdkProtocol: SendStartListening without active session, opening channel
+I (10399) LingxinSdkProtocol: Opening audio channel (start_new_chat)
+[05-29 17:50:34.837] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:272] [main] [chat_api_start_new_chat_called]
+[05-29 17:50:34.846] [LINGXIN_ESP32S3_1.3.0] [D] [chat_api:346] [main] [chat_api_start_new_chat_send_event]
+[05-29 17:50:34.855] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [main] [chat_state_machine] 接受到事件 State_Event_Wakeup_Detected 唤醒事件，当前状态 State_Idle  等待唤醒态
+[05-29 17:50:34.873] [LINGXIN_ESP32S3_1.3.0] [W] [chat_runtime_context:460] [main] [chat_runtime_context_update] current_config is null
+[05-29 17:50:34.885] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:925] [main] [chat_state_machine] 首次唤醒 State_Event_Wakeup_Detected 唤醒事件
+[05-29 17:50:34.898] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:67] [main] [chat_runtime_context_update] Set upload_type to Chat (Audio) by default
+[05-29 17:50:34.912] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:434] [main] 初始化upload_type为 Media_Type_Chat， global_task为 chat_vad
+[05-29 17:50:34.925] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [main] [ChatStateRuntimeContext] Current Context Dump:
+
+[05-29 17:50:34.937] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [main] ------------------------------------------------
+
+[05-29 17:50:34.948] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [main] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:50:34.963] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [main] is_normal_exit                 = true  // 是否是主动退出对话模式
+
+[05-29 17:50:34.978] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [main] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:50:34.992] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [main] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:50:35.007] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [main] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:50:35.020] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [main] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:50:35.035] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [main] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+I (10609) AfeWakeWord: Encode wake word opus 35 packets in 247 ms
+[05-29 17:50:35.049] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [main] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:50:35.068] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [main] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:50:35.081] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [main] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:50:35.095] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [main] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:50:35.109] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [main] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:50:35.123] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [main] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:50:35.137] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [main] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:50:35.151] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [main] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:50:35.165] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [main] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:50:35.180] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [main] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:50:35.192] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [main] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:50:35.205] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [main] ------------------------------------------------
+
+[05-29 17:50:35.217] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [main] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Wakeup_Detected 唤醒事件 的时候，即将切换到 State_Upload_Init  新一轮对话开始，录音开始
+[05-29 17:50:35.243] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [main] [chat_state_machine]  State_Idle  等待 唤醒态 to State_Upload_Init 新一轮对话开始，录音开始, event: State_Event_Wakeup_Detected 唤醒事件
+I (10829) LingxinSdkProtocol: SDK ChatPhase: 2 (scheduling to main thread)
+[05-29 17:50:35.270] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [main] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:35.281] [LINGXIN_ESP32S3_1.3.0] [D] [state_upload_manager:12] [main] 进入上传状态，初始化录音器
+[05-29 17:50:35.292] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:131] [main] chat模块 上行初始化成功
+[05-29 17:50:35.302] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:93] [main] [recorder_manager_recorder_start_called]
+[05-29 17:50:35.313] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:109] [main] [recorder_adapter_recorder_close_callback_before_recorder_start]
+[05-29 17:50:35.325] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:341] [main] [recorder_thread_stop_called]
+[05-29 17:50:35.335] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:121] [main] [recorder_manager_stop_send_thread_success_before_recorder_start]
+[05-29 17:50:35.347] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:286] [main] [recorder_thread_start_called]
+[05-29 17:50:35.357] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:301] [main] [recorder_adapter_semaphore_create]
+[05-29 17:50:35.368] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:321] [main] [recorder_adapter_thread_create]
+[05-29 17:50:35.377] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:363] [main] Creating thread: name=s_1780048235, prio=16, stack=8192, args=0
+[05-29 17:50:35.390] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:391] [s_1780048235] [recorder_thread_entry_function_called]
+[05-29 17:50:35.401] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:386] [main] Thread created successfully: name=s_1780048235, prio=16, stack=8192, tid=1070463720
+[05-29 17:50:35.415] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:325] [main] [recorder_thread_start_success] pid is 1070463720
+[05-29 17:50:35.426] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:139] [main] [recorder_manager_start_send_thread_success]
+[05-29 17:50:35.437] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:166] [main] [adapter_recorder_create_success]
+[05-29 17:50:35.447] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:147] [main] [recorder_adapter_recorder_open]
+[05-29 17:50:35.457] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:228] [main] [adapter_recorder_open_begin]
+[05-29 17:50:35.467] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:150] [main] [recorder_manager_unlock_after_recorder_open_schedule]
+[05-29 17:50:35.479] [LINGXIN_ESP32S3_1.3.0] [D] [state_upload_manager:33] [main] 上传模块 发送 task_start
+[05-29 17:50:35.489] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [main] [ChatStateRuntimeContext] Current Context Dump:
+
+[05-29 17:50:35.501] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [main] ------------------------------------------------
+
+[05-29 17:50:35.512] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [main] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:50:35.527] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [main] is_normal_exit                 = false  // 是否是主动退出对话模式
+
+[05-29 17:50:35.542] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [main] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:50:35.556] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [main] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:50:35.571] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [main] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:50:35.584] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [main] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:50:35.599] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [main] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+[05-29 17:50:35.613] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [main] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:50:35.627] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [main] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:50:35.640] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [main] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:50:35.653] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [main] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:50:35.667] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [main] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:50:35.681] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [main] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:50:35.695] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [main] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:50:35.709] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [main] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:50:35.723] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [main] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:50:35.738] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [main] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:50:35.751] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [main] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:50:35.763] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [main] ------------------------------------------------
+
+[05-29 17:50:35.775] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:122] [main] voice_chat_continue_params.taskId:, voice_chat_continue_params.task:chat_vad voice_chat_continue_params.user_input:, voice_chat_continue_params.scheduleTaskId:
+[05-29 17:50:35.796] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:760] [main] [chat_manager_start_new_begin]
+[05-29 17:50:35.808] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:143] [main] [chat_manager_get_config_finish]
+[05-29 17:50:35.817] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:459] [main] UA: app_id:78fadf26-6588-4523-8fc6-c82710b41928
+sn:JYXJL01259000085
+signature:KqhtBUddO+3ROCUtEuvnvy4sp1o=
+timestamp:1780048235000
+sdk_name:LINGXIN_ESP32S3
+sdk_version:1.3.0
+
+[05-29 17:50:35.839] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:552] [main] websocket_cfg.task_name: lx_ws_1780048235
+W (11419) websocket_client: `network_timeout_ms` is not set, or it is less than or equal to zero, using default time out 10000 (milliseconds)
+[05-29 17:50:35.862] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:569] [main] Connecting to ws://eagent.edu-aliyun.com:80/gw/ws/open/api/v1/unifiedAccess...
+I (11449) websocket_client: Started
+[05-29 17:50:35.876] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:239] [lx_ws_178004823] WEBSOCKET_EVENT_BEGIN
+[05-29 17:50:35.879] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:598] [main] Websocket client started successfully
+[05-29 17:50:35.900] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:676] [main] [chat_manager_init_finish]
+I (11479) AFE: AFE Version: (1MIC_V251128)
+I (11479) AFE: Input PCM Config: total 1 channels(1 microphone, 0 playback), sample rate:16000
+I (11489) AFE: AFE Pipeline: [input] -> |VAD(WebRTC)| -> [output]
+I (11499) AfeAudioProcessor: Audio communication task started, feed size: 512 fetch size: 512
+I (11499) LingxinSdkProtocol: HandleChatPhaseChange: 2
+I (11509) WifiStation: Setting WiFi power save level: PERFORMANCE (NONE)
+I (11519) wifi:Set ps type: 0, coexist: 0
+
+[05-29 17:50:35.997] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:247] [lx_ws_178004823] WEBSOCKET_EVENT_CONNECTED
+[05-29 17:50:35.998] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:507] [lx_ws_178004823] [chat_manager_websocket_connect_success]
+[05-29 17:50:36.008] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: start_task, status: begin, request_id:
+[05-29 17:50:36.022] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 510
+[05-29 17:50:36.035] [LINGXIN_ESP32S3_1.3.0] [E] [lingxin_user_track:779] [lx_ws_178004823] user track not init
+[05-29 17:50:36.043] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: start_task, status: finish, request_id:
+[05-29 17:50:36.060] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 181 bytes
+[05-29 17:50:36.069] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: system_event, request_id:
+[05-29 17:50:36.082] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:394] [lx_ws_178004823] -----SCHEDULECHAT_EVENT_ON_SYSTEM_EVENT-----{"data":{"schedule_task_config":{"advance_connect_time":0},"task_list":[],"type":"schedule_task_list"}}
+[05-29 17:50:36.103] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1387] [lx_ws_178004823] [chat_state_machine] state_machine_post_schedule_data
+[05-29 17:50:36.115] [LINGXIN_ESP32S3_1.3.0] [D] [schedule_timer_manager:118] [lx_ws_178004823] [schedule_list_update_begin]
+[05-29 17:50:36.127] [LINGXIN_ESP32S3_1.3.0] [E] [schedule_timer_manager:123] [lx_ws_178004823] [schedule_list_update_failed] schedule task not open
+[05-29 17:50:36.139] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:5
+[05-29 17:50:36.217] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 174 bytes
+[05-29 17:50:36.218] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_started, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:36.233] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:0
+[05-29 17:50:36.244] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:176] [lx_ws_178004823] [record_manager_start_send] recorder_ready=1 prev_send_flag=0 cbuf_items=0
+[05-29 17:50:36.259] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:182] [lx_ws_178004823] [record_manager_start_send_done] send_flag=1 cbuf_items=0
+I (11939) lx_sdk_bridge: recorder uplink: wait_playback 418 ms
+I (11939) lx_sdk_bridge: SDK record mode: START
+[05-29 17:50:36.370] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:199] [main] create audio processing task: lx_r_1780048236
+[05-29 17:50:36.379] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:215] [main] [adapter_recorder_open_success]
+[05-29 17:50:36.379] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:125] [lx_r_1780048236] audio_processing_task started, frame_size=640
+[05-29 17:50:36.389] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:159] [main] [recorder_adapter_recorder_open_callback]
+[05-29 17:50:36.412] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:161] [main] [recorder_manager_open_recorder_success]
+[05-29 17:50:36.423] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [main] [chat_state_machine] 接受到事件 State_Event_Upload_InitEnd 上行模块初始化成功，当前状态 State_Upload_Init 新一轮对话开始，录音开始
+[05-29 17:50:36.444] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1055] [main] [chat_state_machine] chat_state_run_event_record_ready
+[05-29 17:50:36.456] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [main] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Upload_InitEnd 上行模块初始化成功 的时候，即将切换到 State_Upload_Transfer 录音传输态
+[05-29 17:50:36.482] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [main] [chat_state_machine]  State_Upload_Init 新一轮对话开始，录音开始 to State_Upload_Transfer 录音传输态, event: State_Event_Upload_InitEnd 上行模块初始化成功
+I (12079) LingxinSdkProtocol: SDK ChatPhase: 2 (scheduling to main thread)
+[05-29 17:50:36.511] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [main] lingxin_config_get_state_mutex 结束锁住
+I (12089) LingxinSdkProtocol: HandleChatPhaseChange: 2
+I (12099) WifiStation: Setting WiFi power save level: PERFORMANCE (NONE)
+I (12099) wifi:Set ps type: 0, coexist: 0
+
+[05-29 17:50:36.538] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.551] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.563] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.575] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.587] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.600] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.625] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.628] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.694] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.697] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.709] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.721] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.734] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.761] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.765] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.814] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.816] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.829] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.841] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.853] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.887] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.890] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.938] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.940] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.953] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.965] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:36.977] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.012] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.015] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.062] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.065] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.078] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.089] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.103] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.125] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.128] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.178] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.180] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.193] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.245] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.248] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.260] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.305] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.330] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.333] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.365] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.368] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.410] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.432] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.435] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.496] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.498] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.511] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.523] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.567] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.570] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.583] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.630] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.633] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.645] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.657] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.701] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.704] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.725] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.778] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.780] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.793] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.805] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.840] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.845] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.855] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.912] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.915] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.927] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.939] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.985] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:37.988] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.000] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.048] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.050] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.063] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.075] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.111] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.114] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.126] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.182] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.185] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.199] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.209] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.247] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.265] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.268] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.319] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.325] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.334] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.346] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.397] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.400] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.412] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.463] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.466] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.478] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.490] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.546] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.549] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.561] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.608] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.611] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.623] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.635] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.674] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.685] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.689] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.751] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.753] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.766] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.778] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.826] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.829] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.841] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.898] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.901] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.914] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.932] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.963] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.966] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:38.978] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.031] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.034] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.046] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.058] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.106] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.108] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.121] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.168] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.171] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.184] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.195] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.218] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048235] Sending fragmented binary message, datasize is 640
+[05-29 17:50:39.218] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 169 bytes
+[05-29 17:50:39.231] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: vad_end, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:39.246] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:2
+[05-29 17:50:39.257] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:208] [lx_ws_178004823] [recorder_manager_stop_called] wait_send_left = 0
+[05-29 17:50:39.269] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:226] [lx_ws_178004823] [recorder_adapter_recorder_close_when_stop]
+I (14849) lx_sdk_bridge: SDK record mode: STOP
+[05-29 17:50:39.285] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:278] [lx_ws_178004823] lingxin_recorder_close set should_stop
+[05-29 17:50:39.304] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:137] [lx_r_1780048236] audio_processing_task exiting
+[05-29 17:50:39.308] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:282] [lx_ws_178004823] audio_processing_task exited
+[05-29 17:50:39.319] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:231] [lx_ws_178004823] [recorder_adapter_recorder_close_callback_when_stop]
+[05-29 17:50:39.331] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:234] [lx_ws_178004823] [recorder_adapter_recorder_destroy_when_stop]
+[05-29 17:50:39.343] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:237] [lx_ws_178004823] [recorder_manager_destory_recorder_success_when_stop]
+[05-29 17:50:39.356] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:341] [lx_ws_178004823] [recorder_thread_stop_called]
+[05-29 17:50:39.367] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:344] [lx_ws_178004823] [recorder_thread_stop_start] wait_send is 0
+I (14949) lx_sdk_bridge: recorder uplink: deactivated
+E (15789) websocket_client: Could not lock ws-client within 100 timeout
+[05-29 17:50:40.214] [LINGXIN_ESP32S3_1.3.0] [E] [protocol_manager:824] [s_1780048235] [chat_manager_send_audio_fail] send fail, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:40.224] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:411] [s_1780048235] [recorder_thread_receive_stop_signal] flag is 1
+[05-29 17:50:40.236] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:447] [s_1780048235] [recorder_adapter_semaphore_destroy]
+[05-29 17:50:40.247] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [s_1780048235] [[lx_thread_adapter] before self end] Task Info - ID: 1070463720, Name: s_1780048235, Priority: 16, State: 0
+[05-29 17:50:40.257] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:369] [lx_ws_178004823] [recorder_thread_stop_success]
+[05-29 17:50:40.275] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:371] [lx_ws_178004823] [recorder_adapter_thread_destroy]
+[05-29 17:50:40.286] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [lx_ws_178004823] [[lingxin_thread_destroy] called in thread:] Task Info - ID: 1070503156, Name: lx_ws_178004823, Priority: 16, State: 0
+[05-29 17:50:40.304] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:412] [lx_ws_178004823] Task state: 4, current thread is 1070463720
+[05-29 17:50:40.315] [LINGXIN_ESP32S3_1.3.0] [W] [lingxin_thread:415] [lx_ws_178004823] Attempt to destroy invalid task handle: 1070463720
+[05-29 17:50:40.327] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:373] [lx_ws_178004823] [recorder_adapter_thread_destroy_end]
+[05-29 17:50:40.339] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:377] [lx_ws_178004823] [recorder_thread_destroy_success]
+[05-29 17:50:40.350] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:243] [lx_ws_178004823] [recorder_manager_stop_send_thread_success_when_stop]
+[05-29 17:50:40.362] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: end_audio, status: begin, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:40.379] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:833] [lx_ws_178004823] [chat_manager_send_end_audio_begin]
+[05-29 17:50:40.391] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 140
+[05-29 17:50:40.403] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: end_audio, status: finish, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:40.419] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_Upload_CloseEnd 上行模块停止录音，当前状态 State_Upload_Transfer 录音传输态
+[05-29 17:50:40.439] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1075] [lx_ws_178004823] [chat_state_machine] chat_state_run_event_record_stop
+[05-29 17:50:40.452] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Upload_CloseEnd 上行模块停止录音 的时候，即将切换到 State_Download_Init 流式播放开始态
+[05-29 17:50:40.479] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Upload_Transfer 录音传输态 to State_Download_Init 流式播放开始态, event: State_Event_Upload_CloseEnd 上行模块停止录音
+I (16069) LingxinSdkProtocol: SDK ChatPhase: 3 (scheduling to main thread)
+[05-29 17:50:40.508] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:40.520] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_init_strategies:16] [lx_ws_178004823] 进入download init状态，初始化播放器
+[05-29 17:50:40.533] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:42] [lx_ws_178004823] 进入下行状态，初始化播放 器
+I (16119) lx_adapter_buffer_play: bufferPlay audioInit, codec=mp3, sample_rate=16000
+[05-29 17:50:40.553] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:9] [lx_ws_178004823] 在download manager 接受到 事件 0
+[05-29 17:50:40.564] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_BufferPlay_AudioInitEnd 流式播放初始化结束，当前状态 State_Download_Init 流式播放开始态
+[05-29 17:50:40.586] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_BufferPlay_AudioInitEnd 流式播放初始化结束 的时候， 即将切换到 State_Download_Play 流式播放中
+[05-29 17:50:40.613] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_Init 流式播放开始态 to State_Download_Play 流式播放中, event: State_Event_BufferPlay_AudioInitEnd 流式播放初始 化结束
+I (16209) LingxinSdkProtocol: SDK ChatPhase: 4 (scheduling to main thread)
+[05-29 17:50:40.643] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:40.655] [LINGXIN_ESP32S3_1.3.0] [E] [recorder_manager:193] [lx_ws_178004823] [recorder_manager_run_stop_callback_fail]
+I (16239) LingxinSdkProtocol: HandleChatPhaseChange: 3
+I (16239) LingxinSdkProtocol: HandleChatPhaseChange: 4
+[05-29 17:50:40.672] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 351 bytes
+[05-29 17:50:40.688] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+W (16279) Application: Lingxin text_output missing payload.type
+[05-29 17:50:40.707] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 424 bytes
+[05-29 17:50:40.721] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+W (16309) Application: Lingxin text_output missing payload.type
+[05-29 17:50:40.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 230 bytes
+[05-29 17:50:40.753] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+W (16339) Application: Lingxin text_output missing payload.type
+[05-29 17:50:40.771] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 182 bytes
+[05-29 17:50:40.786] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_response_start, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:40.802] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_response_start
+[05-29 17:50:40.817] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:50:40.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=3547
+[05-29 17:50:40.968] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2816/3547 bytes
+[05-29 17:50:40.979] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 3547/3547 bytes
+[05-29 17:50:40.990] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 3547 bytes
+[05-29 17:50:41.001] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3547
+I (16579) lx_adapter_buffer_play: bufferPlay first packet, codec=mp3, sample_rate=16000, len=3547
+I (16589) StateMachine: State: listening -> speaking
+I (16599) ESP_ES_PARSER: The verion of es_parser is v1.0.0
+W (16599) Display: SetStatus: 说话中...
+I (16599) AudioService: MP3 decoder opened successfully
+[05-29 17:50:41.216] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 1152 bytes
+[05-29 17:50:41.217] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1152
+[05-29 17:50:41.468] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 173 bytes
+[05-29 17:50:41.469] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_ended, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:41.484] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_ended
+[05-29 17:50:41.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:41.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:41.729] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:41.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:41.750] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:41.978] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 3456 bytes
+[05-29 17:50:41.979] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:50:42.218] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:42.219] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:42.230] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:42.241] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:42.251] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:42.469] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:42.470] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:42.719] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:42.719] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:42.966] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=3456
+[05-29 17:50:42.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2816/3456 bytes
+[05-29 17:50:42.978] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 3456/3456 bytes
+[05-29 17:50:42.989] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 3456 bytes
+[05-29 17:50:43.000] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:50:43.216] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=2304
+[05-29 17:50:43.216] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1436/2304 bytes
+[05-29 17:50:43.228] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2304/2304 bytes
+[05-29 17:50:43.238] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 2304 bytes
+[05-29 17:50:43.249] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 2304
+[05-29 17:50:43.470] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 180 bytes
+[05-29 17:50:43.470] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_response_end, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:43.487] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_response_end
+[05-29 17:50:43.715] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 191 bytes
+[05-29 17:50:43.716] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_stage_end, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:43.731] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: end_task, status: begin, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:43.748] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 139
+[05-29 17:50:43.761] [LINGXIN_ESP32S3_1.3.0] [E] [lingxin_user_track:779] [lx_ws_178004823] user track not init
+[05-29 17:50:43.769] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: end_task, status: finish, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:43.905] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:50:43.965] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 172 bytes
+[05-29 17:50:43.966] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_ended, request_id: R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:43.981] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_VoiceChat_AIEnd 服务端结束推音频流事件，当前状态 State_Download_Play 流式播放中
+[05-29 17:50:44.002] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_buffer_play:132] [lx_ws_178004823] audio buffer send finish
+[05-29 17:50:44.013] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:9] [lx_ws_178004823] 在download manager 接受到 事件 2
+[05-29 17:50:44.024] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_BufferPlay_PlayEnd 流式播放结束，当前状态 State_Download_Play 流式播放中
+I (19619) LingxinSdkProtocol: HandlePlayEnd
+[05-29 17:50:44.044] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_transfer_strategies:31] [lx_ws_178004823] 下行模块播放结束，进入下行结束态
+I (19619) StateMachine: State: speaking -> listening
+[05-29 17:50:44.062] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_BufferPlay_PlayEnd 流式播放结束 的时候，即将切换到 State_Download_End 下行结束
+W (19639) Display: SetStatus: 聆听中...
+[05-29 17:50:44.093] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:366] [lx_ws_178004823] [chat_state_machine] need unlock websocket controle
+W (19669) Display: SetEmotion: neutral
+[05-29 17:50:44.109] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_download_stream_control_manager:45] [lx_ws_178004823] chat内核 zzz: 打开写
+[05-29 17:50:44.124] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_Play 流式播放中 to State_Download_End 下行结束, event: State_Event_BufferPlay_PlayEnd 流式播放结束
+I (19719) LingxinSdkProtocol: SDK ChatPhase: 0 (scheduling to main thread)
+I (19719) LingxinSdkProtocol: HandleChatPhaseChange: 0
+[05-29 17:50:44.152] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:44.169] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_end_strategies:17] [lx_ws_178004823] 进入下行结束 态
+[05-29 17:50:44.180] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 Event_Inc_Download_End 下行状态结束 的时候，即将切换到 State_Task_Complete 结束一轮对话
+[05-29 17:50:44.206] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_End 下行结束 to State_Task_Complete 结束一轮对话, event: Event_Inc_Download_End 下行状态结束
+I (19799) LingxinSdkProtocol: SDK ChatPhase: 4 (scheduling to main thread)
+I (19799) LingxinSdkProtocol: HandleChatPhaseChange: 4
+[05-29 17:50:44.233] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:44.250] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:67] [lx_ws_178004823] [chat_runtime_context_update] Set upload_type to Chat (Audio) by default
+[05-29 17:50:44.265] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:434] [lx_ws_178004823] 初始化upload_type为 Media_Type_Chat， global_task为 chat_vad
+[05-29 17:50:44.279] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [lx_ws_178004823] [ChatStateRuntimeContext] Current Context Dump:
+
+[05-29 17:50:44.291] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:44.304] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [lx_ws_178004823] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:50:44.320] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [lx_ws_178004823] is_normal_exit                 = true  // 是否是主动退出对话模式
+
+[05-29 17:50:44.335] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [lx_ws_178004823] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:50:44.351] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [lx_ws_178004823] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:50:44.367] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [lx_ws_178004823] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:50:44.381] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [lx_ws_178004823] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:50:44.396] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [lx_ws_178004823] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+[05-29 17:50:44.411] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [lx_ws_178004823] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:50:44.426] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [lx_ws_178004823] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:50:44.440] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [lx_ws_178004823] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:50:44.454] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [lx_ws_178004823] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:50:44.469] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [lx_ws_178004823] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:50:44.484] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [lx_ws_178004823] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:50:44.499] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [lx_ws_178004823] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:50:44.514] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [lx_ws_178004823] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:50:44.529] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [lx_ws_178004823] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:50:44.545] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [lx_ws_178004823] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:50:44.558] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [lx_ws_178004823] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:50:44.572] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:44.585] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 Event_Inc_TaskComplete_End task complete 状态内部使用的事件，task complete 逻辑已完成 的时候，即将切换到 State_Upload_Init 新一轮对话开始，录音开始
+[05-29 17:50:44.617] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Task_Complete 结束一轮对话 to State_Upload_Init 新一轮对话开始，录音开始, event: Event_Inc_TaskComplete_End task complete 状态内部使用的事件，task complete 逻辑已完成
+I (20219) LingxinSdkProtocol: SDK ChatPhase: 2 (scheduling to main thread)
+I (20219) LingxinSdkProtocol: HandleChatPhaseChange: 2
+[05-29 17:50:44.652] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+I (20229) WifiStation: Setting WiFi power save level: PERFORMANCE (NONE)
+[05-29 17:50:44.668] [LINGXIN_ESP32S3_1.3.0] [D] [state_upload_manager:12] [lx_ws_178004823] 进入上传状态，初始化录音器
+I (20249) wifi:Set ps type: 0, coexist: 0
+[05-29 17:50:44.686] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:131] [lx_ws_178004823] chat模块 上行初始化成功
+
+[05-29 17:50:44.701] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:93] [lx_ws_178004823] [recorder_manager_recorder_start_called]
+[05-29 17:50:44.713] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:109] [lx_ws_178004823] [recorder_adapter_recorder_close_callback_before_recorder_start]
+[05-29 17:50:44.726] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:341] [lx_ws_178004823] [recorder_thread_stop_called]
+[05-29 17:50:44.737] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:121] [lx_ws_178004823] [recorder_manager_stop_send_thread_success_before_recorder_start]
+[05-29 17:50:44.751] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:286] [lx_ws_178004823] [recorder_thread_start_called]
+[05-29 17:50:44.761] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:301] [lx_ws_178004823] [recorder_adapter_semaphore_create]
+[05-29 17:50:44.773] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:321] [lx_ws_178004823] [recorder_adapter_thread_create]
+[05-29 17:50:44.783] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:363] [lx_ws_178004823] Creating thread: name=s_1780048244, prio=16, stack=8192, args=0
+[05-29 17:50:44.796] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:386] [lx_ws_178004823] Thread created successfully: name=s_1780048244, prio=16, stack=8192, tid=1070460800
+[05-29 17:50:44.797] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:391] [s_1780048244] [recorder_thread_entry_function_called]
+[05-29 17:50:44.811] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:325] [lx_ws_178004823] [recorder_thread_start_success] pid is 1070460800
+[05-29 17:50:44.835] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:139] [lx_ws_178004823] [recorder_manager_start_send_thread_success]
+[05-29 17:50:44.847] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:166] [lx_ws_178004823] [adapter_recorder_create_success]
+[05-29 17:50:44.858] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:147] [lx_ws_178004823] [recorder_adapter_recorder_open]
+[05-29 17:50:44.869] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:228] [lx_ws_178004823] [adapter_recorder_open_begin]
+[05-29 17:50:44.880] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:150] [lx_ws_178004823] [recorder_manager_unlock_after_recorder_open_schedule]
+[05-29 17:50:44.893] [LINGXIN_ESP32S3_1.3.0] [D] [state_upload_manager:33] [lx_ws_178004823] 上传模块 发送 task_start
+[05-29 17:50:44.904] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [lx_ws_178004823] [ChatStateRuntimeContext] Current Context Dump:
+
+[05-29 17:50:44.916] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:44.929] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [lx_ws_178004823] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:50:44.945] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [lx_ws_178004823] is_normal_exit                 = false  // 是否是主动退出对话模式
+
+[05-29 17:50:44.960] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [lx_ws_178004823] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:50:44.976] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [lx_ws_178004823] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:50:44.991] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [lx_ws_178004823] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:50:45.006] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [lx_ws_178004823] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:50:45.021] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [lx_ws_178004823] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+[05-29 17:50:45.036] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [lx_ws_178004823] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:50:45.051] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [lx_ws_178004823] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:50:45.065] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [lx_ws_178004823] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:50:45.079] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [lx_ws_178004823] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:50:45.094] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [lx_ws_178004823] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:50:45.109] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [lx_ws_178004823] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:50:45.124] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [lx_ws_178004823] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:50:45.139] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [lx_ws_178004823] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:50:45.154] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [lx_ws_178004823] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:50:45.170] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [lx_ws_178004823] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:50:45.183] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [lx_ws_178004823] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:50:45.197] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:45.210] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:122] [lx_ws_178004823] voice_chat_continue_params.taskId:, voice_chat_continue_params.task:chat_vad voice_chat_continue_params.user_input:, voice_chat_continue_params.scheduleTaskId:
+[05-29 17:50:45.232] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:760] [lx_ws_178004823] [chat_manager_start_new_begin]
+[05-29 17:50:45.245] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:143] [lx_ws_178004823] [chat_manager_get_config_finish]
+[05-29 17:50:45.253] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: start_task, status: begin, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+[05-29 17:50:45.270] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 510
+[05-29 17:50:45.284] [LINGXIN_ESP32S3_1.3.0] [E] [lingxin_user_track:779] [lx_ws_178004823] user track not init
+[05-29 17:50:45.291] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: start_task, status: finish, request_id:R7f0cefdec45b4e13bcae2b1466faf8f1
+I (20879) lx_sdk_bridge: recorder uplink: wait_playback 25 ms
+I (20879) lx_sdk_bridge: SDK record mode: START
+[05-29 17:50:45.319] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:199] [main] create audio processing task: lx_r_1780048245
+[05-29 17:50:45.329] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:215] [main] [adapter_recorder_open_success]
+[05-29 17:50:45.329] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:125] [lx_r_1780048245] audio_processing_task started, frame_size=640
+[05-29 17:50:45.340] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:159] [main] [recorder_adapter_recorder_open_callback]
+[05-29 17:50:45.363] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:161] [main] [recorder_manager_open_recorder_success]
+[05-29 17:50:45.373] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [main] [chat_state_machine] 接受到事件 State_Event_Upload_InitEnd 上行模块初始化成功，当前状态 State_Upload_Init 新一轮对话开始，录音开始
+[05-29 17:50:45.394] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1055] [main] [chat_state_machine] chat_state_run_event_record_ready
+[05-29 17:50:45.406] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [main] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Upload_InitEnd 上行模块初始化成功 的时候，即将切换到 State_Upload_Transfer 录音传输态
+[05-29 17:50:45.432] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [main] [chat_state_machine]  State_Upload_Init 新一轮对话开始，录音开始 to State_Upload_Transfer 录音传输态, event: State_Event_Upload_InitEnd 上行模块初始化成功
+I (21029) LingxinSdkProtocol: SDK ChatPhase: 2 (scheduling to main thread)
+[05-29 17:50:45.461] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [main] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:45.465] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 174 bytes
+I (21039) LingxinSdkProtocol: HandleChatPhaseChange: 2
+[05-29 17:50:45.484] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_started, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+I (21059) WifiStation: Setting WiFi power save level: PERFORMANCE (NONE)
+[05-29 17:50:45.504] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:0
+I (21079) wifi:Set ps type: 0, coexist: 0
+[05-29 17:50:45.522] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:176] [lx_ws_178004823] [record_manager_start_send] recorder_ready=1 prev_send_flag=0 cbuf_items=6
+
+[05-29 17:50:45.540] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:182] [lx_ws_178004823] [record_manager_start_send_done] send_flag=1 cbuf_items=9
+[05-29 17:50:45.592] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.596] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.607] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.619] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.631] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.644] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.666] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.670] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.693] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.696] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.729] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.731] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.744] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.763] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.769] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.812] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.816] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.827] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.840] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.865] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.868] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.892] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.895] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.907] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.930] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.934] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.966] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.969] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.988] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:45.993] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.022] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.024] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.037] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.072] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.075] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.092] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.132] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.135] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.147] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.192] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.195] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.207] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.252] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.255] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.267] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.312] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.315] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.327] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.342] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.352] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.379] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.425] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.427] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.440] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.465] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 169 bytes
+[05-29 17:50:46.466] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: vad_end, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:46.481] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:2
+[05-29 17:50:46.488] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048244] Sending fragmented binary message, datasize is 640
+[05-29 17:50:46.492] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:208] [lx_ws_178004823] [recorder_manager_stop_called] wait_send_left = 0
+[05-29 17:50:46.516] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:226] [lx_ws_178004823] [recorder_adapter_recorder_close_when_stop]
+I (22099) lx_sdk_bridge: SDK record mode: STOP
+[05-29 17:50:46.532] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:278] [lx_ws_178004823] lingxin_recorder_close set should_stop
+[05-29 17:50:46.544] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:137] [lx_r_1780048245] audio_processing_task exiting
+[05-29 17:50:46.555] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:282] [lx_ws_178004823] audio_processing_task exited
+I (22139) lx_sdk_bridge: recorder uplink: deactivated
+[05-29 17:50:46.566] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:231] [lx_ws_178004823] [recorder_adapter_recorder_close_callback_when_stop]
+[05-29 17:50:46.583] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:234] [lx_ws_178004823] [recorder_adapter_recorder_destroy_when_stop]
+[05-29 17:50:46.595] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:237] [lx_ws_178004823] [recorder_manager_destory_recorder_success_when_stop]
+[05-29 17:50:46.608] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:341] [lx_ws_178004823] [recorder_thread_stop_called]
+[05-29 17:50:46.618] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:344] [lx_ws_178004823] [recorder_thread_stop_start] wait_send is 0
+E (23079) websocket_client: Could not lock ws-client within 100 timeout
+[05-29 17:50:47.504] [LINGXIN_ESP32S3_1.3.0] [E] [protocol_manager:824] [s_1780048244] [chat_manager_send_audio_fail] send fail, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:47.514] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:411] [s_1780048244] [recorder_thread_receive_stop_signal] flag is 1
+[05-29 17:50:47.526] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:447] [s_1780048244] [recorder_adapter_semaphore_destroy]
+[05-29 17:50:47.537] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [s_1780048244] [[lx_thread_adapter] before self end] Task Info - ID: 1070460800, Name: s_1780048244, Priority: 16, State: 0
+[05-29 17:50:47.547] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:369] [lx_ws_178004823] [recorder_thread_stop_success]
+[05-29 17:50:47.565] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:371] [lx_ws_178004823] [recorder_adapter_thread_destroy]
+[05-29 17:50:47.576] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [lx_ws_178004823] [[lingxin_thread_destroy] called in thread:] Task Info - ID: 1070503156, Name: lx_ws_178004823, Priority: 16, State: 0
+[05-29 17:50:47.594] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:412] [lx_ws_178004823] Task state: 4, current thread is 1070460800
+[05-29 17:50:47.605] [LINGXIN_ESP32S3_1.3.0] [W] [lingxin_thread:415] [lx_ws_178004823] Attempt to destroy invalid task handle: 1070460800
+[05-29 17:50:47.617] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:373] [lx_ws_178004823] [recorder_adapter_thread_destroy_end]
+[05-29 17:50:47.629] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:377] [lx_ws_178004823] [recorder_thread_destroy_success]
+[05-29 17:50:47.640] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:243] [lx_ws_178004823] [recorder_manager_stop_send_thread_success_when_stop]
+[05-29 17:50:47.652] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: end_audio, status: begin, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:47.669] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:833] [lx_ws_178004823] [chat_manager_send_end_audio_begin]
+[05-29 17:50:47.681] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 140
+[05-29 17:50:47.693] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: end_audio, status: finish, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:47.709] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_Upload_CloseEnd 上行模块停止录音，当前状态 State_Upload_Transfer 录音传输态
+[05-29 17:50:47.729] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1075] [lx_ws_178004823] [chat_state_machine] chat_state_run_event_record_stop
+[05-29 17:50:47.742] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Upload_CloseEnd 上行模块停止录音 的时候，即将切换到 State_Download_Init 流式播放开始态
+[05-29 17:50:47.769] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Upload_Transfer 录音传输态 to State_Download_Init 流式播放开始态, event: State_Event_Upload_CloseEnd 上行模块停止录音
+I (23359) LingxinSdkProtocol: SDK ChatPhase: 3 (scheduling to main thread)
+I (23369) LingxinSdkProtocol: HandleChatPhaseChange: 3
+[05-29 17:50:47.798] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:47.815] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_init_strategies:16] [lx_ws_178004823] 进入download init状态，初始化播放器
+[05-29 17:50:47.828] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:42] [lx_ws_178004823] 进入下行状态，初始化播放 器
+I (23409) lx_adapter_buffer_play: bufferPlay audioInit, codec=mp3, sample_rate=16000
+[05-29 17:50:47.847] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:9] [lx_ws_178004823] 在download manager 接受到 事件 0
+[05-29 17:50:47.859] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_BufferPlay_AudioInitEnd 流式播放初始化结束，当前状态 State_Download_Init 流式播放开始态
+[05-29 17:50:47.881] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_BufferPlay_AudioInitEnd 流式播放初始化结束 的时候， 即将切换到 State_Download_Play 流式播放中
+[05-29 17:50:47.908] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_Init 流式播放开始态 to State_Download_Play 流式播放中, event: State_Event_BufferPlay_AudioInitEnd 流式播放初始 化结束
+I (23499) LingxinSdkProtocol: SDK ChatPhase: 4 (scheduling to main thread)
+[05-29 17:50:47.938] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:47.950] [LINGXIN_ESP32S3_1.3.0] [E] [recorder_manager:193] [lx_ws_178004823] [recorder_manager_run_stop_callback_fail]
+I (23529) LingxinSdkProtocol: HandleChatPhaseChange: 4
+[05-29 17:50:47.966] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 182 bytes
+[05-29 17:50:47.978] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_response_start, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:47.994] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_response_start
+[05-29 17:50:48.013] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:50:48.224] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 3547 bytes
+[05-29 17:50:48.224] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3547
+I (23809) lx_adapter_buffer_play: bufferPlay first packet, codec=mp3, sample_rate=16000, len=3547
+I (23819) StateMachine: State: listening -> speaking
+W (23819) Display: SetStatus: 说话中...
+[05-29 17:50:48.468] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:48.468] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:48.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=3456
+[05-29 17:50:48.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/3456 bytes
+[05-29 17:50:48.734] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 3456/3456 bytes
+[05-29 17:50:48.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 3456 bytes
+[05-29 17:50:48.750] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:50:48.971] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 173 bytes
+[05-29 17:50:48.972] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_ended, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:48.988] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_ended
+[05-29 17:50:49.215] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 303 bytes
+[05-29 17:50:49.216] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+W (24799) Application: Lingxin text_output missing payload.type
+[05-29 17:50:49.467] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:49.468] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:49.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:49.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:49.728] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:49.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:49.750] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:49.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:49.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:49.979] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:49.989] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:50.000] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:50.217] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=3456
+[05-29 17:50:50.218] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1376/3456 bytes
+[05-29 17:50:50.230] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 3456/3456 bytes
+[05-29 17:50:50.240] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 3456 bytes
+[05-29 17:50:50.251] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:50:50.474] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:50.475] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:50.718] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 1152 bytes
+[05-29 17:50:50.719] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1152
+[05-29 17:50:50.968] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:50.968] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:51.031] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:50:51.219] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 3456 bytes
+[05-29 17:50:51.219] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:50:51.468] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:51.469] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1436/4032 bytes
+[05-29 17:50:51.480] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:51.490] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:51.501] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:51.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:51.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:51.729] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:51.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:51.750] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:51.970] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:51.970] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:52.231] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 2304 bytes
+[05-29 17:50:52.232] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 2304
+[05-29 17:50:52.469] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:52.470] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:52.482] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:52.492] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:52.503] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:52.733] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:52.733] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:52.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:52.968] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:53.222] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 1728 bytes
+[05-29 17:50:53.222] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1728
+[05-29 17:50:53.466] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:53.467] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1436/4032 bytes
+[05-29 17:50:53.479] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:53.489] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:53.500] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:53.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=1728
+[05-29 17:50:53.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1436/1728 bytes
+[05-29 17:50:53.728] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1728/1728 bytes
+[05-29 17:50:53.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 1728 bytes
+[05-29 17:50:53.750] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1728
+[05-29 17:50:53.970] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:53.971] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:54.037] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:50:54.217] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:54.217] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:54.229] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:54.239] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:54.250] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:54.467] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:50:54.467] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:50:54.479] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:50:54.489] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:50:54.500] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:54.718] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:50:54.718] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:50:54.965] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 576 bytes
+[05-29 17:50:54.966] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 576
+[05-29 17:50:55.219] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 1728 bytes
+[05-29 17:50:55.219] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1728
+[05-29 17:50:55.468] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 180 bytes
+[05-29 17:50:55.469] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_response_end, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:55.485] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_response_end
+[05-29 17:50:55.715] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 191 bytes
+[05-29 17:50:55.716] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_stage_end, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:55.731] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: end_task, status: begin, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:55.748] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 139
+[05-29 17:50:55.761] [LINGXIN_ESP32S3_1.3.0] [E] [lingxin_user_track:779] [lx_ws_178004823] user track not init
+[05-29 17:50:55.769] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: end_task, status: finish, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:55.965] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 172 bytes
+[05-29 17:50:55.966] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_ended, request_id: Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:55.981] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_VoiceChat_AIEnd 服务端结束推音频流事件，当前状态 State_Download_Play 流式播放中
+[05-29 17:50:56.002] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_buffer_play:132] [lx_ws_178004823] audio buffer send finish
+[05-29 17:50:56.013] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:9] [lx_ws_178004823] 在download manager 接受到 事件 2
+[05-29 17:50:56.024] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_BufferPlay_PlayEnd 流式播放结束，当前状态 State_Download_Play 流式播放中
+I (31619) LingxinSdkProtocol: HandlePlayEnd
+[05-29 17:50:56.044] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_transfer_strategies:31] [lx_ws_178004823] 下行模块播放结束，进入下行结束态
+[05-29 17:50:56.062] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_BufferPlay_PlayEnd 流式播放结束 的时候，即将切换到 State_Download_End 下行结束
+[05-29 17:50:56.088] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:366] [lx_ws_178004823] [chat_state_machine] need unlock websocket controle
+[05-29 17:50:56.100] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_download_stream_control_manager:45] [lx_ws_178004823] chat内核 zzz: 打开写
+[05-29 17:50:56.112] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_Play 流式播放中 to State_Download_End 下行结束, event: State_Event_BufferPlay_PlayEnd 流式播放结束
+I (31699) LingxinSdkProtocol: SDK ChatPhase: 0 (scheduling to main thread)
+[05-29 17:50:56.140] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:56.152] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_end_strategies:17] [lx_ws_178004823] 进入下行结束 态
+[05-29 17:50:56.163] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 Event_Inc_Download_End 下行状态结束 的时候，即将切换到 State_Task_Complete 结束一轮对话
+[05-29 17:50:56.189] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_End 下行结束 to State_Task_Complete 结束一轮对话, event: Event_Inc_Download_End 下行状态结束
+I (31779) LingxinSdkProtocol: SDK ChatPhase: 4 (scheduling to main thread)
+[05-29 17:50:56.217] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:56.228] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:67] [lx_ws_178004823] [chat_runtime_context_update] Set upload_type to Chat (Audio) by default
+[05-29 17:50:56.243] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:434] [lx_ws_178004823] 初始化upload_type为 Media_Type_Chat， global_task为 chat_vad
+[05-29 17:50:56.257] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [lx_ws_178004823] [ChatStateRuntimeContext] Current Context Dump:
+
+[05-29 17:50:56.269] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:56.282] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [lx_ws_178004823] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:50:56.298] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [lx_ws_178004823] is_normal_exit                 = true  // 是否是主动退出对话模式
+
+[05-29 17:50:56.313] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [lx_ws_178004823] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:50:56.329] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [lx_ws_178004823] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:50:56.345] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [lx_ws_178004823] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:50:56.359] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [lx_ws_178004823] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:50:56.374] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [lx_ws_178004823] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+[05-29 17:50:56.389] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [lx_ws_178004823] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:50:56.404] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [lx_ws_178004823] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:50:56.418] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [lx_ws_178004823] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:50:56.432] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [lx_ws_178004823] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:50:56.447] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [lx_ws_178004823] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:50:56.463] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [lx_ws_178004823] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:50:56.477] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [lx_ws_178004823] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:50:56.493] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [lx_ws_178004823] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:50:56.508] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [lx_ws_178004823] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:50:56.523] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [lx_ws_178004823] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:50:56.537] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [lx_ws_178004823] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:50:56.550] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:56.563] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 Event_Inc_TaskComplete_End task complete 状态内部使用的事件，task complete 逻辑已完成 的时候，即将切换到 State_Upload_Init 新一轮对话开始，录音开始
+[05-29 17:50:56.595] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Task_Complete 结束一轮对话 to State_Upload_Init 新一轮对话开始，录音开始, event: Event_Inc_TaskComplete_End task complete 状态内部使用的事件，task complete 逻辑已完成
+I (32189) LingxinSdkProtocol: SDK ChatPhase: 2 (scheduling to main thread)
+[05-29 17:50:56.630] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:56.642] [LINGXIN_ESP32S3_1.3.0] [D] [state_upload_manager:12] [lx_ws_178004823] 进入上传状态，初始化录音器
+[05-29 17:50:56.653] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:131] [lx_ws_178004823] chat模块 上行初始化成功
+[05-29 17:50:56.664] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:93] [lx_ws_178004823] [recorder_manager_recorder_start_called]
+[05-29 17:50:56.676] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:109] [lx_ws_178004823] [recorder_adapter_recorder_close_callback_before_recorder_start]
+[05-29 17:50:56.689] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:341] [lx_ws_178004823] [recorder_thread_stop_called]
+[05-29 17:50:56.700] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:121] [lx_ws_178004823] [recorder_manager_stop_send_thread_success_before_recorder_start]
+[05-29 17:50:56.714] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:286] [lx_ws_178004823] [recorder_thread_start_called]
+[05-29 17:50:56.724] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:301] [lx_ws_178004823] [recorder_adapter_semaphore_create]
+[05-29 17:50:56.736] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:321] [lx_ws_178004823] [recorder_adapter_thread_create]
+[05-29 17:50:56.746] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:363] [lx_ws_178004823] Creating thread: name=s_1780048256, prio=16, stack=8192, args=0
+[05-29 17:50:56.760] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:391] [s_1780048256] [recorder_thread_entry_function_called]
+[05-29 17:50:56.769] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:386] [lx_ws_178004823] Thread created successfully: name=s_1780048256, prio=16, stack=8192, tid=1070317808
+I (31619) StateMachine: State: speaking -> listening
+[05-29 17:50:56.786] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:325] [lx_ws_178004823] [recorder_thread_start_success] pid is 1070317808
+W (32359) Display: SetStatus: 聆听中...
+[05-29 17:50:56.803] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:139] [lx_ws_178004823] [recorder_manager_start_send_thread_success]
+W (32379) Display: SetEmotion: neutral
+[05-29 17:50:56.818] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:166] [lx_ws_178004823] [adapter_recorder_create_success]
+I (32389) LingxinSdkProtocol: HandleChatPhaseChange: 0
+[05-29 17:50:56.833] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:147] [lx_ws_178004823] [recorder_adapter_recorder_open]
+I (32409) LingxinSdkProtocol: HandleChatPhaseChange: 4
+[05-29 17:50:56.849] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:228] [lx_ws_178004823] [adapter_recorder_open_begin]
+I (32419) LingxinSdkProtocol: HandleChatPhaseChange: 2
+[05-29 17:50:56.865] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:150] [lx_ws_178004823] [recorder_manager_unlock_after_recorder_open_schedule]
+I (32439) WifiStation: Setting WiFi power save level: PERFORMANCE (NONE)
+[05-29 17:50:56.882] [LINGXIN_ESP32S3_1.3.0] [D] [state_upload_manager:33] [lx_ws_178004823] 上传模块 发送 task_start
+I (32459) wifi:Set ps type: 0, coexist: 0
+[05-29 17:50:56.900] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [lx_ws_178004823] [ChatStateRuntimeContext] Current Context Dump:
+
+
+[05-29 17:50:56.916] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [lx_ws_178004823] ------------------------------------------------
+
+I (32489) lx_sdk_bridge: recorder uplink: wait_playback 0 ms
+[05-29 17:50:56.929] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [lx_ws_178004823] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:50:56.950] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [lx_ws_178004823] is_normal_exit                 = false  // 是否是主动退出对话模式
+
+I (32529) lx_sdk_bridge: SDK record mode: START
+[05-29 17:50:56.965] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [lx_ws_178004823] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:50:56.985] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [lx_ws_178004823] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:50:57.001] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [lx_ws_178004823] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:50:57.015] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [lx_ws_178004823] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:50:57.030] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [lx_ws_178004823] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+[05-29 17:50:57.045] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [lx_ws_178004823] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:50:57.060] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [lx_ws_178004823] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:50:57.074] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [lx_ws_178004823] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:50:57.089] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [lx_ws_178004823] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:50:57.104] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [lx_ws_178004823] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:50:57.119] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [lx_ws_178004823] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:50:57.134] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [lx_ws_178004823] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:50:57.149] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [lx_ws_178004823] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:50:57.164] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [lx_ws_178004823] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:50:57.179] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [lx_ws_178004823] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:50:57.193] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [lx_ws_178004823] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:50:57.207] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:50:57.219] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:122] [lx_ws_178004823] voice_chat_continue_params.taskId:, voice_chat_continue_params.task:chat_vad voice_chat_continue_params.user_input:, voice_chat_continue_params.scheduleTaskId:
+[05-29 17:50:57.242] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:760] [lx_ws_178004823] [chat_manager_start_new_begin]
+[05-29 17:50:57.254] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:143] [lx_ws_178004823] [chat_manager_get_config_finish]
+[05-29 17:50:57.263] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: start_task, status: begin, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:57.280] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 510
+[05-29 17:50:57.293] [LINGXIN_ESP32S3_1.3.0] [E] [lingxin_user_track:779] [lx_ws_178004823] user track not init
+[05-29 17:50:57.301] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: start_task, status: finish, request_id:Ree1d3a6b2b464809b57d91a060da7ca0
+[05-29 17:50:57.319] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:199] [main] create audio processing task: lx_r_1780048257
+[05-29 17:50:57.329] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:215] [main] [adapter_recorder_open_success]
+[05-29 17:50:57.329] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:125] [lx_r_1780048257] audio_processing_task started, frame_size=640
+[05-29 17:50:57.340] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:159] [main] [recorder_adapter_recorder_open_callback]
+[05-29 17:50:57.362] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:161] [main] [recorder_manager_open_recorder_success]
+[05-29 17:50:57.373] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [main] [chat_state_machine] 接受到事件 State_Event_Upload_InitEnd 上行模块初始化成功，当前状态 State_Upload_Init 新一轮对话开始，录音开始
+[05-29 17:50:57.394] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1055] [main] [chat_state_machine] chat_state_run_event_record_ready
+[05-29 17:50:57.406] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [main] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Upload_InitEnd 上行模块初始化成功 的时候，即将切换到 State_Upload_Transfer 录音传输态
+[05-29 17:50:57.420] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:50:57.432] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [main] [chat_state_machine]  State_Upload_Init 新一轮对话开始，录音开始 to State_Upload_Transfer 录音传输态, event: State_Event_Upload_InitEnd 上行模块初始化成功
+I (33039) LingxinSdkProtocol: SDK ChatPhase: 2 (scheduling to main thread)
+[05-29 17:50:57.465] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 174 bytes
+[05-29 17:50:57.471] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [main] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:50:57.482] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_started, request_id: R3a93a370915446bdb6a9d8dc604f6394
+I (33059) LingxinSdkProtocol: HandleChatPhaseChange: 2
+[05-29 17:50:57.509] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:0
+I (33079) WifiStation: Setting WiFi power save level: PERFORMANCE (NONE)
+[05-29 17:50:57.525] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:176] [lx_ws_178004823] [record_manager_start_send] recorder_ready=1 prev_send_flag=0 cbuf_items=6
+I (33099) wifi:Set ps type: 0, coexist: 0
+[05-29 17:50:57.546] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:182] [lx_ws_178004823] [record_manager_start_send_done] send_flag=1 cbuf_items=6
+
+[05-29 17:50:57.562] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.576] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.588] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.601] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.612] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.625] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.650] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.653] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.709] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.711] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.724] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.736] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.748] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.773] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.776] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.830] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.833] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.845] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.857] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.870] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.900] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.903] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.954] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.957] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.969] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.981] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:57.994] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.019] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.022] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.073] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.075] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.088] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.100] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.113] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.135] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.138] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.209] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.212] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.224] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.236] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.249] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.283] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.287] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.334] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.336] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.349] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.361] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.373] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.406] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.409] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.461] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.463] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.476] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.488] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.523] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.525] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.538] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.589] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.592] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.605] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.627] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.630] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.663] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.695] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.715] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.755] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.758] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.770] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.822] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.825] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.881] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.884] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.897] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.909] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.942] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.948] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:58.958] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.015] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.018] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.030] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.042] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.054] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.081] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.115] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.133] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.136] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.175] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.177] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.190] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.234] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.238] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.287] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.302] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.306] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.317] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.362] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.365] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.377] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.436] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.438] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.451] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.482] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.485] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.500] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.512] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.558] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.560] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.595] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.598] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.611] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.655] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.658] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.723] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.726] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.738] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.750] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.782] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.789] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.798] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.842] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.845] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.857] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.902] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.905] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.917] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.962] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.965] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.977] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:50:59.992] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.002] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.025] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.075] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.078] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.090] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.135] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.138] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.150] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.194] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.198] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.209] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.262] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.265] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.277] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.322] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.325] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.337] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.382] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.385] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.397] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.442] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.445] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.457] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.472] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.494] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.497] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.555] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.558] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.570] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.615] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.618] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.631] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.674] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.678] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.683] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:51:00.699] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.742] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.762] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.765] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.802] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.805] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.817] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.862] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.865] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.918] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.922] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.933] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.945] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.958] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.984] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:00.987] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.037] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.039] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.052] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.094] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.098] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.109] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.155] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.171] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.173] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.222] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.225] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.237] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.282] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.285] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.338] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.342] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.354] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.365] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.402] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.405] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.417] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.480] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.483] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.495] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.515] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.542] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.545] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.575] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.611] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.614] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.635] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.638] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.685] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.702] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.705] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.754] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.762] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.770] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.781] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.822] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.825] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.837] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.895] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.898] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.910] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.922] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.964] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:01.987] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.028] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.030] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.055] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.058] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.098] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.115] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.118] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.165] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.182] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.185] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.197] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.216] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 169 bytes
+[05-29 17:51:02.219] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: vad_end, request_id: R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:02.234] [LINGXIN_ESP32S3_1.3.0] [D] [chat_upload_manager:40] [lx_ws_178004823] chat模块 上行事件回调 event:2
+[05-29 17:51:02.242] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:656] [s_1780048256] Sending fragmented binary message, datasize is 640
+[05-29 17:51:02.246] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:208] [lx_ws_178004823] [recorder_manager_stop_called] wait_send_left = 0
+[05-29 17:51:02.270] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:226] [lx_ws_178004823] [recorder_adapter_recorder_close_when_stop]
+I (37849) lx_sdk_bridge: SDK record mode: STOP
+[05-29 17:51:02.286] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:278] [lx_ws_178004823] lingxin_recorder_close set should_stop
+[05-29 17:51:02.304] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:137] [lx_r_1780048257] audio_processing_task exiting
+[05-29 17:51:02.309] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_audio_record:282] [lx_ws_178004823] audio_processing_task exited
+[05-29 17:51:02.320] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:231] [lx_ws_178004823] [recorder_adapter_recorder_close_callback_when_stop]
+[05-29 17:51:02.332] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:234] [lx_ws_178004823] [recorder_adapter_recorder_destroy_when_stop]
+[05-29 17:51:02.344] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:237] [lx_ws_178004823] [recorder_manager_destory_recorder_success_when_stop]
+[05-29 17:51:02.357] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:341] [lx_ws_178004823] [recorder_thread_stop_called]
+[05-29 17:51:02.367] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:344] [lx_ws_178004823] [recorder_thread_stop_start] wait_send is 0
+I (37949) lx_sdk_bridge: recorder uplink: deactivated
+E (38829) websocket_client: Could not lock ws-client within 100 timeout
+[05-29 17:51:03.254] [LINGXIN_ESP32S3_1.3.0] [E] [protocol_manager:824] [s_1780048256] [chat_manager_send_audio_fail] send fail, request_id:R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:03.264] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:411] [s_1780048256] [recorder_thread_receive_stop_signal] flag is 1
+[05-29 17:51:03.276] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:447] [s_1780048256] [recorder_adapter_semaphore_destroy]
+[05-29 17:51:03.287] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [s_1780048256] [[lx_thread_adapter] before self end] Task Info - ID: 1070317808, Name: s_1780048256, Priority: 16, State: 0
+[05-29 17:51:03.297] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:369] [lx_ws_178004823] [recorder_thread_stop_success]
+[05-29 17:51:03.315] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:371] [lx_ws_178004823] [recorder_adapter_thread_destroy]
+[05-29 17:51:03.326] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:266] [lx_ws_178004823] [[lingxin_thread_destroy] called in thread:] Task Info - ID: 1070503156, Name: lx_ws_178004823, Priority: 16, State: 0
+[05-29 17:51:03.344] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_thread:412] [lx_ws_178004823] Task state: 4, current thread is 1070317808
+[05-29 17:51:03.355] [LINGXIN_ESP32S3_1.3.0] [W] [lingxin_thread:415] [lx_ws_178004823] Attempt to destroy invalid task handle: 1070317808
+[05-29 17:51:03.367] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:373] [lx_ws_178004823] [recorder_adapter_thread_destroy_end]
+[05-29 17:51:03.379] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:377] [lx_ws_178004823] [recorder_thread_destroy_success]
+[05-29 17:51:03.390] [LINGXIN_ESP32S3_1.3.0] [D] [recorder_manager:243] [lx_ws_178004823] [recorder_manager_stop_send_thread_success_when_stop]
+[05-29 17:51:03.402] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: end_audio, status: begin, request_id:R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:03.419] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:833] [lx_ws_178004823] [chat_manager_send_end_audio_begin]
+[05-29 17:51:03.431] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 140
+[05-29 17:51:03.443] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: end_audio, status: finish, request_id:R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:03.459] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_Upload_CloseEnd 上行模块停止录音，当前状态 State_Upload_Transfer 录音传输态
+[05-29 17:51:03.479] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:1075] [lx_ws_178004823] [chat_state_machine] chat_state_run_event_record_stop
+[05-29 17:51:03.492] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_Upload_CloseEnd 上行模块停止录音 的时候，即将切换到 State_Download_Init 流式播放开始态
+[05-29 17:51:03.519] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Upload_Transfer 录音传输态 to State_Download_Init 流式播放开始态, event: State_Event_Upload_CloseEnd 上行模块停止录音
+I (39109) LingxinSdkProtocol: SDK ChatPhase: 3 (scheduling to main thread)
+[05-29 17:51:03.548] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:51:03.560] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_init_strategies:16] [lx_ws_178004823] 进入download init状态，初始化播放器
+[05-29 17:51:03.573] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:42] [lx_ws_178004823] 进入下行状态，初始化播放 器
+I (39159) lx_adapter_buffer_play: bufferPlay audioInit, codec=mp3, sample_rate=16000
+[05-29 17:51:03.593] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:9] [lx_ws_178004823] 在download manager 接受到 事件 0
+[05-29 17:51:03.604] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_BufferPlay_AudioInitEnd 流式播放初始化结束，当前状态 State_Download_Init 流式播放开始态
+[05-29 17:51:03.626] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_BufferPlay_AudioInitEnd 流式播放初始化结束 的时候， 即将切换到 State_Download_Play 流式播放中
+[05-29 17:51:03.653] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_Init 流式播放开始态 to State_Download_Play 流式播放中, event: State_Event_BufferPlay_AudioInitEnd 流式播放初始 化结束
+I (39249) LingxinSdkProtocol: SDK ChatPhase: 4 (scheduling to main thread)
+[05-29 17:51:03.683] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:51:03.695] [LINGXIN_ESP32S3_1.3.0] [E] [recorder_manager:193] [lx_ws_178004823] [recorder_manager_run_stop_callback_fail]
+I (39279) LingxinSdkProtocol: HandleChatPhaseChange: 3
+I (39279) LingxinSdkProtocol: HandleChatPhaseChange: 4
+[05-29 17:51:03.712] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 351 bytes
+[05-29 17:51:03.728] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: R3a93a370915446bdb6a9d8dc604f6394
+W (39319) Application: Lingxin text_output missing payload.type
+[05-29 17:51:03.747] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 422 bytes
+[05-29 17:51:03.761] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: R3a93a370915446bdb6a9d8dc604f6394
+W (39349) Application: Lingxin text_output missing payload.type
+[05-29 17:51:03.781] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 173 bytes
+[05-29 17:51:03.793] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_ended, request_id: R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:03.809] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_ended
+[05-29 17:51:03.822] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:51:03.966] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 253 bytes
+[05-29 17:51:03.967] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: text_output, request_id: R3a93a370915446bdb6a9d8dc604f6394
+W (39549) Application: Lingxin text_output missing payload.type
+[05-29 17:51:04.215] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 182 bytes
+[05-29 17:51:04.215] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_response_start, request_id: R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:04.232] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_response_start
+[05-29 17:51:04.465] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=3547
+[05-29 17:51:04.466] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/3547 bytes
+[05-29 17:51:04.477] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 3547/3547 bytes
+[05-29 17:51:04.488] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 3547 bytes
+[05-29 17:51:04.499] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3547
+I (40079) lx_adapter_buffer_play: bufferPlay first packet, codec=mp3, sample_rate=16000, len=3547
+I (40089) StateMachine: State: listening -> speaking
+W (40099) Display: SetStatus: 说话中...
+[05-29 17:51:04.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 1152 bytes
+[05-29 17:51:04.717] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1152
+[05-29 17:51:04.968] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:51:04.969] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:51:04.981] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:51:04.991] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:51:05.002] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:05.224] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 3456 bytes
+[05-29 17:51:05.225] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:51:05.468] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:51:05.469] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:05.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:51:05.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 1436/4032 bytes
+[05-29 17:51:05.729] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:51:05.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:51:05.750] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:51:05.761] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:05.984] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:51:05.984] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:06.221] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 2880 bytes
+[05-29 17:51:06.221] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 2880
+[05-29 17:51:06.467] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:51:06.468] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2816/4032 bytes
+[05-29 17:51:06.479] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:51:06.490] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:51:06.501] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:06.716] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:286] [lx_ws_178004823] Start reassembly: capacity=4032
+[05-29 17:51:06.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 2876/4032 bytes
+[05-29 17:51:06.728] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:298] [lx_ws_178004823] Reassembled fragment: 4032/4032 bytes
+[05-29 17:51:06.739] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:304] [lx_ws_178004823] Reassembly complete: 4032 bytes
+[05-29 17:51:06.750] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:06.833] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:354] [lx_ws_178004823] Received pong
+[05-29 17:51:06.967] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 4032 bytes
+[05-29 17:51:06.968] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 4032
+[05-29 17:51:07.219] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 3456 bytes
+[05-29 17:51:07.220] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 3456
+[05-29 17:51:07.469] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 2304 bytes
+[05-29 17:51:07.470] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 2304
+[05-29 17:51:07.717] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 1728 bytes
+[05-29 17:51:07.718] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:518] [lx_ws_178004823] [chat_manager_recv_binary] binary data length: 1728
+[05-29 17:51:07.966] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 180 bytes
+[05-29 17:51:07.967] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: audio_response_end, request_id: R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:07.983] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:410] [lx_ws_178004823] [chat_manager_recv_event_ack] event: audio_response_end
+[05-29 17:51:08.216] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 191 bytes
+[05-29 17:51:08.217] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_stage_end, request_id: R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:08.232] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:152] [lx_ws_178004823] [chat_manager_send_event] event: end_task, status: begin, request_id:R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:08.249] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:626] [lx_ws_178004823] Sending text, strlen(message) = 139
+[05-29 17:51:08.262] [LINGXIN_ESP32S3_1.3.0] [E] [lingxin_user_track:779] [lx_ws_178004823] user track not init
+[05-29 17:51:08.270] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:158] [lx_ws_178004823] [chat_manager_send_event] event: end_task, status: finish, request_id:R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:08.464] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_websocket:338] [lx_ws_178004823] Received complete message: 172 bytes
+[05-29 17:51:08.465] [LINGXIN_ESP32S3_1.3.0] [D] [protocol_manager:326] [lx_ws_178004823] [chat_manager_recv_event] event: task_ended, request_id: R3a93a370915446bdb6a9d8dc604f6394
+[05-29 17:51:08.481] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_VoiceChat_AIEnd 服务端结束推音频流事件，当前状态 State_Download_Play 流式播放中
+[05-29 17:51:08.502] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_buffer_play:132] [lx_ws_178004823] audio buffer send finish
+[05-29 17:51:08.512] [LINGXIN_ESP32S3_1.3.0] [D] [state_donwload_manager:9] [lx_ws_178004823] 在download manager 接受到 事件 2
+[05-29 17:51:08.524] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:906] [lx_ws_178004823] [chat_state_machine] 接受到 事件 State_Event_BufferPlay_PlayEnd 流式播放结束，当前状态 State_Download_Play 流式播放中
+I (44119) LingxinSdkProtocol: HandlePlayEnd
+[05-29 17:51:08.544] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_transfer_strategies:31] [lx_ws_178004823] 下行模块播放结束，进入下行结束态
+I (44119) StateMachine: State: speaking -> listening
+[05-29 17:51:08.562] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 State_Event_BufferPlay_PlayEnd 流式播放结束 的时候，即将切换到 State_Download_End 下行结束
+W (44139) Display: SetStatus: 聆听中...
+[05-29 17:51:08.592] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:366] [lx_ws_178004823] [chat_state_machine] need unlock websocket controle
+W (44169) Display: SetEmotion: neutral
+[05-29 17:51:08.609] [LINGXIN_ESP32S3_1.3.0] [D] [lingxin_download_stream_control_manager:45] [lx_ws_178004823] chat内核 zzz: 打开写
+[05-29 17:51:08.624] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_Play 流式播放中 to State_Download_End 下行结束, event: State_Event_BufferPlay_PlayEnd 流式播放结束
+I (44219) LingxinSdkProtocol: SDK ChatPhase: 0 (scheduling to main thread)
+I (44219) LingxinSdkProtocol: HandleChatPhaseChange: 0
+[05-29 17:51:08.652] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:51:08.669] [LINGXIN_ESP32S3_1.3.0] [D] [state_task_download_end_strategies:17] [lx_ws_178004823] 进入下行结束 态
+[05-29 17:51:08.680] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 Event_Inc_Download_End 下行状态结束 的时候，即将切换到 State_Task_Complete 结束一轮对话
+[05-29 17:51:08.706] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:372] [lx_ws_178004823] [chat_state_machine]  State_Download_End 下行结束 to State_Task_Complete 结束一轮对话, event: Event_Inc_Download_End 下行状态结束
+I (44299) LingxinSdkProtocol: SDK ChatPhase: 4 (scheduling to main thread)
+I (44299) LingxinSdkProtocol: HandleChatPhaseChange: 4
+[05-29 17:51:08.733] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:608] [lx_ws_178004823] lingxin_config_get_state_mutex 结束锁住
+[05-29 17:51:08.750] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:67] [lx_ws_178004823] [chat_runtime_context_update] Set upload_type to Chat (Audio) by default
+[05-29 17:51:08.764] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:434] [lx_ws_178004823] 初始化upload_type为 Media_Type_Chat， global_task为 chat_vad
+[05-29 17:51:08.778] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:757] [lx_ws_178004823] [ChatStateRuntimeContext] Current Context Dump:
+
+[05-29 17:51:08.791] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:758] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:51:08.803] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:773] [lx_ws_178004823] exit_code                      = EXIT_REASON_USER_INITIATED  // 退出时的错误信息
+
+[05-29 17:51:08.820] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:774] [lx_ws_178004823] is_normal_exit                 = true  // 是否是主动退出对话模式
+
+[05-29 17:51:08.835] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:775] [lx_ws_178004823] need_terminate_prompt          = false  // 打断唤醒是否需要播放提示音
+
+[05-29 17:51:08.850] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:776] [lx_ws_178004823] need_continue_prompt           = false  // 连续对话前是否需要播放提示音
+
+[05-29 17:51:08.866] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:777] [lx_ws_178004823] is_vad_exit                    = (not set)  // 是否是vad退出
+
+[05-29 17:51:08.880] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:778] [lx_ws_178004823] input_timeout_audio            = (not set)  // 是否正在播放本地音频
+
+[05-29 17:51:08.895] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:779] [lx_ws_178004823] download_type                  = Media_Type_Chat  // 当前播放的类型
+
+[05-29 17:51:08.910] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:780] [lx_ws_178004823] upload_type                    = Media_Type_Chat  // 当前上传的类型
+
+[05-29 17:51:08.925] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:781] [lx_ws_178004823] global_task                    = chat_vad  // 全局任务描述
+
+[05-29 17:51:08.939] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:782] [lx_ws_178004823] current_task_id                = (not set)  // 全局任务ID描述
+
+[05-29 17:51:08.954] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:783] [lx_ws_178004823] single_round                   = false  // 本轮对话是否为单轮对话
+
+[05-29 17:51:08.969] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:784] [lx_ws_178004823] disable_server_vad             = false  // 本轮对话是否禁用云端VAD
+
+[05-29 17:51:08.984] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:785] [lx_ws_178004823] current_user_input             = (not set)  // 当前用户输入文本
+
+[05-29 17:51:08.999] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:786] [lx_ws_178004823] current_schedule_id            = (not set)  // 当前定时任务调度任务ID
+
+[05-29 17:51:09.014] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:787] [lx_ws_178004823] disable_welcome_audio          = true  // 本轮对话是否禁用欢迎语
+
+[05-29 17:51:09.029] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:788] [lx_ws_178004823] play_prologue                  = (not set)  // 本轮对话是否播放开场白
+
+[05-29 17:51:09.044] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:789] [lx_ws_178004823] output_mode                    = (not set)  // 输出模式
+
+[05-29 17:51:09.058] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:790] [lx_ws_178004823] input_mode                     = (not set)  // 输入模式
+
+[05-29 17:51:09.072] [LINGXIN_ESP32S3_1.3.0] [D] [chat_runtime_context:793] [lx_ws_178004823] ------------------------------------------------
+
+[05-29 17:51:09.084] [LINGXIN_ESP32S3_1.3.0] [D] [chat_state_machine:573] [lx_ws_178004823] lingxin_config_get_state_mutex 开始锁住，事件turn_to_with_preset_inner_state 当前是 Event_Inc_TaskComplete_End task complete 状态内部使用的事件，task complete 逻辑已完成 的时候，即将切换到 State_Upload_Init 新一轮对话开始，录音开始

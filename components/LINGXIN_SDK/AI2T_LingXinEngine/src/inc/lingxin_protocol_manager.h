@@ -56,6 +56,8 @@ typedef void (*TerminateCheckCallback)();
 typedef void (*ErrorCallback)(char *data);
 
 void setWaitTerminateOrEndSuccess(bool target);
+// 状态机进入 Idle 态时调用，重置开场白已播放标记
+void reset_played_prologue(void);
 
 bool voice_chat_start_new(ChatStartNewParams *params);
 

@@ -42,6 +42,11 @@ void setWaitTerminateOrEndSuccess(bool target)
 {
   waitTerminateOrEndSuccess = target;
 }
+// 状态机进入 Idle 态时调用，重置开场白已播放标记
+void reset_played_prologue(void)
+{
+  has_played_prologue = false;
+}
 
 static char *getReqId(VoiceChatHandler *handler)
 {
@@ -801,7 +806,6 @@ bool voice_chat_start_new(ChatStartNewParams *params)
     lingxin_log_ut_with_args(LINGXIN_WARN, "chat_manager_start_new_fail", "isAIResponseding true");
     return false;
   }
-
 
   // 开场白结束恢复：不发送新 start_task，直接触发录音上传
   if (skip_next_start_task)

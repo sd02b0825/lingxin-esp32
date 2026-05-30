@@ -500,6 +500,7 @@ static void execute_state_entry_action(ChatState state, InnerStateCollection *pr
   {
   case State_Idle:
     // exit_code 已在 turn_to_with_preset_inner_state 中 cleanup 之前发出，此处无需重复
+    reset_played_prologue();
     break;
   case State_Welcome:
     module_local_play_welcome_audio();
