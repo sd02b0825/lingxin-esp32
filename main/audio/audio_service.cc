@@ -152,6 +152,11 @@ void AudioService::Initialize(AudioCodec* codec) {
         .skip_unhandled_events = true,
     };
     esp_timer_create(&audio_power_timer_args, &audio_power_timer_);
+
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+    env_sound_monitor_ = std::make_unique<EnvSoundMonitor>();
+    env_sound_monitor_->Initialize();
+#endif
 }
 
 void AudioService::Start() {
@@ -196,6 +201,13 @@ void AudioService::Start() {
         audio_service->OpusCodecTask();
         vTaskDelete(NULL);
     }, "opus_codec", 2048 * 12, this, 2, &opus_codec_task_handle_);
+
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+    if (env_sound_monitor_) {
+        env_sound_monitor_->Start();
+        xEventGroupSetBits(event_group_, AS_EVENT_ENV_SOUND_MONITOR_RUNNING);
+    }
+#endif
 }
 
 void AudioService::Stop() {
@@ -204,6 +216,14 @@ void AudioService::Stop() {
     xEventGroupSetBits(event_group_, AS_EVENT_AUDIO_TESTING_RUNNING |
         AS_EVENT_WAKE_WORD_RUNNING |
         AS_EVENT_AUDIO_PROCESSOR_RUNNING);
+
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+    if (env_sound_monitor_) {
+        // 先清除事件位，确保 AudioInputTask 不再调用 FeedPcm
+        xEventGroupClearBits(event_group_, AS_EVENT_ENV_SOUND_MONITOR_RUNNING);
+        env_sound_monitor_->Stop();
+    }
+#endif
 
     std::lock_guard<std::mutex> lock(audio_queue_mutex_);
     audio_encode_queue_.clear();
@@ -262,8 +282,11 @@ bool AudioService::ReadAudioData(std::vector<int16_t>& data, int sample_rate, in
 void AudioService::AudioInputTask() {
     while (true) {
         EventBits_t bits = xEventGroupWaitBits(event_group_, AS_EVENT_AUDIO_TESTING_RUNNING |
-            AS_EVENT_WAKE_WORD_RUNNING | AS_EVENT_AUDIO_PROCESSOR_RUNNING,
-            pdFALSE, pdFALSE, portMAX_DELAY);
+            AS_EVENT_WAKE_WORD_RUNNING | AS_EVENT_AUDIO_PROCESSOR_RUNNING
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+            | AS_EVENT_ENV_SOUND_MONITOR_RUNNING
+#endif
+            , pdFALSE, pdFALSE, portMAX_DELAY);
 
         if (service_stopped_) {
             break;
@@ -297,11 +320,29 @@ void AudioService::AudioInputTask() {
             }
         }
 
-        /* Feed the wake word and/or audio processor */
-        if (bits & (AS_EVENT_WAKE_WORD_RUNNING | AS_EVENT_AUDIO_PROCESSOR_RUNNING)) {
+        /* Feed the wake word, audio processor, and/or env sound monitor */
+        if (bits & (AS_EVENT_WAKE_WORD_RUNNING | AS_EVENT_AUDIO_PROCESSOR_RUNNING
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+            | AS_EVENT_ENV_SOUND_MONITOR_RUNNING
+#endif
+            )) {
             int samples = 160; // 10ms
             std::vector<int16_t> data;
             if (ReadAudioData(data, 16000, samples)) {
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+                if (env_sound_monitor_ && env_sound_monitor_->IsRunning()) {
+                    if (codec_->input_channels() == 2) {
+                        size_t mono_samples = data.size() / 2;
+                        std::vector<int16_t> mono_data(mono_samples);
+                        for (size_t i = 0; i < mono_samples; ++i) {
+                            mono_data[i] = data[i * 2];
+                        }
+                        env_sound_monitor_->FeedPcm(mono_data.data(), mono_data.size());
+                    } else {
+                        env_sound_monitor_->FeedPcm(data.data(), data.size());
+                    }
+                }
+#endif
                 if (bits & AS_EVENT_WAKE_WORD_RUNNING) {
                     wake_word_->Feed(data);
                 }

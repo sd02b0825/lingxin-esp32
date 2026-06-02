@@ -813,6 +813,11 @@ else()
     list(APPEND SOURCES "audio/wake_words/esp_wake_word.cc")
 endif()
 
+# Environment Sound Monitor
+if(CONFIG_ENV_SOUND_MONITOR_ENABLE)
+    list(APPEND SOURCES "audio/env_sound_monitor.cc")
+endif()
+
 # Auto Select Additional Sources
 if (CONFIG_USE_ESP_BLUFI_WIFI_PROVISIONING)
     list(APPEND SOURCES "boards/common/blufi.cpp")
@@ -983,6 +988,8 @@ idf_component_register(SRCS ${SOURCES}
                         bt
                         fatfs
                         LINGXIN_SDK
+                        mbedtls
+                        json
                         ${MAIN_PRIV_REQUIRES_EXTRA}
                     )
 

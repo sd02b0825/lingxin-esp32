@@ -28,6 +28,12 @@
 #include "protocol.h"
 #include "ogg_demuxer.h"
 
+
+
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+#include "env_sound_monitor.h"
+#endif
+
 /*
  * There are two types of audio data flow:
  * 1. (MIC) -> [Processors] -> {Encode Queue} -> [Opus Encoder] -> {Send Queue} -> (Server)
@@ -54,6 +60,7 @@
 #define AS_EVENT_WAKE_WORD_RUNNING          (1 << 1)
 #define AS_EVENT_AUDIO_PROCESSOR_RUNNING    (1 << 2)
 #define AS_EVENT_PLAYBACK_NOT_EMPTY         (1 << 3)
+#define AS_EVENT_ENV_SOUND_MONITOR_RUNNING  (1 << 4)
 
 #define AS_OPUS_GET_FRAME_DRU_ENUM(duration_ms)                   \
     ((duration_ms) == 5 ? ESP_OPUS_ENC_FRAME_DURATION_5_MS :      \
@@ -169,6 +176,10 @@ private:
     int decoder_frame_size_ = 0;
     DebugStatistics debug_statistics_;
     srmodel_list_t* models_list_ = nullptr;
+
+#if CONFIG_ENV_SOUND_MONITOR_ENABLE
+    std::unique_ptr<EnvSoundMonitor> env_sound_monitor_;
+#endif
 
     EventGroupHandle_t event_group_;
 

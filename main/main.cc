@@ -13,6 +13,9 @@
 
 extern "C" void app_main(void)
 {
+    // Suppress noisy certificate validation info logs
+    esp_log_level_set("esp-x509-crt-bundle", ESP_LOG_WARN);
+
     // Initialize NVS flash for WiFi configuration
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {

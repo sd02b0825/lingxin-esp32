@@ -1126,3 +1126,44 @@ config LINGXIN_AUDIO_FRAME_MS
         Audio frame duration used by the local Opus encoder and PCM decoder path.
 
 endmenu
+
+menu "Environment Sound Monitor"
+
+config ENV_SOUND_MONITOR_ENABLE
+    bool "Enable Environment Sound Monitor"
+    default n
+    help
+        独立线程持续监听环境声音，以 Opus 编码定期上传到指定服务器。
+        开启后不影响正常对话流程，录音从 AudioInputTask 分流。
+
+config ENV_SOUND_MONITOR_URL
+    string "Upload URL"
+    default "http://127.0.0.1:8000/predict/opus"
+    depends on ENV_SOUND_MONITOR_ENABLE
+    help
+        环境音 Opus 数据上传的服务器地址。
+
+config ENV_SOUND_MONITOR_INTERVAL_SEC
+    int "Upload Interval (seconds)"
+    default 5
+    range 1 60
+    depends on ENV_SOUND_MONITOR_ENABLE
+    help
+        每次上传的音频时长间隔，单位秒。
+
+config ENV_SOUND_MONITOR_SAMPLE_RATE
+    int "Audio Sample Rate"
+    default 16000
+    depends on ENV_SOUND_MONITOR_ENABLE
+    help
+        环境音监控的音频采样率，单位 Hz。应与硬件输入采样率一致。
+
+config ENV_SOUND_MONITOR_OPUS_BITRATE_KBPS
+    int "Opus Encoder Bitrate (kbps)"
+    default 16
+    range 6 128
+    depends on ENV_SOUND_MONITOR_ENABLE
+    help
+        环境音 Opus 编码器的目标比特率，单位 kbps。
+
+endmenu
